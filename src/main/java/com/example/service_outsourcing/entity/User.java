@@ -1,7 +1,10 @@
 package com.example.service_outsourcing.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public class User implements Serializable {
     private String userId;
 
@@ -20,6 +23,8 @@ public class User implements Serializable {
     private String departmentId;
 
     private String leaderId;
+
+    private Integer integralNum;
 
     private static final long serialVersionUID = 1L;
 

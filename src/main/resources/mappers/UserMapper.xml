@@ -11,6 +11,7 @@
     <result column="is_hr" property="isHr" jdbcType="INTEGER" />
     <result column="department_id" property="departmentId" jdbcType="VARCHAR" />
     <result column="leader_id" property="leaderId" jdbcType="VARCHAR" />
+    <result column="integral_num" property="integralNum" jdbcType="INTEGER" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from service_user
@@ -19,11 +20,11 @@
   <insert id="insert" parameterType="com.example.service_outsourcing.entity.User" >
     insert into service_user (user_id, passwd, `role`, 
       user_name, membership_level, organization_id, 
-      is_hr, department_id, leader_id
+      is_hr, department_id, leader_id,integral_num
       )
     values (#{userId,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, 
       #{userName,jdbcType=VARCHAR}, #{membershipLevel,jdbcType=INTEGER}, #{organizationId,jdbcType=VARCHAR}, 
-      #{isHr,jdbcType=INTEGER}, #{departmentId,jdbcType=VARCHAR}, #{leaderId,jdbcType=VARCHAR}
+      #{isHr,jdbcType=INTEGER}, #{departmentId,jdbcType=VARCHAR}, #{leaderId,jdbcType=VARCHAR}, #{integralNum,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.User" >
@@ -36,29 +37,30 @@
       is_hr = #{isHr,jdbcType=INTEGER},
       department_id = #{departmentId,jdbcType=VARCHAR},
       leader_id = #{leaderId,jdbcType=VARCHAR}
+      integral_num = #{integralNum,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select user_id, passwd, `role`, user_name, membership_level, organization_id, is_hr, 
-    department_id, leader_id
+    department_id, leader_id,integral_num
     from service_user
     where user_id = #{userId,jdbcType=VARCHAR}
   </select>
   <select id="selectByLeaderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select user_id, passwd, `role`, user_name, membership_level, organization_id, is_hr,
-    department_id, leader_id
+    department_id, leader_id,integral_num
     from service_user
     where leader_id = #{userId,jdbcType=VARCHAR}
   </select>
   <select id="getUserByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select user_id, passwd, `role`, user_name, membership_level, organization_id, is_hr,
-    department_id, leader_id
+    department_id, leader_id,integral_num
     from service_user
     where user_name = #{userName,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select user_id, passwd, `role`, user_name, membership_level, organization_id, is_hr, 
-    department_id, leader_id
+    department_id, leader_id,integral_num
     from service_user
   </select>
 </mapper>

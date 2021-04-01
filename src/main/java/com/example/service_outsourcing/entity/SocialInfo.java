@@ -20,4 +20,6 @@ public class SocialInfo implements Serializable {
     private String concreteContent;
 
     private String supportingMaterialUrl;
+
+    private static final long serialVersionUID = 1L;
 }

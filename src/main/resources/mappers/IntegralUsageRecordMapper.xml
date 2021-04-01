@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.IntegralUsageRecordMapper" >
+    <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.IntegralUsageRecord" >
+        <id column="integral_id" property="integralId" jdbcType="VARCHAR" />
+        <result column="usage_time" property="usageTime" jdbcType="VARCHAR" />
+        <result column="usage_record" property="usageRecord" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from integral_usage_record
+    where integral_id = #{integralId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.example.service_outsourcing.entity.IntegralUsageRecord" >
+    insert into integral_usage_record (integral_id,usage_time,usage_record,user_id)
+    values (#{integralId,jdbcType=VARCHAR}, #{usageTime,jdbcType=VARCHAR}, #{usageRecord,jdbcType=VARCHAR},
+      #{userId,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.IntegralUsageRecord" >
+    update integral_usage_record
+    set usage_time = #{usageTime,jdbcType=VARCHAR},
+      usage_record = #{usageRecord,jdbcType=VARCHAR},
+      user_id = #{user_id,jdbcType=VARCHAR}
+    where integral_id = #{integralId,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select *
+    from integral_usage_record
+    where integral_id = #{integralId,jdbcType=VARCHAR}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap" >
+    select *
+    from integral_usage_record
+  </select>
+</mapper>
