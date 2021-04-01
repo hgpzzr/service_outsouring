@@ -71,6 +71,6 @@ public interface UserService {
     ResultVO getAllHRAccount();
 
 
-    ResultVO getAllHRAccount666666666666666();
+
 
 }

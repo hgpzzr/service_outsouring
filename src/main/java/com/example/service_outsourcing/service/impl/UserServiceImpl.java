@@ -250,8 +250,4 @@ public class UserServiceImpl implements UserService {
         return ResultVOUtil.success(getAllHRAccountVOS);
     }
 
-    @Override
-    public ResultVO getAllHRAccount666666666666666() {
-        return null;
-    }
 }
