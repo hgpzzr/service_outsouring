@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.IdentifyCardMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.IdentifyCard" >
+    <id column="identity_card_id" property="identityCardId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="identity_card_pic_url" property="identityCardPicUrl" jdbcType="VARCHAR" />
+    <result column="verification_status" property="verificationStatus" jdbcType="INTEGER" />
+    <result column="overdue_time" property="overdueTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from identify_card
+    where identity_card_id = #{identityCardId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.IdentifyCard" >
+    insert into identify_card (identity_card_id, material_id, identity_card_pic_url, 
+      verification_status, overdue_time)
+    values (#{identityCardId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{identityCardPicUrl,jdbcType=VARCHAR}, 
+      #{verificationStatus,jdbcType=INTEGER}, #{overdueTime,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.IdentifyCard" >
+    update identify_card
+    set material_id = #{materialId,jdbcType=VARCHAR},
+      identity_card_pic_url = #{identityCardPicUrl,jdbcType=VARCHAR},
+      verification_status = #{verificationStatus,jdbcType=INTEGER},
+      overdue_time = #{overdueTime,jdbcType=VARCHAR}
+    where identity_card_id = #{identityCardId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select identity_card_id, material_id, identity_card_pic_url, verification_status, 
+    overdue_time
+    from identify_card
+    where identity_card_id = #{identityCardId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select identity_card_id, material_id, identity_card_pic_url, verification_status, 
+    overdue_time
+    from identify_card
+  </select>
+</mapper>

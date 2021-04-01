@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.EntryRegisterMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.EntryRegister" >
+    <id column="register_id" property="registerId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="register_pic_url" property="registerPicUrl" jdbcType="VARCHAR" />
+    <result column="register_pass_status" property="registerPassStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from entry_register
+    where register_id = #{registerId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.EntryRegister" >
+    insert into entry_register (register_id, material_id, register_pic_url, 
+      register_pass_status)
+    values (#{registerId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{registerPicUrl,jdbcType=VARCHAR}, 
+      #{registerPassStatus,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.EntryRegister" >
+    update entry_register
+    set material_id = #{materialId,jdbcType=VARCHAR},
+      register_pic_url = #{registerPicUrl,jdbcType=VARCHAR},
+      register_pass_status = #{registerPassStatus,jdbcType=INTEGER}
+    where register_id = #{registerId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select register_id, material_id, register_pic_url, register_pass_status
+    from entry_register
+    where register_id = #{registerId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select register_id, material_id, register_pic_url, register_pass_status
+    from entry_register
+  </select>
+</mapper>

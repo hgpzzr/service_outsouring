@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.OrganizationMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.Organization" >
+    <id column="organization_id" property="organizationId" jdbcType="VARCHAR" />
+    <result column="organization_name" property="organizationName" jdbcType="VARCHAR" />
+    <result column="authentication_status" property="authenticationStatus" jdbcType="INTEGER" />
+    <result column="authentication_pic_url" property="authenticationPicUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from organization
+    where organization_id = #{organizationId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.Organization" >
+    insert into organization (organization_id, organization_name,
+      authentication_status, authentication_pic_url
+      )
+    values (#{organizationId,jdbcType=VARCHAR}, #{organizationName,jdbcType=VARCHAR},
+      #{authenticationStatus,jdbcType=INTEGER}, #{authenticationPicUrl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.Organization" >
+    update organization
+    set organization_name = #{organizationName,jdbcType=VARCHAR},
+      authentication_status = #{authenticationStatus,jdbcType=INTEGER},
+      authentication_pic_url = #{authenticationPicUrl,jdbcType=VARCHAR}
+    where organization_id = #{organizationId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select organization_id, organization_name, authentication_status, authentication_pic_url
+    from organization
+    where organization_id = #{organizationId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select organization_id, organization_name, authentication_status, authentication_pic_url
+    from organization
+  </select>
+</mapper>

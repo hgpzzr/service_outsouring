@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.CertificateMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.Certificate" >
+    <id column="certificate_id" property="certificateId" jdbcType="VARCHAR" />
+    <result column="resume_id" property="resumeId" jdbcType="VARCHAR" />
+    <result column="certificate_name" property="certificateName" jdbcType="VARCHAR" />
+    <result column="certificate_describe" property="certificateDescribe" jdbcType="VARCHAR" />
+    <result column="certificate_prove_pic_url" property="certificateProvePicUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from certificate
+    where certificate_id = #{certificateId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.Certificate" >
+    insert into certificate (certificate_id, resume_id, certificate_name, 
+      certificate_describe, certificate_prove_pic_url
+      )
+    values (#{certificateId,jdbcType=VARCHAR}, #{resumeId,jdbcType=VARCHAR}, #{certificateName,jdbcType=VARCHAR}, 
+      #{certificateDescribe,jdbcType=VARCHAR}, #{certificateProvePicUrl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.Certificate" >
+    update certificate
+    set resume_id = #{resumeId,jdbcType=VARCHAR},
+      certificate_name = #{certificateName,jdbcType=VARCHAR},
+      certificate_describe = #{certificateDescribe,jdbcType=VARCHAR},
+      certificate_prove_pic_url = #{certificateProvePicUrl,jdbcType=VARCHAR}
+    where certificate_id = #{certificateId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select certificate_id, resume_id, certificate_name, certificate_describe, certificate_prove_pic_url
+    from certificate
+    where certificate_id = #{certificateId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select certificate_id, resume_id, certificate_name, certificate_describe, certificate_prove_pic_url
+    from certificate
+  </select>
+</mapper>

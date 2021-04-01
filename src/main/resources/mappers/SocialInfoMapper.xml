@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.SocialInfoMapper" >
+    <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.SocialInfo" >
+        <id column="material_id" property="materialId" jdbcType="VARCHAR" />
+        <result column="social_info_id" property="socialInfoId" jdbcType="VARCHAR" />
+        <result column="info_name" property="infoName" jdbcType="VARCHAR" />
+        <result column="concrete_content" property="concreteContent" jdbcType="VARCHAR" />
+        <result column="supporting_material_url" property="supportingMaterialUrl" jdbcType="VARCHAR" />
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from social_info
+        where social_info_id = #{socialInfoId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.example.service_outsourcing.entity.SocialInfo" >
+        insert into skill (material_id, social_info_id, info_name,
+        concrete_content,supporting_material_url)
+        values (#{materialId,jdbcType=VARCHAR}, #{socialInfoId,jdbcType=VARCHAR}, #{infoName,jdbcType=VARCHAR},
+        #{concreteContent,jdbcType=VARCHAR},#{supportingMaterialUrl,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.SocialInfo" >
+        update skill
+        set material_id = #{materialId,jdbcType=VARCHAR},
+        info_name = #{infoName,jdbcType=VARCHAR},
+        concrete_content = #{concreteContent,jdbcType=VARCHAR}
+        supporting_material_url = #{supportingMaterialUrl,jdbcType=VARCHAR}
+        where social_info_id = #{socialInfoId,jdbcType=VARCHAR}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select *
+        from social_info
+        where social_info_id = #{socialInfoId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap" >
+        select *
+        from skill
+    </select>
+</mapper>

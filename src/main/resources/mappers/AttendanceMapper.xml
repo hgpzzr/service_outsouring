@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.AttendanceMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.Attendance" >
+    <id column="attendance_id" property="attendanceId" jdbcType="VARCHAR" />
+    <result column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="attendance_num" property="attendanceNum" jdbcType="INTEGER" />
+    <result column="absence_num" property="absenceNum" jdbcType="INTEGER" />
+    <result column="absence_rate" property="absenceRate" jdbcType="DOUBLE" />
+    <result column="late_num" property="lateNum" jdbcType="INTEGER" />
+    <result column="late_rate" property="lateRate" jdbcType="DOUBLE" />
+    <result column="leave_num" property="leaveNum" jdbcType="INTEGER" />
+    <result column="leave_rate" property="leaveRate" jdbcType="DOUBLE" />
+    <result column="leave_early_num" property="leaveEarlyNum" jdbcType="INTEGER" />
+    <result column="leave_early_rate" property="leaveEarlyRate" jdbcType="DOUBLE" />
+    <result column="comprehensive_rating" property="comprehensiveRating" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from attendance
+    where attendance_id = #{attendanceId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.Attendance" >
+    insert into attendance (attendance_id, record_id, attendance_num, 
+      absence_num, absence_rate, late_num, 
+      late_rate, leave_num, leave_rate, 
+      leave_early_num, leave_early_rate, comprehensive_rating
+      )
+    values (#{attendanceId,jdbcType=VARCHAR}, #{recordId,jdbcType=VARCHAR}, #{attendanceNum,jdbcType=INTEGER}, 
+      #{absenceNum,jdbcType=INTEGER}, #{absenceRate,jdbcType=DOUBLE}, #{lateNum,jdbcType=INTEGER}, 
+      #{lateRate,jdbcType=DOUBLE}, #{leaveNum,jdbcType=INTEGER}, #{leaveRate,jdbcType=DOUBLE}, 
+      #{leaveEarlyNum,jdbcType=INTEGER}, #{leaveEarlyRate,jdbcType=DOUBLE}, #{comprehensiveRating,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.Attendance" >
+    update attendance
+    set record_id = #{recordId,jdbcType=VARCHAR},
+      attendance_num = #{attendanceNum,jdbcType=INTEGER},
+      absence_num = #{absenceNum,jdbcType=INTEGER},
+      absence_rate = #{absenceRate,jdbcType=DOUBLE},
+      late_num = #{lateNum,jdbcType=INTEGER},
+      late_rate = #{lateRate,jdbcType=DOUBLE},
+      leave_num = #{leaveNum,jdbcType=INTEGER},
+      leave_rate = #{leaveRate,jdbcType=DOUBLE},
+      leave_early_num = #{leaveEarlyNum,jdbcType=INTEGER},
+      leave_early_rate = #{leaveEarlyRate,jdbcType=DOUBLE},
+      comprehensive_rating = #{comprehensiveRating,jdbcType=VARCHAR}
+    where attendance_id = #{attendanceId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select attendance_id, record_id, attendance_num, absence_num, absence_rate, late_num, 
+    late_rate, leave_num, leave_rate, leave_early_num, leave_early_rate, comprehensive_rating
+    from attendance
+    where attendance_id = #{attendanceId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select attendance_id, record_id, attendance_num, absence_num, absence_rate, late_num, 
+    late_rate, leave_num, leave_rate, leave_early_num, leave_early_rate, comprehensive_rating
+    from attendance
+  </select>
+</mapper>

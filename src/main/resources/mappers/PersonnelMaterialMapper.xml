@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.PersonnelMaterialMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.PersonnelMaterial" >
+    <id column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from personnel_material
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.PersonnelMaterial" >
+    insert into personnel_material (material_id, employee_id)
+    values (#{materialId,jdbcType=VARCHAR}, #{employeeId,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.PersonnelMaterial" >
+    update personnel_material
+    set employee_id = #{employeeId,jdbcType=VARCHAR}
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select material_id, employee_id
+    from personnel_material
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select material_id, employee_id
+    from personnel_material
+  </select>
+</mapper>

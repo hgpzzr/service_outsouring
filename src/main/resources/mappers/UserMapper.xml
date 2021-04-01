@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.User" >
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="passwd" property="passwd" jdbcType="VARCHAR" />
+    <result column="role" property="role" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="membership_level" property="membershipLevel" jdbcType="INTEGER" />
+    <result column="organization_id" property="organizationId" jdbcType="VARCHAR" />
+    <result column="is_hr" property="isHr" jdbcType="INTEGER" />
+    <result column="department_id" property="departmentId" jdbcType="VARCHAR" />
+    <result column="leader_id" property="leaderId" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from service_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.User" >
+    insert into service_user (user_id, passwd, `role`, 
+      user_name, membership_level, organization_id, 
+      is_hr, department_id, leader_id
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, 
+      #{userName,jdbcType=VARCHAR}, #{membershipLevel,jdbcType=INTEGER}, #{organizationId,jdbcType=VARCHAR}, 
+      #{isHr,jdbcType=INTEGER}, #{departmentId,jdbcType=VARCHAR}, #{leaderId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.User" >
+    update service_user
+    set passwd = #{passwd,jdbcType=VARCHAR},
+      `role` = #{role,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      membership_level = #{membershipLevel,jdbcType=INTEGER},
+      organization_id = #{organizationId,jdbcType=VARCHAR},
+      is_hr = #{isHr,jdbcType=INTEGER},
+      department_id = #{departmentId,jdbcType=VARCHAR},
+      leader_id = #{leaderId,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select user_id, passwd, `role`, user_name, membership_level, organization_id, is_hr, 
+    department_id, leader_id
+    from service_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLeaderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select user_id, passwd, `role`, user_name, membership_level, organization_id, is_hr,
+    department_id, leader_id
+    from service_user
+    where leader_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="getUserByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select user_id, passwd, `role`, user_name, membership_level, organization_id, is_hr,
+    department_id, leader_id
+    from service_user
+    where user_name = #{userName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select user_id, passwd, `role`, user_name, membership_level, organization_id, is_hr, 
+    department_id, leader_id
+    from service_user
+  </select>
+</mapper>

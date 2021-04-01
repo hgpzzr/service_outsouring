@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.ProveFileMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.ProveFile" >
+    <id column="prove_id" property="proveId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="prove_file_pic_url" property="proveFilePicUrl" jdbcType="VARCHAR" />
+    <result column="prove_status" property="proveStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from prove_file
+    where prove_id = #{proveId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.ProveFile" >
+    insert into prove_file (prove_id, material_id, project_id, 
+      prove_file_pic_url, prove_status)
+    values (#{proveId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, 
+      #{proveFilePicUrl,jdbcType=VARCHAR}, #{proveStatus,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.ProveFile" >
+    update prove_file
+    set material_id = #{materialId,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=VARCHAR},
+      prove_file_pic_url = #{proveFilePicUrl,jdbcType=VARCHAR},
+      prove_status = #{proveStatus,jdbcType=INTEGER}
+    where prove_id = #{proveId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select prove_id, material_id, project_id, prove_file_pic_url, prove_status
+    from prove_file
+    where prove_id = #{proveId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select prove_id, material_id, project_id, prove_file_pic_url, prove_status
+    from prove_file
+  </select>
+</mapper>

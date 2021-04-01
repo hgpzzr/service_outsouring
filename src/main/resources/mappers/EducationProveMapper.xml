@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.EducationProveMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.EducationProve" >
+    <id column="education_id" property="educationId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="education_pic_url" property="educationPicUrl" jdbcType="VARCHAR" />
+    <result column="education_prove_status" property="educationProveStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from education_prove
+    where education_id = #{educationId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.EducationProve" >
+    insert into education_prove (education_id, material_id, education_pic_url, 
+      education_prove_status)
+    values (#{educationId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{educationPicUrl,jdbcType=VARCHAR}, 
+      #{educationProveStatus,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.EducationProve" >
+    update education_prove
+    set material_id = #{materialId,jdbcType=VARCHAR},
+      education_pic_url = #{educationPicUrl,jdbcType=VARCHAR},
+      education_prove_status = #{educationProveStatus,jdbcType=INTEGER}
+    where education_id = #{educationId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select education_id, material_id, education_pic_url, education_prove_status
+    from education_prove
+    where education_id = #{educationId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select education_id, material_id, education_pic_url, education_prove_status
+    from education_prove
+  </select>
+</mapper>

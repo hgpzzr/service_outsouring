@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.WorkExperienceMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.WorkExperience" >
+    <id column="work_id" property="workId" jdbcType="VARCHAR" />
+    <result column="resume_id" property="resumeId" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="begin_time" property="beginTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+    <result column="work_describe" property="workDescribe" jdbcType="VARCHAR" />
+    <result column="work_prove_pic_url" property="workProvePicUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from work_experience
+    where work_id = #{workId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.WorkExperience" >
+    insert into work_experience (work_id, resume_id, company_name, 
+      begin_time, end_time, work_describe, 
+      work_prove_pic_url)
+    values (#{workId,jdbcType=VARCHAR}, #{resumeId,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{beginTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{workDescribe,jdbcType=VARCHAR}, 
+      #{workProvePicUrl,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.WorkExperience" >
+    update work_experience
+    set resume_id = #{resumeId,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      work_describe = #{workDescribe,jdbcType=VARCHAR},
+      work_prove_pic_url = #{workProvePicUrl,jdbcType=VARCHAR}
+    where work_id = #{workId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select work_id, resume_id, company_name, begin_time, end_time, work_describe, work_prove_pic_url
+    from work_experience
+    where work_id = #{workId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByResumeId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select work_id, resume_id, company_name, begin_time, end_time, work_describe, work_prove_pic_url
+    from work_experience
+    where resume_id = #{ResumeId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select work_id, resume_id, company_name, begin_time, end_time, work_describe, work_prove_pic_url
+    from work_experience
+  </select>
+</mapper>

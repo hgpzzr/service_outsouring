@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.BasicInformationMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.BasicInformation" >
+    <id column="resume_id" property="resumeId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="birth" property="birth" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="work_year" property="workYear" jdbcType="INTEGER" />
+    <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+    <result column="marry_status" property="marryStatus" jdbcType="INTEGER" />
+    <result column="political_outlook" property="politicalOutlook" jdbcType="VARCHAR" />
+    <result column="native_place" property="nativePlace" jdbcType="VARCHAR" />
+    <result column="nation" property="nation" jdbcType="VARCHAR" />
+    <result column="height" property="height" jdbcType="DOUBLE" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+    <result column="education_level" property="educationLevel" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from basic_information
+    where resume_id = #{resumeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.BasicInformation" >
+    insert into basic_information (resume_id, `name`, birth, 
+      gender, phone, email, 
+      work_year, pic_url, marry_status, 
+      political_outlook, native_place, nation, 
+      height, weight, education_level
+      )
+    values (#{resumeId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{birth,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{workYear,jdbcType=INTEGER}, #{picUrl,jdbcType=VARCHAR}, #{marryStatus,jdbcType=INTEGER}, 
+      #{politicalOutlook,jdbcType=VARCHAR}, #{nativePlace,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
+      #{height,jdbcType=DOUBLE}, #{weight,jdbcType=DOUBLE}, #{educationLevel,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.BasicInformation" >
+    update basic_information
+--     set
+    <trim prefix="set" suffixOverrides=",">
+      <if test="name != null"> `name` = #{name,jdbcType=VARCHAR},</if>
+      <if test="birth != null"> birth = #{birth,jdbcType=VARCHAR},</if>
+      <if test="gender != null">gender = #{gender,jdbcType=INTEGER},</if>
+      <if test="phone != null">phone = #{phone,jdbcType=VARCHAR},</if>
+      <if test="email != null">email = #{email,jdbcType=VARCHAR},</if>
+      <if test="workYear != null">work_year = #{workYear,jdbcType=INTEGER},</if>
+      <if test="picUrl != null"> pic_url = #{picUrl,jdbcType=VARCHAR},</if>
+      <if test="marryStatus != null">marry_status = #{marryStatus,jdbcType=INTEGER},</if>
+      <if test="politicalOutlook != null"> political_outlook = #{politicalOutlook,jdbcType=VARCHAR},</if>
+      <if test="nativePlace != null"> native_place = #{nativePlace,jdbcType=VARCHAR},</if>
+      <if test="nation != null">nation = #{nation,jdbcType=VARCHAR},</if>
+      <if test="height != null">height = #{height,jdbcType=DOUBLE},</if>
+      <if test="weight != null"> weight = #{weight,jdbcType=DOUBLE},</if>
+      <if test="educationLevel != null">education_level = #{educationLevel,jdbcType=VARCHAR}</if>
+    </trim>
+    where resume_id = #{resumeId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select resume_id, `name`, birth, gender, phone, email, work_year, pic_url, marry_status, 
+    political_outlook, native_place, nation, height, weight, education_level
+    from basic_information
+    where resume_id = #{resumeId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select resume_id, `name`, birth, gender, phone, email, work_year, pic_url, marry_status, 
+    political_outlook, native_place, nation, height, weight, education_level
+    from basic_information
+  </select>
+</mapper>

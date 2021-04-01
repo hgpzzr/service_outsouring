@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.AchievementMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.Achievement" >
+    <id column="achievement_id" property="achievementId" jdbcType="VARCHAR" />
+    <result column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="achievement_grade" property="achievementGrade" jdbcType="VARCHAR" />
+    <result column="achievement_evaluate" property="achievementEvaluate" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from achievement
+    where achievement_id = #{achievementId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.Achievement" >
+    insert into achievement (achievement_id, record_id, achievement_grade, 
+      achievement_evaluate)
+    values (#{achievementId,jdbcType=VARCHAR}, #{recordId,jdbcType=VARCHAR}, #{achievementGrade,jdbcType=VARCHAR}, 
+      #{achievementEvaluate,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.Achievement" >
+    update achievement
+    set record_id = #{recordId,jdbcType=VARCHAR},
+      achievement_grade = #{achievementGrade,jdbcType=VARCHAR},
+      achievement_evaluate = #{achievementEvaluate,jdbcType=VARCHAR}
+    where achievement_id = #{achievementId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select achievement_id, record_id, achievement_grade, achievement_evaluate
+    from achievement
+    where achievement_id = #{achievementId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select achievement_id, record_id, achievement_grade, achievement_evaluate
+    from achievement
+  </select>
+</mapper>

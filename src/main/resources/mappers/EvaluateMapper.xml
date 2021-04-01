@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.EvaluateMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.Evaluate" >
+    <id column="evaluate_id" property="evaluateId" jdbcType="VARCHAR" />
+    <result column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="evaluate_time" property="evaluateTime" jdbcType="VARCHAR" />
+    <result column="evaluate_type" property="evaluateType" jdbcType="VARCHAR" />
+    <result column="evaluate_content" property="evaluateContent" jdbcType="VARCHAR" />
+    <result column="evaluate_person" property="evaluatePerson" jdbcType="VARCHAR" />
+    <result column="evaluate_person_relationship" property="evaluatePersonRelationship" jdbcType="VARCHAR" />
+    <result column="evaluate_name" property="evaluateName" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from evaluate
+    where evaluate_id = #{evaluateId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.Evaluate" >
+    insert into evaluate (evaluate_id, record_id, evaluate_time, 
+      evaluate_type, evaluate_content, evaluate_person, 
+      evaluate_person_relationship, evaluate_name
+      )
+    values (#{evaluateId,jdbcType=VARCHAR}, #{recordId,jdbcType=VARCHAR}, #{evaluateTime,jdbcType=VARCHAR}, 
+      #{evaluateType,jdbcType=VARCHAR}, #{evaluateContent,jdbcType=VARCHAR}, #{evaluatePerson,jdbcType=VARCHAR}, 
+      #{evaluatePersonRelationship,jdbcType=VARCHAR}, #{evaluateName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.Evaluate" >
+    update evaluate
+    set record_id = #{recordId,jdbcType=VARCHAR},
+      evaluate_time = #{evaluateTime,jdbcType=VARCHAR},
+      evaluate_type = #{evaluateType,jdbcType=VARCHAR},
+      evaluate_content = #{evaluateContent,jdbcType=VARCHAR},
+      evaluate_person = #{evaluatePerson,jdbcType=VARCHAR},
+      evaluate_person_relationship = #{evaluatePersonRelationship,jdbcType=VARCHAR},
+      evaluate_name = #{evaluateName,jdbcType=VARCHAR}
+    where evaluate_id = #{evaluateId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select evaluate_id, record_id, evaluate_time, evaluate_type, evaluate_content, evaluate_person, 
+    evaluate_person_relationship, evaluate_name
+    from evaluate
+    where evaluate_id = #{evaluateId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select evaluate_id, record_id, evaluate_time, evaluate_type, evaluate_content, evaluate_person, 
+    evaluate_person_relationship, evaluate_name
+    from evaluate
+  </select>
+</mapper>

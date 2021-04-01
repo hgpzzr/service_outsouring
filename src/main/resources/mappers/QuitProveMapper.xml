@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.QuitProveMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.QuitProve" >
+    <id column="quit_id" property="quitId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="quit_file_pic_url" property="quitFilePicUrl" jdbcType="VARCHAR" />
+    <result column="quit_status" property="quitStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from quit_prove
+    where quit_id = #{quitId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.QuitProve" >
+    insert into quit_prove (quit_id, material_id, quit_file_pic_url, 
+      quit_status)
+    values (#{quitId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{quitFilePicUrl,jdbcType=VARCHAR}, 
+      #{quitStatus,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.QuitProve" >
+    update quit_prove
+    set material_id = #{materialId,jdbcType=VARCHAR},
+      quit_file_pic_url = #{quitFilePicUrl,jdbcType=VARCHAR},
+      quit_status = #{quitStatus,jdbcType=INTEGER}
+    where quit_id = #{quitId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select quit_id, material_id, quit_file_pic_url, quit_status
+    from quit_prove
+    where quit_id = #{quitId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select quit_id, material_id, quit_file_pic_url, quit_status
+    from quit_prove
+  </select>
+</mapper>

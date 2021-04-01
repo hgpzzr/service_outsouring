@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.EntryPhysicalExaminationMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.EntryPhysicalExamination" >
+    <id column="physical_examination_id" property="physicalExaminationId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="physical_examination_pic_url" property="physicalExaminationPicUrl" jdbcType="VARCHAR" />
+    <result column="physical_examination_status" property="physicalExaminationStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from entry_physical_examination
+    where physical_examination_id = #{physicalExaminationId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.EntryPhysicalExamination" >
+    insert into entry_physical_examination (physical_examination_id, material_id, 
+      physical_examination_pic_url, physical_examination_status
+      )
+    values (#{physicalExaminationId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, 
+      #{physicalExaminationPicUrl,jdbcType=VARCHAR}, #{physicalExaminationStatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.EntryPhysicalExamination" >
+    update entry_physical_examination
+    set material_id = #{materialId,jdbcType=VARCHAR},
+      physical_examination_pic_url = #{physicalExaminationPicUrl,jdbcType=VARCHAR},
+      physical_examination_status = #{physicalExaminationStatus,jdbcType=INTEGER}
+    where physical_examination_id = #{physicalExaminationId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select physical_examination_id, material_id, physical_examination_pic_url, physical_examination_status
+    from entry_physical_examination
+    where physical_examination_id = #{physicalExaminationId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select physical_examination_id, material_id, physical_examination_pic_url, physical_examination_status
+    from entry_physical_examination
+  </select>
+</mapper>

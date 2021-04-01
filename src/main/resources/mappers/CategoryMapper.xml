@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.service_outsourcing.mapper.CategoryMapper">
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.Category">
+    <id column="post_category_id" jdbcType="VARCHAR" property="postCategoryId" />
+    <result column="post_category_name" jdbcType="VARCHAR" property="postCategoryName" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from category
+    where post_category_id = #{postCategoryId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.Category">
+    insert into category (post_category_id, post_category_name)
+    values (#{postCategoryId,jdbcType=VARCHAR}, #{postCategoryName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.Category">
+    update category
+    set post_category_name = #{postCategoryName,jdbcType=VARCHAR}
+    where post_category_id = #{postCategoryId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select post_category_id, post_category_name
+    from category
+    where post_category_id = #{postCategoryId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select post_category_id, post_category_name
+    from category
+  </select>
+
+
+</mapper>
