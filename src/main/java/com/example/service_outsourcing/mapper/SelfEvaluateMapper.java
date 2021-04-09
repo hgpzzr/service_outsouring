@@ -8,9 +8,13 @@ import java.util.List;
 public interface SelfEvaluateMapper {
     int deleteByPrimaryKey(String selfEvaluateId);
 
+    int deleteByResumeId(String resumeId);
+
     int insert(SelfEvaluate record);
 
     SelfEvaluate selectByPrimaryKey(String selfEvaluateId);
+
+    List<SelfEvaluate> selectByResumeId(String resumeId);
 
     List<SelfEvaluate> selectAll();
 

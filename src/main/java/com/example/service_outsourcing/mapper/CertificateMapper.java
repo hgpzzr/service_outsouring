@@ -8,9 +8,13 @@ import java.util.List;
 public interface CertificateMapper {
     int deleteByPrimaryKey(String certificateId);
 
+    int deleteByResumeId(String resumeId);
+
     int insert(Certificate record);
 
     Certificate selectByPrimaryKey(String certificateId);
+
+    List<Certificate> selectByResumeId(String resumeId);
 
     List<Certificate> selectAll();
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.example.service_outsourcing.mapper.EmployeeMapper" >
   <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.Employee" >
     <id column="employee_id" property="employeeId" jdbcType="VARCHAR" />
-    <result column="department_id" property="departmentId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="post_id" property="postId" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
@@ -11,24 +11,24 @@
     where employee_id = #{employeeId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.example.service_outsourcing.entity.Employee" >
-    insert into employee (employee_id, department_id, post_id
+    insert into employee (employee_id, status, post_id
       )
-    values (#{employeeId,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, #{postId,jdbcType=VARCHAR}
+    values (#{employeeId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{postId,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.Employee" >
     update employee
-    set department_id = #{departmentId,jdbcType=VARCHAR},
+    set status = #{status,jdbcType=VARCHAR},
       post_id = #{postId,jdbcType=VARCHAR}
     where employee_id = #{employeeId,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select employee_id, department_id, post_id
+    select employee_id, status, post_id
     from employee
     where employee_id = #{employeeId,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select employee_id, department_id, post_id
+    select employee_id, status, post_id
     from employee
   </select>
 </mapper>

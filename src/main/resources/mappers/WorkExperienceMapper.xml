@@ -14,6 +14,10 @@
     delete from work_experience
     where work_id = #{workId,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByResumeId" parameterType="java.lang.String" >
+    delete from work_experience
+    where resume_id = #{resumeId,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.example.service_outsourcing.entity.WorkExperience" >
     insert into work_experience (work_id, resume_id, company_name, 
       begin_time, end_time, work_describe, 

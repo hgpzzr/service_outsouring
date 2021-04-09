@@ -83,7 +83,7 @@ public class ApplicantController {
         return applicantService.insertWorkExperience(form,file);
     }
 
-    @GetMapping("/deleteWorkExperience")
+    @DeleteMapping("/deleteWorkExperience")
     @ApiOperation("删除工作经历")
     public ResultVO deleteWorkExperience(String workId){
         return applicantService.deleteWorkExperience(workId);
@@ -95,9 +95,57 @@ public class ApplicantController {
         return applicantService.insertProjectExperience(form,file);
     }
 
-    @GetMapping("/deleteProjectExperience")
+    @DeleteMapping("/deleteProjectExperience")
     @ApiOperation("删除项目经历")
     public ResultVO deleteProjectExperience(String projectId){
         return applicantService.deleteProjectExperience(projectId);
+    }
+
+    @PostMapping("/insertSkill")
+    @ApiOperation("添加技能特长")
+    public ResultVO insertSkill(SkillForm form){
+        return applicantService.insertSkill(form);
+    }
+
+    @DeleteMapping("/deleteSkill")
+    @ApiOperation("删除技能特长")
+    public ResultVO deleteSkill(String skillId){
+        return applicantService.deleteSkill(skillId);
+    }
+
+    @PostMapping("/insertCertificate")
+    @ApiOperation("添加证书")
+    public ResultVO insertCertificate(CertificateForm form,@RequestParam("file") MultipartFile file){
+        return applicantService.insertCertificate(form,file);
+    }
+
+    @DeleteMapping("deleteCertificate")
+    @ApiOperation("删除证书")
+    public ResultVO deleteCertificate(String certificateId){
+        return applicantService.deleteCertificate(certificateId);
+    }
+
+    @PostMapping("/insertSelfEvaluate")
+    @ApiOperation("添加自我评价")
+    public ResultVO insertSelfEvaluate(SelfEvaluateForm form){
+        return applicantService.insertSelfEvaluate(form);
+    }
+
+    @DeleteMapping("/deleteSelfEvaluate")
+    @ApiOperation("删除自我评价")
+    public ResultVO deleteSelfEvaluate(String selfEvaluateId){
+        return applicantService.deleteSelfEvaluate(selfEvaluateId);
+    }
+
+    @DeleteMapping("/deleteResume")
+    @ApiOperation("删除简历")
+    public ResultVO deleteResume(String resumeId){
+        return applicantService.deleteResume(resumeId);
+    }
+
+    @GetMapping("browseResume")
+    @ApiOperation("查看简历")
+    public ResultVO browseResume(String resumeId){
+        return applicantService.browseResume(resumeId);
     }
 }

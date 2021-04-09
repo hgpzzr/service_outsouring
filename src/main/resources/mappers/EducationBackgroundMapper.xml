@@ -14,6 +14,10 @@
     delete from education_background
     where background_id = #{backgroundId,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByResumeId" parameterType="java.lang.String" >
+    delete from education_background
+    where resume_id = #{resumeId,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.example.service_outsourcing.entity.EducationBackground" >
     insert into education_background (background_id, resume_id, school_name, 
       major, begin_time, end_time, 

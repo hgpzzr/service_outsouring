@@ -10,6 +10,10 @@
     delete from self_evaluate
     where self_evaluate_id = #{selfEvaluateId,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByResumeId" parameterType="java.lang.String" >
+    delete from self_evaluate
+    where resume_id = #{resumeId,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.example.service_outsourcing.entity.SelfEvaluate" >
     insert into self_evaluate (self_evaluate_id, resume_id, evaluate_describe
       )
@@ -26,6 +30,11 @@
     select self_evaluate_id, resume_id, evaluate_describe
     from self_evaluate
     where self_evaluate_id = #{selfEvaluateId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByResumeId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select self_evaluate_id, resume_id, evaluate_describe
+    from self_evaluate
+    where resume_id = #{resumeId,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select self_evaluate_id, resume_id, evaluate_describe

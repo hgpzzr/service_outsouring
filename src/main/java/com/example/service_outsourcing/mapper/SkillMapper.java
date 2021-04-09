@@ -8,9 +8,13 @@ import java.util.List;
 public interface SkillMapper {
     int deleteByPrimaryKey(String skillId);
 
+    int deleteByResumeId(String resumeId);
+
     int insert(Skill record);
 
     Skill selectByPrimaryKey(String skillId);
+
+    List<Skill> selectByResumeId(String resumeId);
 
     List<Skill> selectAll();
 

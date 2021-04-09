@@ -8,6 +8,8 @@ import java.util.List;
 public interface EducationBackgroundMapper {
     int deleteByPrimaryKey(String backgroundId);
 
+    int deleteByResumeId(String resumeId);
+
     int insert(EducationBackground record);
 
     EducationBackground selectByPrimaryKey(String backgroundId);

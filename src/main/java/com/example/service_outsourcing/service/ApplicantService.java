@@ -114,4 +114,42 @@ public interface ApplicantService {
      * @return
      */
     ResultVO deleteSkill(String skillId);
+
+    /**
+     * 添加证书
+     * @param form
+     * @param file
+     * @return
+     */
+    ResultVO insertCertificate(CertificateForm form,MultipartFile file);
+
+    /**
+     * 删除证书
+     * @param certificateId
+     * @return
+     */
+    ResultVO deleteCertificate(String certificateId);
+
+    /**
+     * 添加自我评价
+     * @param form
+     * @return
+     */
+    ResultVO insertSelfEvaluate(SelfEvaluateForm form);
+
+    /**
+     * 删除自我评价
+     * @param selfEvaluateId
+     * @return
+     */
+    ResultVO deleteSelfEvaluate(String selfEvaluateId);
+
+    /**
+     * 删除简历
+     * @param resumeId
+     * @return
+     */
+    ResultVO deleteResume(String resumeId);
+
+    ResultVO browseResume(String resumeId);
 }

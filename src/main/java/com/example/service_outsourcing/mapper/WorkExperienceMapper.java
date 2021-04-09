@@ -8,6 +8,8 @@ import java.util.List;
 public interface WorkExperienceMapper {
     int deleteByPrimaryKey(String workId);
 
+    int deleteByResumeId(String resumeId);
+
     int insert(WorkExperience record);
 
     WorkExperience selectByPrimaryKey(String workId);

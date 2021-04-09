@@ -8,6 +8,8 @@ import java.util.List;
 public interface ProjectExperienceMapper {
     int deleteByPrimaryKey(String projectId);
 
+    int deleteByResumeId(String resumeId);
+
     int insert(ProjectExperience record);
 
     ProjectExperience selectByPrimaryKey(String projectId);
