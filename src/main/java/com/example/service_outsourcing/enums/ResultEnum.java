@@ -25,6 +25,8 @@ public enum  ResultEnum {
     DATE_ORDER_ERROR(14,"开始时间比结束时间晚"),
     WORK_EXPERIENCE_NOT_EXIST_ERROR(15,"工作经历不存在"),
     PROJECT_EXPERIENCE_NOT_EXIST_ERROR(16,"项目经历不存在"),
+    SKILL_NOT_EXIST_ERROR(17,"技能特长不存在"),
+    CERTIFICATE_NOT_EXIST_ERROR(18,"证书不存在"),
 
 
 

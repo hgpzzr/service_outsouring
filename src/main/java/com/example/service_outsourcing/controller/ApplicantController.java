@@ -100,4 +100,40 @@ public class ApplicantController {
     public ResultVO deleteProjectExperience(String projectId){
         return applicantService.deleteProjectExperience(projectId);
     }
+
+    @PostMapping("/insertSkill")
+    @ApiOperation("添加技能特长")
+    public ResultVO insertSkill(SkillForm form){
+        return applicantService.insertSkill(form);
+    }
+
+    @GetMapping("/deleteSkill")
+    @ApiOperation("删除技能特长")
+    public ResultVO deleteSkill(String skillId){
+        return applicantService.deleteSkill(skillId);
+    }
+
+    @PostMapping("/insertCertificate")
+    @ApiOperation("添加证书")
+    public ResultVO insertCertificate(CertificateForm form,@RequestParam("file") MultipartFile file){
+        return applicantService.insertCertificate(form,file);
+    }
+
+    @GetMapping("deleteCertificate")
+    @ApiOperation("删除证书")
+    public ResultVO deleteCertificate(String certificateId){
+        return applicantService.deleteCertificate(certificateId);
+    }
+
+    @PostMapping("/insertSelfEvaluate")
+    @ApiOperation("添加自我评价")
+    public ResultVO insertSelfEvaluate(SelfEvaluateForm form){
+        return applicantService.insertSelfEvaluate(form);
+    }
+
+    @GetMapping("/deleteSelfEvaluate")
+    @ApiOperation("删除自我评价")
+    public ResultVO deleteSelfEvaluate(String selfEvaluateId){
+        return applicantService.deleteSelfEvaluate(selfEvaluateId);
+    }
 }

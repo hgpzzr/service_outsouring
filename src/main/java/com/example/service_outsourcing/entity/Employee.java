@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Employee implements Serializable {
     private String employeeId;
 
-    private String departmentId;
+    private String status;
 
     private String postId;
 
@@ -19,13 +19,6 @@ public class Employee implements Serializable {
         this.employeeId = employeeId == null ? null : employeeId.trim();
     }
 
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId == null ? null : departmentId.trim();
-    }
 
     public String getPostId() {
         return postId;
@@ -35,6 +28,14 @@ public class Employee implements Serializable {
         this.postId = postId == null ? null : postId.trim();
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -42,7 +43,6 @@ public class Employee implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", employeeId=").append(employeeId);
-        sb.append(", departmentId=").append(departmentId);
         sb.append(", postId=").append(postId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

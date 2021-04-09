@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import sun.security.action.PutAllAction;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,22 +31,18 @@ import java.util.Map;
 public class ApplicantServiceImpl implements ApplicantService {
     @Autowired
     private ResumeMapper resumeMapper;
-
     @Autowired
     private BasicInformationMapper basicInformationMapper;
-
     @Autowired
     private EducationBackgroundMapper educationBackgroundMapper;
-
     @Autowired
     private WorkExperienceMapper workExperienceMapper;
-
     @Autowired
     private ProjectExperienceMapper projectExperienceMapper;
-
     @Autowired
     private SkillMapper skillMapper;
-
+    @Autowired
+    private CertificateMapper certificateMapper;
     @Autowired
     private SelfEvaluateMapper selfEvaluateMapper;
 
@@ -57,6 +54,9 @@ public class ApplicantServiceImpl implements ApplicantService {
 
     @Value("${img.projectExperience.url}")
     private String projectExperienceUrl;
+
+    @Value("${img.certificate.url}")
+    private String certificateUrl;
 
     @Override
     public ResultVO createResume(String IDNumber) {
@@ -351,12 +351,122 @@ public class ApplicantServiceImpl implements ApplicantService {
             log.error("【添加技能特长】：简历不存在，添加失败");
             return ResultVOUtil.error(ResultEnum.RESUME_NOT_EXIST_ERROR);
         }
+        //存入数据库
+        Skill skill = new Skill();
+        BeanUtils.copyProperties(skillForm,skill);
+        String skillId = GenerateIdUtil.getSkillId(skillMapper);
+        skill.setSkillId(skillId);
+        int insert = skillMapper.insert(skill);
+        if(insert != 1){
+            log.error("【添加技能特长】：数据库操作失败");
+            return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
 
-        return null;
+        Map<String,String> map = new HashMap<>();
+        map.put("skillId",skillId);
+        map.put("message","添加成功");
+        return ResultVOUtil.success(map);
     }
 
     @Override
     public ResultVO deleteSkill(String skillId) {
-        return null;
+        if(skillMapper.selectByPrimaryKey(skillId) == null){
+            log.error("【删除技能特长】：技能不存在，删除失败");
+            return ResultVOUtil.error(ResultEnum.SKILL_NOT_EXIST_ERROR);
+        }
+        int delete = skillMapper.deleteByPrimaryKey(skillId);
+        if(delete != 1){
+            log.error("【删除技能特长】：数据库操作失败");
+            return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
+        return ResultVOUtil.success("删除成功");
+    }
+
+    @Override
+    public ResultVO insertCertificate(CertificateForm form, MultipartFile file) {
+        if(resumeMapper.selectByPrimaryKey(form.getResumeId()) == null){
+            log.error("【添加证书】：简历不存在");
+            return ResultVOUtil.error(ResultEnum.RESUME_NOT_EXIST_ERROR);
+        }
+        //获得图片路径
+        String filePath = certificateUrl;
+        StringBuilder stringBuilder = new StringBuilder();
+        //获得新文件名
+        String fileName = FileUtil.generateFileName(file);
+        stringBuilder.append(filePath).append(fileName);
+        //上传图片
+        boolean upload = FileUtil.upload(file, filePath, fileName);
+        if(!upload){
+            log.error("【添加证书】：文件上传失败");
+            return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+        }
+        //保存到数据库
+        Certificate certificate = new Certificate();
+        BeanUtils.copyProperties(form,certificate);
+        certificate.setCertificateProvePicUrl(stringBuilder.toString());
+        //获得certificateId
+        String certificateId = GenerateIdUtil.getCertificateId(certificateMapper);
+        certificate.setCertificateId(certificateId);
+        int insert = certificateMapper.insert(certificate);
+        if(insert != 1){
+            log.error("【添加证书】：数据库操作失败");
+            return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
+
+        Map<String,String> map = new HashMap<>();
+        map.put("certificateId",certificateId);
+        map.put("message","添加成功");
+        return ResultVOUtil.success(map);
+    }
+
+    @Override
+    public ResultVO deleteCertificate(String certificateId) {
+        Certificate certificate = certificateMapper.selectByPrimaryKey(certificateId);
+        if(certificate == null){
+            log.error("【删除证书】：证书不存在");
+            return ResultVOUtil.error(ResultEnum.CERTIFICATE_NOT_EXIST_ERROR);
+        }
+        //删除图片
+        FileUtil.deleteFile(certificate.getCertificateProvePicUrl());
+        //删除数据库记录
+        int delete = certificateMapper.deleteByPrimaryKey(certificateId);
+        if(delete != 1){
+            log.error("【删除证书】：数据库操作失败");
+            return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
+        return ResultVOUtil.success("删除成功");
+    }
+
+    @Override
+    public ResultVO insertSelfEvaluate(SelfEvaluateForm form) {
+        //判断简历是否存在
+        if(resumeMapper.selectByPrimaryKey(form.getResumeId()) == null){
+            log.error("【添加自我评价】：简历不存在");
+            return ResultVOUtil.error(ResultEnum.RESUME_NOT_EXIST_ERROR);
+        }
+        //加入数据库
+        SelfEvaluate selfEvaluate = new SelfEvaluate();
+        BeanUtils.copyProperties(form,selfEvaluate);
+        String selfEvaluateId = GenerateIdUtil.getSelfEvaluateId(selfEvaluateMapper);
+        selfEvaluate.setSelfEvaluateId(selfEvaluateId);
+        int insert = selfEvaluateMapper.insert(selfEvaluate);
+        if(insert != 1){
+            log.error("【添加自我评价】");
+            return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
+        Map<String,String> map = new HashMap<>();
+        map.put("selfEvaluateId",selfEvaluateId);
+        map.put("message","添加成功");
+        return ResultVOUtil.success(map);
+    }
+
+    @Override
+    public ResultVO deleteSelfEvaluate(String selfEvaluateId) {
+        int delete = selfEvaluateMapper.deleteByPrimaryKey(selfEvaluateId);
+        if(delete != 1){
+            log.error("【删除自我评价】:数据库操作失败");
+            return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
+        return ResultVOUtil.success("删除成功");
     }
 }

@@ -119,4 +119,58 @@ public class GenerateIdUtil {
         stringBuilder.append(num);
         return stringBuilder.toString();
     }
+
+    /**
+     * 随机生成不重复的background_id
+     * @param skillMapper
+     * @return
+     */
+    public static String getSkillId(SkillMapper skillMapper){
+        String num;
+        StringBuilder stringBuilder = new StringBuilder("JN");
+        do{
+            Random random= new Random();
+            int randomNum = random.nextInt(89999999);
+            int intNum = randomNum +10000000;
+            num = String.valueOf(intNum);
+        }while (skillMapper.selectByPrimaryKey(num) != null);
+        stringBuilder.append(num);
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 随机生成不重复的background_id
+     * @param certificateMapper
+     * @return
+     */
+    public static String getCertificateId(CertificateMapper certificateMapper){
+        String num;
+        StringBuilder stringBuilder = new StringBuilder("ZS");
+        do{
+            Random random= new Random();
+            int randomNum = random.nextInt(89999999);
+            int intNum = randomNum +10000000;
+            num = String.valueOf(intNum);
+        }while (certificateMapper.selectByPrimaryKey(num) != null);
+        stringBuilder.append(num);
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 随机生成不重复的background_id
+     * @param selfEvaluateMapper
+     * @return
+     */
+    public static String getSelfEvaluateId(SelfEvaluateMapper selfEvaluateMapper){
+        String num;
+        StringBuilder stringBuilder = new StringBuilder("ZS");
+        do{
+            Random random= new Random();
+            int randomNum = random.nextInt(89999999);
+            int intNum = randomNum +10000000;
+            num = String.valueOf(intNum);
+        }while (selfEvaluateMapper.selectByPrimaryKey(num) != null);
+        stringBuilder.append(num);
+        return stringBuilder.toString();
+    }
 }
