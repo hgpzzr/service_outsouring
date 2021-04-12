@@ -47,12 +47,20 @@ server:
   port: 8088
 img:
   enterpriseCertification:
-    url: D:\\image\\enterpriseCertification\\
+    url: D:\\image\\EnterpriseCertification\\
   basicInformation:
-    url: D:\\image\\basicInformation\\
+    url: D:\\image\\BasicInformation\\
   workExperience:
-    url: D:\\image\\workExperience\\
+    url: D:\\image\\WorkExperience\\
   projectExperience:
-    url: D:\\image\\projectExperience\\
+    url: D:\\image\\ProjectExperience\\
   certificate:
-    url: D:\\image\\certificate\\
+    url: D:\\image\\Certificate\\
+  ID:
+    url: D:\\image\\ID\\
+  educationProve:
+    url: D:\\image\\EducationProve\\
+  socialInfo:
+    url: D:\\image\\SocialInfo\\
+  entryRegister:
+    url: D:\\image\\EntryRegister\\

@@ -27,6 +27,11 @@ public enum  ResultEnum {
     PROJECT_EXPERIENCE_NOT_EXIST_ERROR(16,"项目经历不存在"),
     SKILL_NOT_EXIST_ERROR(17,"技能特长不存在"),
     CERTIFICATE_NOT_EXIST_ERROR(18,"证书不存在"),
+    EMPLOYEE_NOT_EXIST_ERROR(19,"员工不存在"),
+    PERSONNEL_MATERIAL_NOT_EXIST_ERROR(20,"人事材料不存在"),
+    ID_NOT_EXIST_ERROR(21,"身份证不存在"),
+    SOCIAL_INFO_NOT_EXIST_ERROR(22,"社会信息不存在"),
+    ENTRY_REGISTER_NOT_EXIST_ERROR(23,"入职登记不存在"),
 
 
 

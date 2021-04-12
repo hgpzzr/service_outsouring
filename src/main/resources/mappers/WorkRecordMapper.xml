@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.WorkRecordMapper" >
+    <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.WorkRecord" >
+        <id column="record_id" property="recordId" jdbcType="VARCHAR" />
+        <result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+        <result column="organization_id" property="organizationId" jdbcType="VARCHAR" />
+        <result column="begin_time" property="beginTime" jdbcType="VARCHAR" />
+        <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+        <result column="post_id" property="postId" jdbcType="VARCHAR" />
+        <result column="work_status" property="workStatus" jdbcType="VARCHAR" />
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from work_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.example.service_outsourcing.entity.WorkRecord" >
+    insert into work_record (record_id, employee_id, organization_id,
+      begin_time, end_time, post_id, work_status)
+    values (#{recordId,jdbcType=VARCHAR}, #{employeeId,jdbcType=VARCHAR}, #{organizationId,jdbcType=VARCHAR},
+      #{beginTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{postId,jdbcType=VARCHAR},
+      #{workStatus,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.WorkRecord" >
+    update work_record
+    set work_status = #{workStatus,jdbcType=VARCHAR},
+      employee_id = #{employeeId,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      organization_id = #{organizationId,jdbcType=VARCHAR},
+      post_id = #{postId,jdbcType=VARCHAR}
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select *
+    from work_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap" >
+    select *
+    from work_record
+  </select>
+</mapper>
