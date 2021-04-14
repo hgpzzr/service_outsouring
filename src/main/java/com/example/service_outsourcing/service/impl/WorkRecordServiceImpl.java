@@ -43,6 +43,8 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 	private EvaluateMapper evaluateMapper;
 	@Autowired
 	private AttendanceMapper attendanceMapper;
+	@Autowired
+	private GenerateIdUtil generateIdUtil;
 
 	@Override
 	public ResultVO insertWorkRecord(WorkRecordForm form) {
@@ -74,7 +76,8 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 		// 存入数据库
 		WorkRecord workRecord = new WorkRecord();
 		BeanUtils.copyProperties(form,workRecord);
-		String recordId = GenerateIdUtil.getRecordId(workRecordMapper);
+//		String recordId = GenerateIdUtil.getRecordId(workRecordMapper);
+		String recordId = generateIdUtil.getRandomId(workRecordMapper, "WR");
 		workRecord.setRecordId(recordId);
 		int insert = workRecordMapper.insert(workRecord);
 		if(insert != 1){
@@ -102,7 +105,8 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 		}
 		Achievement achievement = new Achievement();
 		BeanUtils.copyProperties(form,achievement);
-		String achievementId = GenerateIdUtil.getAchievementId(achievementMapper);
+//		String achievementId = GenerateIdUtil.getAchievementId(achievementMapper);
+		String achievementId = generateIdUtil.getRandomId(achievementMapper, "AC");
 		achievement.setAchievementId(achievementId);
 		int insert = achievementMapper.insert(achievement);
 		if(insert != 1){
@@ -130,7 +134,8 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 		}
 		Evaluate evaluate = new Evaluate();
 		BeanUtils.copyProperties(form,evaluate);
-		String evaluateId = GenerateIdUtil.getEvaluateId(evaluateMapper);
+//		String evaluateId = GenerateIdUtil.getEvaluateId(evaluateMapper);
+		String evaluateId = generateIdUtil.getRandomId(evaluateMapper, "EV");
 		evaluate.setEvaluateId(evaluateId);
 		int insert = evaluateMapper.insert(evaluate);
 		if(insert != 1){
@@ -167,7 +172,8 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 		attendance.setLeaveRate(Double.valueOf(decimalFormat.format(leaveRate)));
 		double leaveEarlyRate = form.getLeaveEarlyNum()*1.0/form.getAttendanceNum();
 		attendance.setLeaveEarlyRate(Double.valueOf(decimalFormat.format(leaveEarlyRate)));
-		String attendanceId = GenerateIdUtil.getAttendanceId(attendanceMapper);
+//		String attendanceId = GenerateIdUtil.getAttendanceId(attendanceMapper);
+		String attendanceId = generateIdUtil.getRandomId(attendanceMapper, "AT");
 		attendance.setAttendanceId(attendanceId);
 		int insert = attendanceMapper.insert(attendance);
 		if(insert != 1){

@@ -53,6 +53,8 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 	private ContractMapper contractMapper;
 	@Autowired
 	private EmployeeMapper employeeMapper;
+	@Autowired
+	private GenerateIdUtil generateIdUtil;
 
 	@Value("${img.ID.url}")
 	private String imgIDUrl;
@@ -77,7 +79,8 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			log.error("【添加人事材料】：员工不存在");
 			return ResultVOUtil.error(ResultEnum.EMPLOYEE_NOT_EXIST_ERROR);
 		}
-		String materialId = GenerateIdUtil.getMaterialId(personnelMaterialMapper);
+//		String materialId = GenerateIdUtil.getMaterialId(personnelMaterialMapper);
+		String materialId = generateIdUtil.getRandomId(personnelMaterialMapper, "PM");
 		PersonnelMaterial personnelMaterial = new PersonnelMaterial();
 		personnelMaterial.setMaterialId(materialId);
 		personnelMaterial.setEmployeeId(employeeId);
@@ -119,7 +122,8 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		// 存入数据库
 		IdentifyCard identifyCard = new IdentifyCard();
 		BeanUtils.copyProperties(form, identifyCard);
-		String identifyCardId = GenerateIdUtil.getIdentifyCardId(identifyCardMapper);
+//		String identifyCardId = GenerateIdUtil.getIdentifyCardId(identifyCardMapper);
+		String identifyCardId = generateIdUtil.getRandomId(identifyCardMapper, "ID");
 		identifyCard.setIdentityCardId(identifyCardId);
 		identifyCard.setVerificationStatus(1);
 		identifyCard.setIdentityCardPicUrl(url.toString());
@@ -162,7 +166,8 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		// 存入数据库
 		EducationProve educationProve = new EducationProve();
 		educationProve.setMaterialId(materialId);
-		String educationId = GenerateIdUtil.getEducationId(educationProveMapper);
+//		String educationId = GenerateIdUtil.getEducationId(educationProveMapper);
+		String educationId = generateIdUtil.getRandomId(educationProveMapper, "EP");
 		educationProve.setEducationId(educationId);
 		educationProve.setEducationProveStatus(1);
 		educationProve.setEducationPicUrl(url.toString());
@@ -205,7 +210,8 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		//存入数据库
 		SocialInfo socialInfo = new SocialInfo();
 		BeanUtils.copyProperties(form, socialInfo);
-		String socialInfoId = GenerateIdUtil.getSocialInfoId(socialInfoMapper);
+//		String socialInfoId = GenerateIdUtil.getSocialInfoId(socialInfoMapper);
+		String socialInfoId = generateIdUtil.getRandomId(socialInfoMapper, "SI");
 		socialInfo.setSocialInfoId(socialInfoId);
 		socialInfo.setSupportingMaterialUrl(url.toString());
 		int insert = socialInfoMapper.insert(socialInfo);
@@ -248,7 +254,8 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		// 存入数据库
 		EntryRegister entryRegister = new EntryRegister();
 		entryRegister.setMaterialId(materialId);
-		String registerId = GenerateIdUtil.getRegisterId(entryRegisterMapper);
+//		String registerId = GenerateIdUtil.getRegisterId(entryRegisterMapper);
+		String registerId = generateIdUtil.getRandomId(entryRegisterMapper, "ER");
 		entryRegister.setRegisterId(registerId);
 		entryRegister.setRegisterPicUrl(url.toString());
 		entryRegister.setRegisterPassStatus(1);
@@ -292,7 +299,8 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		// 存入数据库
 		EntryPhysicalExamination physicalExamination= new EntryPhysicalExamination();
 		physicalExamination.setMaterialId(materialId);
-		String physicalExaminationId = GenerateIdUtil.getPhysicalExaminationId(entryPhysicalExaminationMapper);
+//		String physicalExaminationId = GenerateIdUtil.getPhysicalExaminationId(entryPhysicalExaminationMapper);
+		String physicalExaminationId = generateIdUtil.getRandomId(entryPhysicalExaminationMapper, "EP");
 		physicalExamination.setPhysicalExaminationId(physicalExaminationId);
 		physicalExamination.setPhysicalExaminationStatus(1);
 		physicalExamination.setPhysicalExaminationPicUrl(url.toString());
@@ -339,7 +347,8 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		// 存入数据库
 		QuitProve quitProve = new QuitProve();
 		quitProve.setMaterialId(materialId);
-		String quitId = GenerateIdUtil.getQuitId(quitProveMapper);
+//		String quitId = GenerateIdUtil.getQuitId(quitProveMapper);
+		String quitId = generateIdUtil.getRandomId(quitProveMapper, "QP");
 		quitProve.setQuitId(quitId);
 		quitProve.setQuitFilePicUrl(url.toString());
 		quitProve.setQuitStatus(1);
@@ -392,7 +401,8 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		ProveFile proveFile = new ProveFile();
 		BeanUtils.copyProperties(proveFileForm,proveFile);
 		proveFile.setProveFilePicUrl(url.toString());
-		String proveId = GenerateIdUtil.getProveId(proveFileMapper);
+//		String proveId = GenerateIdUtil.getProveId(proveFileMapper);
+		String proveId = generateIdUtil.getRandomId(proveFileMapper, "PF");
 		proveFile.setProveId(proveId);
 		proveFile.setProveStatus(1);
 		int insert = proveFileMapper.insert(proveFile);
@@ -441,7 +451,8 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		BeanUtils.copyProperties(form,contract);
 		contract.setContractFilePicUrl(url.toString());
 		contract.setContractStatus(1);
-		String contractId = GenerateIdUtil.getContractId(contractMapper);
+//		String contractId = GenerateIdUtil.getContractId(contractMapper);
+		String contractId = generateIdUtil.getRandomId(contractMapper, "CO");
 		contract.setContractId(contractId);
 		int insert = contractMapper.insert(contract);
 		if(insert != 1){

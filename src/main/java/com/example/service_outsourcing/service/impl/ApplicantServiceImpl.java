@@ -45,6 +45,8 @@ public class ApplicantServiceImpl implements ApplicantService {
     private CertificateMapper certificateMapper;
     @Autowired
     private SelfEvaluateMapper selfEvaluateMapper;
+    @Autowired
+    private GenerateIdUtil generateIdUtil;
 
     @Value("${img.basicInformation.url}")
     private String basicInformationUrl;
@@ -67,7 +69,9 @@ public class ApplicantServiceImpl implements ApplicantService {
         }
         Resume resume = new Resume();
         resume.setEmployeeId(IDNumber);
-        resume.setResumeId(GenerateIdUtil.getResumeId(resumeMapper));
+//        resume.setResumeId(GenerateIdUtil.getResumeId(resumeMapper));
+        String resumeId = generateIdUtil.getRandomId(resumeMapper, "RE");
+        resume.setResumeId(resumeId);
         int insert = resumeMapper.insert(resume);
         if(insert != 1){
             log.error("【添加简历】：操作数据库是失败，添加失败");
@@ -172,7 +176,8 @@ public class ApplicantServiceImpl implements ApplicantService {
         //加入数据库
         EducationBackground educationBackground = new EducationBackground();
         BeanUtils.copyProperties(form,educationBackground);
-        String backgroundId = GenerateIdUtil.getBackgroundId(educationBackgroundMapper);
+//        String backgroundId = GenerateIdUtil.getBackgroundId(educationBackgroundMapper);
+        String backgroundId = generateIdUtil.getRandomId(educationBackgroundMapper, "EB");
         educationBackground.setBackgroundId(backgroundId);
         int insert = educationBackgroundMapper.insert(educationBackground);
         if(insert!=1){
@@ -252,7 +257,8 @@ public class ApplicantServiceImpl implements ApplicantService {
         workExperience.setWorkProvePicUrl(stringBuilder.toString());
 
         //生成随机的work_id
-        String workId = GenerateIdUtil.getWorkId(workExperienceMapper);
+//        String workId = GenerateIdUtil.getWorkId(workExperienceMapper);
+        String workId = generateIdUtil.getRandomId(workExperienceMapper, "WE");
         workExperience.setWorkId(workId);
         int insert = workExperienceMapper.insert(workExperience);
         if(insert != 1){
@@ -319,7 +325,8 @@ public class ApplicantServiceImpl implements ApplicantService {
         ProjectExperience projectExperience = new ProjectExperience();
         BeanUtils.copyProperties(form,projectExperience);
         projectExperience.setProjectProvePicUrl(stringBuilder.toString());
-        String projectId = GenerateIdUtil.getProjectId(projectExperienceMapper);
+//        String projectId = GenerateIdUtil.getProjectId(projectExperienceMapper);
+        String projectId = generateIdUtil.getRandomId(projectExperienceMapper, "PE");
         projectExperience.setProjectId(projectId);
         int insert = projectExperienceMapper.insert(projectExperience);
         if(insert != 1){
@@ -362,7 +369,8 @@ public class ApplicantServiceImpl implements ApplicantService {
         //存入数据库
         Skill skill = new Skill();
         BeanUtils.copyProperties(skillForm,skill);
-        String skillId = GenerateIdUtil.getSkillId(skillMapper);
+//        String skillId = GenerateIdUtil.getSkillId(skillMapper);
+        String skillId = generateIdUtil.getRandomId(skillMapper, "SK");
         skill.setSkillId(skillId);
         int insert = skillMapper.insert(skill);
         if(insert != 1){
@@ -413,7 +421,8 @@ public class ApplicantServiceImpl implements ApplicantService {
         BeanUtils.copyProperties(form,certificate);
         certificate.setCertificateProvePicUrl(stringBuilder.toString());
         //获得certificateId
-        String certificateId = GenerateIdUtil.getCertificateId(certificateMapper);
+//        String certificateId = GenerateIdUtil.getCertificateId(certificateMapper);
+        String certificateId = generateIdUtil.getRandomId(certificateMapper, "CE");
         certificate.setCertificateId(certificateId);
         int insert = certificateMapper.insert(certificate);
         if(insert != 1){
@@ -455,7 +464,8 @@ public class ApplicantServiceImpl implements ApplicantService {
         //加入数据库
         SelfEvaluate selfEvaluate = new SelfEvaluate();
         BeanUtils.copyProperties(form,selfEvaluate);
-        String selfEvaluateId = GenerateIdUtil.getSelfEvaluateId(selfEvaluateMapper);
+//        String selfEvaluateId = GenerateIdUtil.getSelfEvaluateId(selfEvaluateMapper);
+        String selfEvaluateId = generateIdUtil.getRandomId(selfEvaluateMapper, "SE");
         selfEvaluate.setSelfEvaluateId(selfEvaluateId);
         int insert = selfEvaluateMapper.insert(selfEvaluate);
         if(insert != 1){
