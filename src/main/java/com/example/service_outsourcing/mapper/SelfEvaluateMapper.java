@@ -14,7 +14,7 @@ public interface SelfEvaluateMapper {
 
     SelfEvaluate selectByPrimaryKey(String selfEvaluateId);
 
-    List<SelfEvaluate> selectByResumeId(String resumeId);
+    SelfEvaluate selectByResumeId(String resumeId);
 
     List<SelfEvaluate> selectAll();
 

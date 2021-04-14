@@ -120,23 +120,25 @@ public class ApplicantServiceImpl implements ApplicantService {
             log.error("【更新基本信息】：简历不存在，更新失败");
             return ResultVOUtil.error(ResultEnum.RESUME_NOT_EXIST_ERROR);
         }
-        //删除原来的图片
-        FileUtil.deleteFile(basicInformation.getPicUrl());
-        String filePath = basicInformationUrl;
-        //获得图片路径
-        StringBuilder stringBuilder = new StringBuilder();
-        //图片名称
-        String fileName = FileUtil.generateFileName(file);
-        //图片url
-        stringBuilder.append(filePath).append(fileName);
-        //上传图片
-        boolean upload = FileUtil.upload(file, filePath, fileName);
-        if(!upload){
-            log.error("【修改基本信息】，文件上传失败，修改失败");
-            return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+        if(!file.isEmpty()){
+            //删除原来的图片
+            FileUtil.deleteFile(basicInformation.getPicUrl());
+            String filePath = basicInformationUrl;
+            //获得图片路径
+            StringBuilder stringBuilder = new StringBuilder();
+            //图片名称
+            String fileName = FileUtil.generateFileName(file);
+            //图片url
+            stringBuilder.append(filePath).append(fileName);
+            //上传图片
+            boolean upload = FileUtil.upload(file, filePath, fileName);
+            if(!upload){
+                log.error("【修改基本信息】，文件上传失败，修改失败");
+                return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+            }
+            basicInformation.setPicUrl(stringBuilder.toString());
         }
         BeanUtils.copyProperties(form,basicInformation);
-        basicInformation.setPicUrl(stringBuilder.toString());
         int update = basicInformationMapper.updateByPrimaryKey(basicInformation);
         if(update != 1){
             log.error("【更新基本信息】：操作数据库失败，更新失败");
@@ -288,6 +290,18 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
+    public ResultVO getWorkExperience(String workId) {
+        WorkExperience workExperience = workExperienceMapper.selectByPrimaryKey(workId);
+        return ResultVOUtil.success(workExperience);
+    }
+
+    @Override
+    public ResultVO getAllWorkExperience(String resumeId) {
+        List<WorkExperience> workExperiences = workExperienceMapper.selectByResumeId(resumeId);
+        return ResultVOUtil.success(workExperiences);
+    }
+
+    @Override
     public ResultVO insertProjectExperience(ProjectExperienceForm form, MultipartFile file) {
         //判断简历是否存在
         Resume resume = resumeMapper.selectByPrimaryKey(form.getResumeId());
@@ -359,6 +373,18 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
+    public ResultVO getProjectExperience(String projectId) {
+        ProjectExperience projectExperience = projectExperienceMapper.selectByPrimaryKey(projectId);
+        return ResultVOUtil.success(projectExperience);
+    }
+
+    @Override
+    public ResultVO getAllProjectExperience(String resumeId) {
+        List<ProjectExperience> projectExperiences = projectExperienceMapper.selectByResumeId(resumeId);
+        return ResultVOUtil.success(projectExperiences);
+    }
+
+    @Override
     public ResultVO insertSkill(SkillForm skillForm) {
         //判断简历是否存在
         Resume resume = resumeMapper.selectByPrimaryKey(skillForm.getResumeId());
@@ -396,6 +422,18 @@ public class ApplicantServiceImpl implements ApplicantService {
             return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
         }
         return ResultVOUtil.success("删除成功");
+    }
+
+    @Override
+    public ResultVO getSkill(String skillId) {
+        Skill skill = skillMapper.selectByPrimaryKey(skillId);
+        return ResultVOUtil.success(skill);
+    }
+
+    @Override
+    public ResultVO getAllSkill(String resumeId) {
+        List<Skill> skills = skillMapper.selectByResumeId(resumeId);
+        return ResultVOUtil.success(skills);
     }
 
     @Override
@@ -455,11 +493,26 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
+    public ResultVO getCertificate(String certificateId) {
+        Certificate certificate = certificateMapper.selectByPrimaryKey(certificateId);
+        return ResultVOUtil.success(certificate);
+    }
+
+    @Override
+    public ResultVO getAllCertificate(String resumeId) {
+        List<Certificate> certificates = certificateMapper.selectByResumeId(resumeId);
+        return ResultVOUtil.success(certificates);
+    }
+
+    @Override
     public ResultVO insertSelfEvaluate(SelfEvaluateForm form) {
         //判断简历是否存在
         if(resumeMapper.selectByPrimaryKey(form.getResumeId()) == null){
             log.error("【添加自我评价】：简历不存在");
             return ResultVOUtil.error(ResultEnum.RESUME_NOT_EXIST_ERROR);
+        }
+        if(selfEvaluateMapper.selectByResumeId(form.getResumeId()) != null){
+            return ResultVOUtil.error(ResultEnum.SELF_EVALUATE_EXIST_ERROR);
         }
         //加入数据库
         SelfEvaluate selfEvaluate = new SelfEvaluate();
@@ -486,6 +539,12 @@ public class ApplicantServiceImpl implements ApplicantService {
             return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
         }
         return ResultVOUtil.success("删除成功");
+    }
+
+    @Override
+    public ResultVO getSelfEvaluate(String selfEvaluateId) {
+        SelfEvaluate selfEvaluate = selfEvaluateMapper.selectByPrimaryKey(selfEvaluateId);
+        return ResultVOUtil.success(selfEvaluate);
     }
 
     @Override
@@ -544,7 +603,7 @@ public class ApplicantServiceImpl implements ApplicantService {
         //获得证书
         List<Certificate> certificates = certificateMapper.selectByResumeId(resumeId);
         //获得自我评价
-        List<SelfEvaluate> selfEvaluates = selfEvaluateMapper.selectByResumeId(resumeId);
+        SelfEvaluate selfEvaluate = selfEvaluateMapper.selectByResumeId(resumeId);
         Map map = new HashMap();
         map.put("basicInformation",basicInformation);
         map.put("educationBackgrounds",educationBackgrounds);
@@ -552,7 +611,7 @@ public class ApplicantServiceImpl implements ApplicantService {
         map.put("projectExperiences",projectExperiences);
         map.put("skills",skills);
         map.put("certificates",certificates);
-        map.put("selfEvaluates",selfEvaluates);
+        map.put("selfEvaluate",selfEvaluate);
         return ResultVOUtil.success(map);
     }
 }

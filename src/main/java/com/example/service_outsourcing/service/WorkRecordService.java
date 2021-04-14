@@ -70,5 +70,12 @@ public interface WorkRecordService {
 	 */
 	ResultVO deleteAttendance(String attendanceId);
 
+	/**
+	 * 浏览单个工作记录
+	 * @param recordId
+	 * @return
+	 */
 	ResultVO browseWorkRecord(String recordId);
+
+	ResultVO getAllWorkRecord();
 }

@@ -140,4 +140,10 @@ public class PersonnelMaterialsController {
 	public ResultVO deletePersonnelMaterial(String materialId){
 		return personnelMaterialsService.deletePersonnelMaterial(materialId);
 	}
+
+	@GetMapping("/all")
+	@ApiOperation("获得所有人事材料")
+	public ResultVO getAllPersonnelMaterial(){
+		return personnelMaterialsService.getAllPersonnelMaterial();
+	}
 }

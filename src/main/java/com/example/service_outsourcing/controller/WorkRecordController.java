@@ -79,4 +79,10 @@ public class WorkRecordController {
 	public ResultVO browseWorkRecord(String recordId){
 		return workRecordService.browseWorkRecord(recordId);
 	}
+
+	@ApiOperation("获得所有工作记录")
+	@GetMapping("/getAllWorkRecord")
+	public ResultVO getAllWorkRecord(){
+		return workRecordService.getAllWorkRecord();
+	}
 }

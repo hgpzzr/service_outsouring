@@ -148,6 +148,13 @@ public interface PersonnelMaterialsService {
 	 */
 	ResultVO browsePersonnelMaterial(String materialId);
 
+	/**
+	 * 删除人事材料
+	 * @param materialId
+	 * @return
+	 */
 	ResultVO deletePersonnelMaterial(String materialId);
+
+	ResultVO getAllPersonnelMaterial();
 
 }

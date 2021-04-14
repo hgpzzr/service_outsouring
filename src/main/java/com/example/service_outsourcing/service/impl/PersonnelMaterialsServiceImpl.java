@@ -89,7 +89,9 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
-		return ResultVOUtil.success("添加成功");
+		Map map = new HashMap();
+		map.put("materialId",materialId);
+		return ResultVOUtil.success(map);
 	}
 
 	@Override
@@ -175,7 +177,9 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
-		return ResultVOUtil.success("添加成功");
+		Map map = new HashMap();
+		map.put("educationId",educationId);
+		return ResultVOUtil.success(map);
 	}
 
 	@Override
@@ -218,7 +222,9 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
-		return ResultVOUtil.success("添加成功");
+		Map map = new HashMap();
+		map.put("socialInfoId",socialInfoId);
+		return ResultVOUtil.success(map);
 	}
 
 	@Override
@@ -263,7 +269,9 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
-		return ResultVOUtil.success("添加成功");
+		Map map = new HashMap();
+		map.put("registerId",registerId);
+		return ResultVOUtil.success(map);
 	}
 
 	@Override
@@ -548,6 +556,12 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			deleteContract(contract.getContractId());
 		}
 		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO getAllPersonnelMaterial() {
+		List<PersonnelMaterial> personnelMaterials = personnelMaterialMapper.selectAll();
+		return ResultVOUtil.success(personnelMaterials);
 	}
 
 }

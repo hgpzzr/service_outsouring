@@ -83,13 +83,30 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 		if(insert != 1){
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
-		return ResultVOUtil.success(recordId);
+		Map map = new HashMap();
+		map.put("recordId",recordId);
+		return ResultVOUtil.success(map);
 	}
 
 	@Override
 	public ResultVO deleteWorkRecord(String recordId) {
 		if(workRecordMapper.selectByPrimaryKey(recordId)==null){
 			return ResultVOUtil.error(ResultEnum.WORK_RECORD_NOT_EXIST_ERROR);
+		}
+		List<Attendance> attendances = attendanceMapper.selectByRecordId(recordId);
+		for (int i = 0; i < attendances.size(); i++) {
+			Attendance attendance = attendances.get(i);
+			deleteAttendance(attendance.getAttendanceId());
+		}
+		List<Achievement> achievements = achievementMapper.selectByRecordId(recordId);
+		for (int i = 0; i < achievements.size(); i++) {
+			Achievement achievement = achievements.get(i);
+			deleteAchievement(achievement.getAchievementId());
+		}
+		List<Evaluate> evaluates = evaluateMapper.selectByRecordId(recordId);
+		for (int i = 0; i < evaluates.size(); i++) {
+			Evaluate evaluate = evaluates.get(i);
+			deleteEvaluate(evaluate.getEvaluateId());
 		}
 		int delete = workRecordMapper.deleteByPrimaryKey(recordId);
 		if(delete != 1){
@@ -112,7 +129,9 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 		if(insert != 1){
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
-		return ResultVOUtil.success(achievementId);
+		Map map = new HashMap();
+		map.put("achievementId",achievementId);
+		return ResultVOUtil.success(map);
 	}
 
 	@Override
@@ -141,7 +160,9 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 		if(insert != 1){
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
-		return ResultVOUtil.success(evaluateId);
+		Map map = new HashMap();
+		map.put("evaluateId",evaluateId);
+		return ResultVOUtil.success(map);
 	}
 
 	@Override
@@ -179,7 +200,9 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 		if(insert != 1){
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
-		return ResultVOUtil.success(attendanceId);
+		Map map = new HashMap();
+		map.put("attendanceId",attendanceId);
+		return ResultVOUtil.success(map);
 	}
 
 	@Override
@@ -206,5 +229,11 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 		map.put("evaluates",evaluates);
 		map.put("attendances",attendances);
 		return ResultVOUtil.success(map);
+	}
+
+	@Override
+	public ResultVO getAllWorkRecord() {
+		List<WorkRecord> workRecords = workRecordMapper.selectAll();
+		return ResultVOUtil.success(workRecords);
 	}
 }

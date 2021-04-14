@@ -44,6 +44,7 @@ public enum  ResultEnum {
     ACHIEVEMENT_NOT_EXIST_ERROR(33,"绩效不存在"),
     EVALUATE_NOT_EXIST_ERROR(34,"评价不存在"),
     ATTENDANCE_NOT_EXIST_ERROR(35,"考勤不存在"),
+    SELF_EVALUATE_EXIST_ERROR(36,"自我评价已存在"),
 
 
 
