@@ -20,6 +20,8 @@ public interface SocialInfoMapper {
 
     SocialInfo selectByPrimaryKey(String socialInfoId);
 
+    List<SocialInfo> selectByMaterialId(String materialId);
+
     List<SocialInfo> selectAll();
 
     int updateByPrimaryKey(Skill socialInfoId);

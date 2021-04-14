@@ -12,6 +12,8 @@ public interface QuitProveMapper {
 
     QuitProve selectByPrimaryKey(String quitId);
 
+    List<QuitProve> selectByMaterialId(String materialId);
+
     List<QuitProve> selectAll();
 
     int updateByPrimaryKey(QuitProve record);

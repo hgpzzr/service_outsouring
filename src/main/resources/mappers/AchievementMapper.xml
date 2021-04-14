@@ -33,4 +33,9 @@
     select achievement_id, record_id, achievement_grade, achievement_evaluate
     from achievement
   </select>
+  <select id="selectByRecordId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select achievement_id, record_id, achievement_grade, achievement_evaluate
+    from achievement
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </select>
 </mapper>

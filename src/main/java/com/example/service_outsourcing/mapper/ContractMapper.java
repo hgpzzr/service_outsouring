@@ -12,6 +12,8 @@ public interface ContractMapper {
 
     Contract selectByPrimaryKey(String contractId);
 
+    List<Contract> selectByMaterialId(String materialId);
+
     List<Contract> selectAll();
 
     int updateByPrimaryKey(Contract record);

@@ -42,6 +42,12 @@
     from evaluate
     where evaluate_id = #{evaluateId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByRecordId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select evaluate_id, record_id, evaluate_time, evaluate_type, evaluate_content, evaluate_person,
+    evaluate_person_relationship, evaluate_name
+    from evaluate
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select evaluate_id, record_id, evaluate_time, evaluate_type, evaluate_content, evaluate_person, 
     evaluate_person_relationship, evaluate_name

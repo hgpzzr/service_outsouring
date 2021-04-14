@@ -12,6 +12,8 @@ public interface EntryRegisterMapper {
 
     EntryRegister selectByPrimaryKey(String registerId);
 
+    List<EntryRegister> selectByMaterialId(String materialId);
+
     List<EntryRegister> selectAll();
 
     int updateByPrimaryKey(EntryRegister record);

@@ -151,5 +151,10 @@ public interface ApplicantService {
      */
     ResultVO deleteResume(String resumeId);
 
+    /**
+     * 浏览简历
+     * @param resumeId
+     * @return
+     */
     ResultVO browseResume(String resumeId);
 }

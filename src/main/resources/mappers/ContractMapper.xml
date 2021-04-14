@@ -5,7 +5,8 @@
     <id column="contract_id" property="contractId" jdbcType="VARCHAR" />
     <result column="material_id" property="materialId" jdbcType="VARCHAR" />
     <result column="contract_file_pic_url" property="contractFilePicUrl" jdbcType="VARCHAR" />
-    <result column="contract_status" property="contractStatus" jdbcType="VARCHAR" />
+    <result column="expiration_time" property="expirationTime" jdbcType="VARCHAR" />
+    <result column="contract_status" property="contractStatus" jdbcType="INTEGER" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from contract
@@ -13,24 +14,30 @@
   </delete>
   <insert id="insert" parameterType="com.example.service_outsourcing.entity.Contract" >
     insert into contract (contract_id, material_id, contract_file_pic_url, 
-      contract_status)
+      contract_status,expiration_time)
     values (#{contractId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{contractFilePicUrl,jdbcType=VARCHAR}, 
-      #{contractStatus,jdbcType=VARCHAR})
+      #{contractStatus,jdbcType=INTEGER},#{expirationTime,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.Contract" >
     update contract
     set material_id = #{materialId,jdbcType=VARCHAR},
       contract_file_pic_url = #{contractFilePicUrl,jdbcType=VARCHAR},
-      contract_status = #{contractStatus,jdbcType=VARCHAR}
+      contract_status = #{contractStatus,jdbcType=INTEGER},
+      expiration_time = #{expirationTime,jdbcType=INTEGER}
     where contract_id = #{contractId,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select contract_id, material_id, contract_file_pic_url, contract_status
+    select contract_id, material_id, contract_file_pic_url, contract_status, expiration_time
     from contract
     where contract_id = #{contractId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByMaterialId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select contract_id, material_id, contract_file_pic_url, contract_status, expiration_time
+    from contract
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select contract_id, material_id, contract_file_pic_url, contract_status
+    select contract_id, material_id, contract_file_pic_url, contract_status, expiration_time
     from contract
   </select>
 </mapper>

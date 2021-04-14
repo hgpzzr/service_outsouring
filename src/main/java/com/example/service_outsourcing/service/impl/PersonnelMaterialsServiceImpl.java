@@ -3,20 +3,27 @@ package com.example.service_outsourcing.service.impl;
 import com.example.service_outsourcing.VO.ResultVO;
 import com.example.service_outsourcing.entity.*;
 import com.example.service_outsourcing.enums.ResultEnum;
-import com.example.service_outsourcing.form.IDForm;
-import com.example.service_outsourcing.form.SocialInfoForm;
+import com.example.service_outsourcing.form.*;
 import com.example.service_outsourcing.mapper.*;
 import com.example.service_outsourcing.service.PersonnelMaterialsService;
 import com.example.service_outsourcing.utils.FileUtil;
 import com.example.service_outsourcing.utils.GenerateIdUtil;
 import com.example.service_outsourcing.utils.ResultVOUtil;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.NotWritablePropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author hgp
@@ -45,8 +52,6 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 	@Autowired
 	private ContractMapper contractMapper;
 	@Autowired
-	private WorkRecordMapper workRecordMapper;
-	@Autowired
 	private EmployeeMapper employeeMapper;
 
 	@Value("${img.ID.url}")
@@ -57,6 +62,14 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 	private String socialInfoUrl;
 	@Value("${img.entryRegister.url}")
 	private String registerUrl;
+	@Value("${img.physicalExamination.url}")
+	private String physicalExaminationUrl;
+	@Value("${img.quitProve.url}")
+	private String quitProveUrl;
+	@Value("${img.proveFile.url}")
+	private String proveFileUrl;
+	@Value("${img.contract.url}")
+	private String contractUrl;
 
 	@Override
 	public ResultVO insertPersonnelMaterial(String employeeId) {
@@ -66,8 +79,9 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		}
 		String materialId = GenerateIdUtil.getMaterialId(personnelMaterialMapper);
 		PersonnelMaterial personnelMaterial = new PersonnelMaterial();
-		personnelMaterial.setEmployeeId(materialId);
+		personnelMaterial.setMaterialId(materialId);
 		personnelMaterial.setEmployeeId(employeeId);
+		log.info("personnelMaterial:{}",personnelMaterial.toString());
 		int insert = personnelMaterialMapper.insert(personnelMaterial);
 		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
@@ -80,6 +94,14 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		if (personnelMaterialMapper.selectByPrimaryKey(form.getMaterialId()) == null) {
 			log.error("【添加身份证】：人事材料不存在");
 			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
+		}
+		// 判断过期时间是否在当前时间之前
+		Date date = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String format = simpleDateFormat.format(date);
+		log.info("format:{}",format);
+		if(format.compareTo(form.getOverdueTime()) >= 0){
+			return ResultVOUtil.error(ResultEnum.DATE_EARLY_ERROR);
 		}
 		// 上传文件
 		// 获得url
@@ -101,15 +123,21 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		identifyCard.setIdentityCardId(identifyCardId);
 		identifyCard.setVerificationStatus(1);
 		identifyCard.setIdentityCardPicUrl(url.toString());
-		return ResultVOUtil.success("添加成功");
+		identifyCardMapper.insert(identifyCard);
+		Map map = new HashMap();
+		map.put("identifyCardId",identifyCardId);
+		return ResultVOUtil.success(map);
 	}
 
 	@Override
 	public ResultVO deleteID(String identifyCardId) {
-		if (identifyCardMapper.selectByPrimaryKey(identifyCardId) == null) {
+		IdentifyCard identifyCard = identifyCardMapper.selectByPrimaryKey(identifyCardId);
+		if (identifyCard == null) {
 			log.error("【删除身份证】：身份证不存在");
 			return ResultVOUtil.error(ResultEnum.ID_NOT_EXIST_ERROR);
 		}
+		// 删除图片
+		FileUtil.deleteFile(identifyCard.getIdentityCardPicUrl());
 		int delete = identifyCardMapper.deleteByPrimaryKey(identifyCardId);
 		if (delete != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
@@ -147,9 +175,11 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 
 	@Override
 	public ResultVO deleteEducationProve(String educationId) {
-		if (educationProveMapper.selectByPrimaryKey(educationId) == null) {
+		EducationProve educationProve = educationProveMapper.selectByPrimaryKey(educationId);
+		if (educationProve == null) {
 			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
 		}
+		FileUtil.deleteFile(educationProve.getEducationPicUrl());
 		int delete = educationProveMapper.deleteByPrimaryKey(educationId);
 		if (delete != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
@@ -174,12 +204,12 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 
 		//存入数据库
 		SocialInfo socialInfo = new SocialInfo();
-		BeanUtils.copyProperties(form,socialInfo);
+		BeanUtils.copyProperties(form, socialInfo);
 		String socialInfoId = GenerateIdUtil.getSocialInfoId(socialInfoMapper);
 		socialInfo.setSocialInfoId(socialInfoId);
 		socialInfo.setSupportingMaterialUrl(url.toString());
 		int insert = socialInfoMapper.insert(socialInfo);
-		if(insert != 1){
+		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("添加成功");
@@ -187,11 +217,14 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 
 	@Override
 	public ResultVO deleteSocialInfo(String socialInfoId) {
-		if(socialInfoMapper.selectByPrimaryKey(socialInfoId)==null){
+		SocialInfo socialInfo = socialInfoMapper.selectByPrimaryKey(socialInfoId);
+		if (socialInfo == null) {
 			return ResultVOUtil.error(ResultEnum.SOCIAL_INFO_NOT_EXIST_ERROR);
 		}
+		// 删除图片
+		FileUtil.deleteFile(socialInfo.getSupportingMaterialUrl());
 		int delete = socialInfoMapper.deleteByPrimaryKey(socialInfoId);
-		if(delete != 1){
+		if (delete != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("删除成功");
@@ -199,14 +232,14 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 
 	@Override
 	public ResultVO insertEntryRegister(String materialId, MultipartFile file) {
-		if(personnelMaterialMapper.selectByPrimaryKey(materialId)==null){
+		if (personnelMaterialMapper.selectByPrimaryKey(materialId) == null) {
 			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
 		}
 		//上传文件
 		String filePath = registerUrl;
 		String fileName = FileUtil.generateFileName(file);
 		boolean upload = FileUtil.upload(file, filePath, fileName);
-		if(!upload){
+		if (!upload) {
 			return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
 		}
 		StringBuilder url = new StringBuilder();
@@ -220,7 +253,7 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		entryRegister.setRegisterPicUrl(url.toString());
 		entryRegister.setRegisterPassStatus(1);
 		int insert = entryRegisterMapper.insert(entryRegister);
-		if(insert != 1){
+		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("添加成功");
@@ -228,12 +261,280 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 
 	@Override
 	public ResultVO deleteEntryRegister(String registerId) {
-		if(entryRegisterMapper.selectByPrimaryKey(registerId)==null){
+		EntryRegister entryRegister = entryRegisterMapper.selectByPrimaryKey(registerId);
+		if (entryRegister == null) {
 			return ResultVOUtil.error(ResultEnum.ENTRY_REGISTER_NOT_EXIST_ERROR);
 		}
+		// 删除图片
+		FileUtil.deleteFile(entryRegister.getRegisterPicUrl());
 		int delete = entryRegisterMapper.deleteByPrimaryKey(registerId);
+		if (delete != 1) {
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO insertPhysicalExamination(String materialId, MultipartFile file) {
+		if (personnelMaterialMapper.selectByPrimaryKey(materialId) == null) {
+			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
+		}
+		// 上传图片
+		String filePath = physicalExaminationUrl;
+		String fileName = FileUtil.generateFileName(file);
+		boolean upload = FileUtil.upload(file, filePath, fileName);
+		if (!upload) {
+			return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+		}
+		StringBuilder url = new StringBuilder();
+		url.append(filePath).append(fileName);
+
+		// 存入数据库
+		EntryPhysicalExamination physicalExamination= new EntryPhysicalExamination();
+		physicalExamination.setMaterialId(materialId);
+		String physicalExaminationId = GenerateIdUtil.getPhysicalExaminationId(entryPhysicalExaminationMapper);
+		physicalExamination.setPhysicalExaminationId(physicalExaminationId);
+		physicalExamination.setPhysicalExaminationStatus(1);
+		physicalExamination.setPhysicalExaminationPicUrl(url.toString());
+		int insert = entryPhysicalExaminationMapper.insert(physicalExamination);
+		if(insert != 1){
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		Map map = new HashMap();
+		map.put("message","添加成功");
+		map.put("physicalExaminationId",physicalExaminationId);
+		return ResultVOUtil.success(map);
+	}
+
+	@Override
+	public ResultVO deletePhysicalExamination(String examinationId) {
+		EntryPhysicalExamination physicalExamination = entryPhysicalExaminationMapper.selectByPrimaryKey(examinationId);
+		if(physicalExamination==null){
+			return ResultVOUtil.error(ResultEnum.PHYSICAL_EXAMINATION_NOT_EXIST_ERROR);
+		}
+		String physicalExaminationPicUrl = physicalExamination.getPhysicalExaminationPicUrl();
+		// 删除图片
+		FileUtil.deleteFile(physicalExaminationPicUrl);
+		int delete = entryPhysicalExaminationMapper.deleteByPrimaryKey(examinationId);
 		if(delete != 1){
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO insertQuitProve(String materialId, MultipartFile file) {
+		if (personnelMaterialMapper.selectByPrimaryKey(materialId) == null) {
+			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
+		}
+		// 上传图片
+		String filePath = quitProveUrl;
+		String fileName = FileUtil.generateFileName(file);
+		boolean upload = FileUtil.upload(file, filePath, fileName);
+		if(!upload){
+			return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+		}
+		StringBuilder url = new StringBuilder();
+		url.append(filePath).append(fileName);
+		// 存入数据库
+		QuitProve quitProve = new QuitProve();
+		quitProve.setMaterialId(materialId);
+		String quitId = GenerateIdUtil.getQuitId(quitProveMapper);
+		quitProve.setQuitId(quitId);
+		quitProve.setQuitFilePicUrl(url.toString());
+		quitProve.setQuitStatus(1);
+		int insert = quitProveMapper.insert(quitProve);
+		if(insert != 1){
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		Map map = new HashMap();
+		map.put("message","添加成功");
+		map.put("quitId",quitId);
+		return ResultVOUtil.success(map);
+	}
+
+	@Override
+	public ResultVO deleteQuitProve(String quitId) {
+		QuitProve quitProve = quitProveMapper.selectByPrimaryKey(quitId);
+		if(quitProve==null){
+			return ResultVOUtil.error(ResultEnum.QUIT_PROVE_NOT_EXIST_ERROR);
+		}
+		String quitFilePicUrl = quitProve.getQuitFilePicUrl();
+		// 删除图片
+		FileUtil.deleteFile(quitFilePicUrl);
+		int delete = quitProveMapper.deleteByPrimaryKey(quitId);
+		if(delete != 1){
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO insertProveFile(ProveFileForm proveFileForm,MultipartFile file) {
+		if(personnelMaterialMapper.selectByPrimaryKey(proveFileForm.getMaterialId())==null){
+			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
+		}
+		// 判断项目是否已存在证明文件
+		if(proveFileMapper.selectByProjectId(proveFileForm.getProjectId())!=null){
+			return ResultVOUtil.error(ResultEnum.PROJECT_PROVE_FILE_EXIST_ERROR);
+		}
+		// 上传文件
+		String filePath = proveFileUrl;
+		String fileName = FileUtil.generateFileName(file);
+		boolean upload = FileUtil.upload(file, filePath, fileName);
+		if(!upload){
+			return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+		}
+		StringBuilder url = new StringBuilder();
+		url.append(filePath).append(fileName);
+
+		// 存入数据库
+		ProveFile proveFile = new ProveFile();
+		BeanUtils.copyProperties(proveFileForm,proveFile);
+		proveFile.setProveFilePicUrl(url.toString());
+		String proveId = GenerateIdUtil.getProveId(proveFileMapper);
+		proveFile.setProveId(proveId);
+		proveFile.setProveStatus(1);
+		int insert = proveFileMapper.insert(proveFile);
+		if(insert != 1){
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		Map map = new HashMap();
+		map.put("message","添加成功");
+		map.put("proveId",proveId);
+		return ResultVOUtil.success(map);
+	}
+
+	@Override
+	public ResultVO deleteProveFile(String proveId) {
+		ProveFile proveFile = proveFileMapper.selectByPrimaryKey(proveId);
+		if(proveFile==null){
+			return ResultVOUtil.error(ResultEnum.PROVE_FILE_NOT_EXIST_ERROR);
+		}
+		// 删除图片
+		FileUtil.deleteFile(proveFile.getProveFilePicUrl());
+		// 删除数据库记录
+		int delete = proveFileMapper.deleteByPrimaryKey(proveId);
+		if(delete != 1){
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO insertContract(ContractForm form, MultipartFile file) {
+		if(personnelMaterialMapper.selectByPrimaryKey(form.getMaterialId())==null){
+			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
+		}
+		// 上传图片
+		String filePath = contractUrl;
+		String fileName = FileUtil.generateFileName(file);
+		boolean upload = FileUtil.upload(file, filePath, fileName);
+		if(!upload){
+			return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+		}
+		StringBuilder url = new StringBuilder();
+		url.append(filePath).append(fileName);
+
+		// 存入数据库
+		Contract contract = new Contract();
+		BeanUtils.copyProperties(form,contract);
+		contract.setContractFilePicUrl(url.toString());
+		contract.setContractStatus(1);
+		String contractId = GenerateIdUtil.getContractId(contractMapper);
+		contract.setContractId(contractId);
+		int insert = contractMapper.insert(contract);
+		if(insert != 1){
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		Map map = new HashMap();
+		map.put("message","添加成功");
+		map.put("contractId",contractId);
+		return ResultVOUtil.success(map);
+	}
+
+	@Override
+	public ResultVO deleteContract(String contractId) {
+		Contract contract = contractMapper.selectByPrimaryKey(contractId);
+		if(contract == null){
+			return ResultVOUtil.error(ResultEnum.CONTRACT_NOT_EXIST_ERROR);
+		}
+		// 删除图片
+		FileUtil.deleteFile(contract.getContractFilePicUrl());
+		// 删除数据库记录
+		int delete = contractMapper.deleteByPrimaryKey(contractId);
+		if(delete != 1){
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO browsePersonnelMaterial(String materialId) {
+		PersonnelMaterial personnelMaterial = personnelMaterialMapper.selectByPrimaryKey(materialId);
+		List<IdentifyCard> identifyCards = identifyCardMapper.selectByMaterialId(materialId);
+		List<EducationProve> educationProves = educationProveMapper.selectByMaterialId(materialId);
+		List<SocialInfo> socialInfos = socialInfoMapper.selectByMaterialId(materialId);
+		List<EntryRegister> entryRegisters = entryRegisterMapper.selectByMaterialId(materialId);
+		List<EntryPhysicalExamination> entryPhysicalExaminations = entryPhysicalExaminationMapper.selectByMaterialId(materialId);
+		List<QuitProve> quitProves = quitProveMapper.selectByMaterialId(materialId);
+		List<ProveFile> proveFiles = proveFileMapper.selectByMaterialId(materialId);
+		List<Contract> contracts = contractMapper.selectByMaterialId(materialId);
+		Map map = new HashMap();
+		map.put("personnelMaterial",personnelMaterial);
+		map.put("identifyCards",identifyCards);
+		map.put("educationProves",educationProves);
+		map.put("socialInfos",socialInfos);
+		map.put("entryRegisters",entryRegisters);
+		map.put("entryPhysicalExaminations",entryPhysicalExaminations);
+		map.put("quitProves",quitProves);
+		map.put("proveFiles",proveFiles);
+		map.put("contracts",contracts);
+		return ResultVOUtil.success(map);
+	}
+
+	@Override
+	public ResultVO deletePersonnelMaterial(String materialId) {
+		PersonnelMaterial personnelMaterial = personnelMaterialMapper.selectByPrimaryKey(materialId);
+		List<IdentifyCard> identifyCards = identifyCardMapper.selectByMaterialId(materialId);
+		for (int i = 0; i < identifyCards.size(); i++) {
+			IdentifyCard identifyCard = identifyCards.get(i);
+			deleteID(identifyCard.getIdentityCardId());
+		}
+		List<EducationProve> educationProves = educationProveMapper.selectByMaterialId(materialId);
+		for (int i = 0; i < educationProves.size(); i++) {
+			EducationProve educationProve = educationProves.get(i);
+			deleteEducationProve(educationProve.getEducationId());
+		}
+		List<SocialInfo> socialInfos = socialInfoMapper.selectByMaterialId(materialId);
+		for (int i = 0; i < socialInfos.size(); i++) {
+			SocialInfo socialInfo = socialInfos.get(i);
+			deleteSocialInfo(socialInfo.getSocialInfoId());
+		}
+		List<EntryRegister> entryRegisters = entryRegisterMapper.selectByMaterialId(materialId);
+		for (int i = 0; i < entryRegisters.size(); i++) {
+			EntryRegister entryRegister = entryRegisters.get(i);
+			deleteEntryRegister(entryRegister.getRegisterId());
+		}
+		List<EntryPhysicalExamination> entryPhysicalExaminations = entryPhysicalExaminationMapper.selectByMaterialId(materialId);
+		for (int i = 0; i < entryPhysicalExaminations.size(); i++) {
+			EntryPhysicalExamination physicalExamination = entryPhysicalExaminations.get(i);
+			deletePhysicalExamination(physicalExamination.getPhysicalExaminationId());
+		}
+		List<QuitProve> quitProves = quitProveMapper.selectByMaterialId(materialId);
+		for (int i = 0; i < quitProves.size(); i++) {
+			QuitProve quitProve = quitProves.get(i);
+			deleteQuitProve(quitProve.getQuitId());
+		}
+		List<ProveFile> proveFiles = proveFileMapper.selectByMaterialId(materialId);
+		for (int i = 0; i < proveFiles.size(); i++) {
+			ProveFile proveFile = proveFiles.get(i);
+			deleteProveFile(proveFile.getProveId());
+		}
+		List<Contract> contracts = contractMapper.selectByMaterialId(materialId);
+		for (int i = 0; i < contracts.size(); i++) {
+			Contract contract = contracts.get(i);
+			deleteContract(contract.getContractId());
 		}
 		return ResultVOUtil.success("删除成功");
 	}

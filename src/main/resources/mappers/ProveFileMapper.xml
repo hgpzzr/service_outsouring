@@ -31,6 +31,16 @@
     from prove_file
     where prove_id = #{proveId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByProjectId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select prove_id, material_id, project_id, prove_file_pic_url, prove_status
+    from prove_file
+    where project_id = #{projectId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByMaterialId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select prove_id, material_id, project_id, prove_file_pic_url, prove_status
+    from prove_file
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select prove_id, material_id, project_id, prove_file_pic_url, prove_status
     from prove_file

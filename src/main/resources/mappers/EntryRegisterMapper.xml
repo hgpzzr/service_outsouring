@@ -29,6 +29,11 @@
     from entry_register
     where register_id = #{registerId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByMaterialId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select register_id, material_id, register_pic_url, register_pass_status
+    from entry_register
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select register_id, material_id, register_pic_url, register_pass_status
     from entry_register

@@ -14,5 +14,7 @@ public interface AchievementMapper {
 
     List<Achievement> selectAll();
 
+    List<Achievement> selectByRecordId(String recordId);
+
     int updateByPrimaryKey(Achievement record);
 }

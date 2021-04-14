@@ -8,7 +8,7 @@
         <result column="begin_time" property="beginTime" jdbcType="VARCHAR" />
         <result column="end_time" property="endTime" jdbcType="VARCHAR" />
         <result column="post_id" property="postId" jdbcType="VARCHAR" />
-        <result column="work_status" property="workStatus" jdbcType="VARCHAR" />
+        <result column="work_status" property="workStatus" jdbcType="INTEGER" />
     </resultMap>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from work_record
@@ -19,11 +19,11 @@
       begin_time, end_time, post_id, work_status)
     values (#{recordId,jdbcType=VARCHAR}, #{employeeId,jdbcType=VARCHAR}, #{organizationId,jdbcType=VARCHAR},
       #{beginTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{postId,jdbcType=VARCHAR},
-      #{workStatus,jdbcType=VARCHAR})
+      #{workStatus,jdbcType=INTEGER})
   </insert>
     <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.WorkRecord" >
     update work_record
-    set work_status = #{workStatus,jdbcType=VARCHAR},
+    set work_status = #{workStatus,jdbcType=INTEGER},
       employee_id = #{employeeId,jdbcType=VARCHAR},
       begin_time = #{beginTime,jdbcType=VARCHAR},
       end_time = #{endTime,jdbcType=VARCHAR},
@@ -39,5 +39,10 @@
     <select id="selectAll" resultMap="BaseResultMap" >
     select *
     from work_record
+  </select>
+    <select id="selectByEmployeeId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select *
+    from work_record
+    where employee_id = #{employeeId,jdbcType=VARCHAR}
   </select>
 </mapper>

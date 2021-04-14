@@ -193,7 +193,7 @@ public class GenerateIdUtil {
     }
 
     /**
-     * 随机生成不重复的materialId
+     * 随机生成不重复的identifyCardId
      * @param identifyCardMapper
      * @return
      */
@@ -211,7 +211,7 @@ public class GenerateIdUtil {
     }
 
     /**
-     * 随机生成不重复的materialId
+     * 随机生成不重复的educationId
      * @param educationProveMapper
      * @return
      */
@@ -229,7 +229,7 @@ public class GenerateIdUtil {
     }
 
     /**
-     * 随机生成不重复的materialId
+     * 随机生成不重复的socialInfoId
      * @param socialInfoMapper
      * @return
      */
@@ -247,7 +247,7 @@ public class GenerateIdUtil {
     }
 
     /**
-     * 随机生成不重复的materialId
+     * 随机生成不重复的registerId
      * @param entryRegisterMapper
      * @return
      */
@@ -260,6 +260,150 @@ public class GenerateIdUtil {
             int intNum = randomNum +10000000;
             num = String.valueOf(intNum);
         }while (entryRegisterMapper.selectByPrimaryKey(num) != null);
+        stringBuilder.append(num);
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 随机生成不重复的physicalExaminationId
+     * @param entryPhysicalExaminationMapper
+     * @return
+     */
+    public static String getPhysicalExaminationId(EntryPhysicalExaminationMapper entryPhysicalExaminationMapper){
+        String num;
+        StringBuilder stringBuilder = new StringBuilder("PE");
+        do{
+            Random random= new Random();
+            int randomNum = random.nextInt(89999999);
+            int intNum = randomNum +10000000;
+            num = String.valueOf(intNum);
+        }while (entryPhysicalExaminationMapper.selectByPrimaryKey(num) != null);
+        stringBuilder.append(num);
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 随机生成不重复的quitId
+     * @param quitProveMapper
+     * @return
+     */
+    public static String getQuitId(QuitProveMapper quitProveMapper){
+        String num;
+        StringBuilder stringBuilder = new StringBuilder("QP");
+        do{
+            Random random= new Random();
+            int randomNum = random.nextInt(89999999);
+            int intNum = randomNum +10000000;
+            num = String.valueOf(intNum);
+        }while (quitProveMapper.selectByPrimaryKey(num) != null);
+        stringBuilder.append(num);
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 随机生成不重复的proveId
+     * @param proveFileMapper
+     * @return
+     */
+    public static String getProveId(ProveFileMapper proveFileMapper){
+        String num;
+        StringBuilder stringBuilder = new StringBuilder("QP");
+        do{
+            Random random= new Random();
+            int randomNum = random.nextInt(89999999);
+            int intNum = randomNum +10000000;
+            num = String.valueOf(intNum);
+        }while (proveFileMapper.selectByPrimaryKey(num) != null);
+        stringBuilder.append(num);
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 随机生成不重复的contractId
+     * @param contractMapper
+     * @return
+     */
+    public static String getContractId(ContractMapper contractMapper){
+        String num;
+        StringBuilder stringBuilder = new StringBuilder("CO");
+        do{
+            Random random= new Random();
+            int randomNum = random.nextInt(89999999);
+            int intNum = randomNum +10000000;
+            num = String.valueOf(intNum);
+        }while (contractMapper.selectByPrimaryKey(num) != null);
+        stringBuilder.append(num);
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 随机生成不重复的recordId
+     * @param workRecordMapper
+     * @return
+     */
+    public static String getRecordId(WorkRecordMapper workRecordMapper){
+        String num;
+        StringBuilder stringBuilder = new StringBuilder("WR");
+        do{
+            Random random= new Random();
+            int randomNum = random.nextInt(89999999);
+            int intNum = randomNum +10000000;
+            num = String.valueOf(intNum);
+        }while (workRecordMapper.selectByPrimaryKey(num) != null);
+        stringBuilder.append(num);
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 随机生成不重复的recordId
+     * @param achievementMapper
+     * @return
+     */
+    public static String getAchievementId(AchievementMapper achievementMapper){
+        String num;
+        StringBuilder stringBuilder = new StringBuilder("AC");
+        do{
+            Random random= new Random();
+            int randomNum = random.nextInt(89999999);
+            int intNum = randomNum +10000000;
+            num = String.valueOf(intNum);
+        }while (achievementMapper.selectByPrimaryKey(num) != null);
+        stringBuilder.append(num);
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 随机生成不重复的recordId
+     * @param evaluateMapper
+     * @return
+     */
+    public static String getEvaluateId(EvaluateMapper evaluateMapper){
+        String num;
+        StringBuilder stringBuilder = new StringBuilder("EV");
+        do{
+            Random random= new Random();
+            int randomNum = random.nextInt(89999999);
+            int intNum = randomNum +10000000;
+            num = String.valueOf(intNum);
+        }while (evaluateMapper.selectByPrimaryKey(num) != null);
+        stringBuilder.append(num);
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 随机生成不重复的recordId
+     * @param attendanceMapper
+     * @return
+     */
+    public static String getAttendanceId(AttendanceMapper attendanceMapper){
+        String num;
+        StringBuilder stringBuilder = new StringBuilder("AT");
+        do{
+            Random random= new Random();
+            int randomNum = random.nextInt(89999999);
+            int intNum = randomNum +10000000;
+            num = String.valueOf(intNum);
+        }while (attendanceMapper.selectByPrimaryKey(num) != null);
         stringBuilder.append(num);
         return stringBuilder.toString();
     }

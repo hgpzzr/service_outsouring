@@ -12,6 +12,8 @@ public interface AttendanceMapper {
 
     Attendance selectByPrimaryKey(String attendanceId);
 
+    List<Attendance> selectByRecordId(String recordId);
+
     List<Attendance> selectAll();
 
     int updateByPrimaryKey(Attendance record);

@@ -14,5 +14,7 @@ public interface IdentifyCardMapper {
 
     List<IdentifyCard> selectAll();
 
+    List<IdentifyCard> selectByMaterialId(String materialId);
+
     int updateByPrimaryKey(IdentifyCard record);
 }

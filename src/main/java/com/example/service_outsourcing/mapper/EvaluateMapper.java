@@ -12,6 +12,8 @@ public interface EvaluateMapper {
 
     Evaluate selectByPrimaryKey(String evaluateId);
 
+    List<Evaluate> selectByRecordId(String recordId);
+
     List<Evaluate> selectAll();
 
     int updateByPrimaryKey(Evaluate record);
