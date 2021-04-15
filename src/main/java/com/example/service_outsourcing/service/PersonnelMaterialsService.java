@@ -37,6 +37,20 @@ public interface PersonnelMaterialsService {
 	ResultVO deleteID(String identifyCardId);
 
 	/**
+	 * 获得单个身份证
+	 * @param identifyCardId
+	 * @return
+	 */
+	ResultVO getID(String identifyCardId);
+
+	/**
+	 * 获得一份人事材料下的所有身份证
+	 * @param materialId
+	 * @return
+	 */
+	ResultVO getAllID(String materialId);
+
+	/**
 	 * 添加学历证明
 	 * @param materialId
 	 * @param file
@@ -50,6 +64,20 @@ public interface PersonnelMaterialsService {
 	 * @return
 	 */
 	ResultVO deleteEducationProve(String educationId);
+
+	/**
+	 * 获得单个教育证明
+	 * @param educationId
+	 * @return
+	 */
+	ResultVO getEducationProve(String educationId);
+
+	/**
+	 * 获得一份人事材料下的所有教育证明
+	 * @param materialId
+	 * @return
+	 */
+	ResultVO getAllEducationProve(String materialId);
 
 	/**
 	 * 添加社会信息
@@ -67,6 +95,20 @@ public interface PersonnelMaterialsService {
 	ResultVO deleteSocialInfo(String socialInfoId);
 
 	/**
+	 * 获得单个社会信息
+	 * @param socialInfoId
+	 * @return
+	 */
+	ResultVO getSocialInfo(String socialInfoId);
+
+	/**
+	 * 获得一份人事材料的所有社会信息
+	 * @param materialId
+	 * @return
+	 */
+	ResultVO getAllSocialInfo(String materialId);
+
+	/**
 	 * 添加入职登记
 	 * @param materialId
 	 * @param file
@@ -80,6 +122,20 @@ public interface PersonnelMaterialsService {
 	 * @return
 	 */
 	ResultVO deleteEntryRegister(String registerId);
+
+	/**
+	 * 获得单个入职登记
+	 * @param registerId
+	 * @return
+	 */
+	ResultVO getEntryRegister(String registerId);
+
+	/**
+	 * 获得一份人事材料的所有入职登记
+	 * @param materialId
+	 * @return
+	 */
+	ResultVO getAllEntryRegister(String materialId);
 
 	/**
 	 * 添加入职体检
@@ -97,6 +153,20 @@ public interface PersonnelMaterialsService {
 	ResultVO deletePhysicalExamination(String examinationId);
 
 	/**
+	 * 获得单个入职体检
+	 * @param examinationId
+	 * @return
+	 */
+	ResultVO getPhysicalExamination(String examinationId);
+
+	/**
+	 * 获得一份人事材料的所有入职体检
+	 * @param materialId
+	 * @return
+	 */
+	ResultVO getAllPhysicalExamination(String materialId);
+
+	/**
 	 * 添加离职证明
 	 * @param materialId
 	 * @param file
@@ -110,6 +180,20 @@ public interface PersonnelMaterialsService {
 	 * @return
 	 */
 	ResultVO deleteQuitProve(String quitId);
+
+	/**
+	 * 获得单个离职证明
+	 * @param quitId
+	 * @return
+	 */
+	ResultVO getQuitProve(String quitId);
+
+	/**
+	 * 获得一份人事材料的所有离职证明
+	 * @param materialId
+	 * @return
+	 */
+	ResultVO getAllQuitProve(String materialId);
 
 	/**
 	 * 添加证明材料
@@ -127,6 +211,20 @@ public interface PersonnelMaterialsService {
 	ResultVO deleteProveFile(String proveId);
 
 	/**
+	 * 获得单个证明材料
+	 * @param proveId
+	 * @return
+	 */
+	ResultVO getProveFile(String proveId);
+
+	/**
+	 * 获得一份人事材料的所有证明材料
+	 * @param materialId
+	 * @return
+	 */
+	ResultVO getAllProveFile(String materialId);
+
+	/**
 	 * 添加合同
 	 * @param form
 	 * @param file
@@ -140,6 +238,20 @@ public interface PersonnelMaterialsService {
 	 * @return
 	 */
 	ResultVO deleteContract(String contractId);
+
+	/**
+	 * 获得单个合同
+	 * @param contractId
+	 * @return
+	 */
+	ResultVO getContract(String contractId);
+
+	/**
+	 * 获得一份人事材料的所有合同
+	 * @param materialId
+	 * @return
+	 */
+	ResultVO getAllContract(String materialId);
 
 	/**
 	 * 浏览单个人事材料

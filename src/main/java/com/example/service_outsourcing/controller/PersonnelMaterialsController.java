@@ -45,6 +45,18 @@ public class PersonnelMaterialsController {
 		return personnelMaterialsService.deleteID(identifyCardId);
 	}
 
+	@GetMapping("/getID")
+	@ApiOperation("获得一张身份证")
+	public ResultVO getId(String identifyCardId){
+		return personnelMaterialsService.getID(identifyCardId);
+	}
+
+	@GetMapping("/getAllID")
+	@ApiOperation("获得一份人事材料下的所有身份证")
+	public ResultVO getAllID(String materialId){
+		return personnelMaterialsService.getAllID(materialId);
+	}
+
 	@PostMapping("/insertEducationProve")
 	@ApiOperation("添加学历证明")
 	public ResultVO insertEducationProve(String materialId,@RequestParam("file") MultipartFile file){
@@ -55,6 +67,18 @@ public class PersonnelMaterialsController {
 	@ApiOperation("删除学历证明")
 	public ResultVO deleteEducationProve(String educationId){
 		return personnelMaterialsService.deleteEducationProve(educationId);
+	}
+
+	@GetMapping("/getEducationProve")
+	@ApiOperation("获得单个学历证明")
+	public ResultVO getEducationProve(String educationId){
+		return personnelMaterialsService.getEducationProve(educationId);
+	}
+
+	@GetMapping("/getAllEducationProve")
+	@ApiOperation("获得一份人事材料下的所有学历证明")
+	public ResultVO getAllEducationProve(String materialId){
+		return personnelMaterialsService.getAllEducationProve(materialId);
 	}
 
 	@PostMapping("/insertSocialInfo")
@@ -69,6 +93,18 @@ public class PersonnelMaterialsController {
 		return personnelMaterialsService.deleteSocialInfo(socialInfoId);
 	}
 
+	@GetMapping("/getSocialInfo")
+	@ApiOperation("获得单个社会信息")
+	public ResultVO getSocialInfo(String socialInfoId){
+		return personnelMaterialsService.getSocialInfo(socialInfoId);
+	}
+
+	@GetMapping("/getAllSocialInfo")
+	@ApiOperation("获得一份人事材料下的所有社会信息")
+	public ResultVO getAllSocialInfo(String materialId){
+		return personnelMaterialsService.getAllSocialInfo(materialId);
+	}
+
 	@PostMapping("/insertEntryRegister")
 	@ApiOperation("添加入职登记")
 	public ResultVO insertEntryRegister(String materialId,@RequestParam("file") MultipartFile file){
@@ -79,6 +115,18 @@ public class PersonnelMaterialsController {
 	@ApiOperation("删除入职登记")
 	public ResultVO deleteEntryRegister(String registerId){
 		return personnelMaterialsService.deleteEntryRegister(registerId);
+	}
+
+	@GetMapping("/getEntryRegister")
+	@ApiOperation("获得单个入职登记")
+	public ResultVO getEntryRegister(String registerId){
+		return personnelMaterialsService.getEntryRegister(registerId);
+	}
+
+	@GetMapping("/getAllEntryRegister")
+	@ApiOperation("获得一份人事材料下的所有入职登记")
+	public ResultVO getAllEntryRegister(String materialId){
+		return personnelMaterialsService.getAllEntryRegister(materialId);
 	}
 
 	@PostMapping("/insertPhysicalExamination")
@@ -93,6 +141,18 @@ public class PersonnelMaterialsController {
 		return personnelMaterialsService.deletePhysicalExamination(physicalExaminationId);
 	}
 
+	@GetMapping("/getPhysicalExamination")
+	@ApiOperation("获得单个入职体检")
+	public ResultVO getPhysicalExamination(String physicalExaminationId){
+		return personnelMaterialsService.getPhysicalExamination(physicalExaminationId);
+	}
+
+	@GetMapping("/getAllPhysicalExamination")
+	@ApiOperation("获得一份人事材料下的所有入职体检")
+	public ResultVO getAllPhysicalExamination(String materialId){
+		return personnelMaterialsService.getAllPhysicalExamination(materialId);
+	}
+
 	@PostMapping("/insertQuitProve")
 	@ApiOperation("添加离职证明")
 	public ResultVO insertQuitProve(String materialId,@RequestParam("file") MultipartFile file){
@@ -103,6 +163,18 @@ public class PersonnelMaterialsController {
 	@ApiOperation("删除离职证明")
 	public ResultVO deleteQuitProve(String quitId){
 		return personnelMaterialsService.deleteQuitProve(quitId);
+	}
+
+	@GetMapping("/getQuitProve")
+	@ApiOperation("获得单个离职证明")
+	public ResultVO getQuitProve(String quitId){
+		return personnelMaterialsService.getQuitProve(quitId);
+	}
+
+	@GetMapping("/getAllQuitProve")
+	@ApiOperation("获得一份人事材料下的所有离职证明")
+	public ResultVO getAllQuitProve(String materialId){
+		return personnelMaterialsService.getAllQuitProve(materialId);
 	}
 
 	@PostMapping("/insertProveFile")
@@ -117,6 +189,18 @@ public class PersonnelMaterialsController {
 		return personnelMaterialsService.deleteProveFile(proveId);
 	}
 
+	@GetMapping("/getProveFile")
+	@ApiOperation("获得单个证明材料")
+	public ResultVO getProveFile(String proveId){
+		return personnelMaterialsService.getProveFile(proveId);
+	}
+
+	@GetMapping("/getAllProveFile")
+	@ApiOperation("获得一份人事材料下的所有证明材料")
+	public ResultVO getAllProveFile(String materialId){
+		return personnelMaterialsService.getAllProveFile(materialId);
+	}
+
 	@PostMapping("/insertContract")
 	@ApiOperation("添加合同")
 	public ResultVO insertContract(ContractForm form, @RequestParam("file") MultipartFile file){
@@ -127,6 +211,18 @@ public class PersonnelMaterialsController {
 	@ApiOperation("删除合同")
 	public ResultVO deleteContract(String contractId){
 		return personnelMaterialsService.deleteContract(contractId);
+	}
+
+	@GetMapping("/getContract")
+	@ApiOperation("获得单个合同")
+	public ResultVO getContract(String contractId){
+		return personnelMaterialsService.getContract(contractId);
+	}
+
+	@GetMapping("/getAllContract")
+	@ApiOperation("获得一份人事材料下的所有合同")
+	public ResultVO getAllContract(String materialId){
+		return personnelMaterialsService.getAllContract(materialId);
 	}
 
 	@GetMapping("/browse")

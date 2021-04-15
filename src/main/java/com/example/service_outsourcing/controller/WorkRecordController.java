@@ -50,6 +50,18 @@ public class WorkRecordController {
 		return workRecordService.deleteAchievement(achievementId);
 	}
 
+	@GetMapping("/getAchievement")
+	@ApiOperation("获得单个绩效")
+	public ResultVO getAchievement(String achievementId){
+		return workRecordService.getAchievement(achievementId);
+	}
+
+	@GetMapping("/getAllAchievement")
+	@ApiOperation("获得一份工作记录下的所有绩效")
+	public ResultVO getAllAchievement(String recordId){
+		return workRecordService.getAllAchievement(recordId);
+	}
+
 	@ApiOperation("添加评价")
 	@PostMapping("/insertEvaluate")
 	public ResultVO insertEvaluate(EvaluateForm form){
@@ -60,6 +72,18 @@ public class WorkRecordController {
 	@DeleteMapping("/deleteEvaluate")
 	public ResultVO deleteEvaluate(String evaluateId){
 		return workRecordService.deleteEvaluate(evaluateId);
+	}
+
+	@GetMapping("/getEvaluate")
+	@ApiOperation("获得单个评价")
+	public ResultVO getEvaluate(String evaluateId){
+		return workRecordService.getEvaluate(evaluateId);
+	}
+
+	@GetMapping("/getAllEvaluate")
+	@ApiOperation("获得一份工作记录下的所有评价")
+	public ResultVO getAllEvaluate(String recordId){
+		return workRecordService.getAllAEvaluate(recordId);
 	}
 
 	@ApiOperation("添加考勤")
@@ -74,15 +98,27 @@ public class WorkRecordController {
 		return workRecordService.deleteAttendance(attendanceId);
 	}
 
+	@GetMapping("/getAttendance")
+	@ApiOperation("获得单个考勤记录")
+	public ResultVO getAttendance(String attendanceId){
+		return workRecordService.getAttendance(attendanceId);
+	}
+
+	@GetMapping("/getAllAttendance")
+	@ApiOperation("获得一份工作记录下的所有考勤记录")
+	public ResultVO getAllAttendance(String recordId){
+		return workRecordService.getAllAttendance(recordId);
+	}
+
 	@ApiOperation("浏览单个工作记录")
 	@GetMapping("/browseWorkRecord")
 	public ResultVO browseWorkRecord(String recordId){
 		return workRecordService.browseWorkRecord(recordId);
 	}
 
-	@ApiOperation("获得所有工作记录")
+	@ApiOperation("获得一个员工的所有工作记录")
 	@GetMapping("/getAllWorkRecord")
-	public ResultVO getAllWorkRecord(){
-		return workRecordService.getAllWorkRecord();
+	public ResultVO getAllWorkRecord(String employeeId){
+		return workRecordService.getAllWorkRecord(employeeId);
 	}
 }

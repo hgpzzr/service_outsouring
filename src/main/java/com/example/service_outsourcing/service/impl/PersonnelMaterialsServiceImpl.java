@@ -152,6 +152,18 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 	}
 
 	@Override
+	public ResultVO getID(String identifyCardId) {
+		IdentifyCard identifyCard = identifyCardMapper.selectByPrimaryKey(identifyCardId);
+		return ResultVOUtil.success(identifyCard);
+	}
+
+	@Override
+	public ResultVO getAllID(String materialId) {
+		List<IdentifyCard> identifyCards = identifyCardMapper.selectByMaterialId(materialId);
+		return ResultVOUtil.success(identifyCards);
+	}
+
+	@Override
 	public ResultVO insertEducationProve(String materialId, MultipartFile file) {
 		if (personnelMaterialMapper.selectByPrimaryKey(materialId) == null) {
 			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
@@ -194,6 +206,18 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO getEducationProve(String educationId) {
+		EducationProve educationProve = educationProveMapper.selectByPrimaryKey(educationId);
+		return ResultVOUtil.success(educationProve);
+	}
+
+	@Override
+	public ResultVO getAllEducationProve(String materialId) {
+		List<EducationProve> educationProves = educationProveMapper.selectByMaterialId(materialId);
+		return ResultVOUtil.success(educationProves);
 	}
 
 	@Override
@@ -243,6 +267,18 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 	}
 
 	@Override
+	public ResultVO getSocialInfo(String socialInfoId) {
+		SocialInfo socialInfo = socialInfoMapper.selectByPrimaryKey(socialInfoId);
+		return ResultVOUtil.success(socialInfo);
+	}
+
+	@Override
+	public ResultVO getAllSocialInfo(String materialId) {
+		List<SocialInfo> socialInfos = socialInfoMapper.selectByMaterialId(materialId);
+		return ResultVOUtil.success(socialInfos);
+	}
+
+	@Override
 	public ResultVO insertEntryRegister(String materialId, MultipartFile file) {
 		if (personnelMaterialMapper.selectByPrimaryKey(materialId) == null) {
 			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
@@ -287,6 +323,18 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO getEntryRegister(String registerId) {
+		EntryRegister entryRegister = entryRegisterMapper.selectByPrimaryKey(registerId);
+		return ResultVOUtil.success(entryRegister);
+	}
+
+	@Override
+	public ResultVO getAllEntryRegister(String materialId) {
+		List<EntryRegister> entryRegisters = entryRegisterMapper.selectByMaterialId(materialId);
+		return ResultVOUtil.success(entryRegisters);
 	}
 
 	@Override
@@ -339,6 +387,16 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 	}
 
 	@Override
+	public ResultVO getPhysicalExamination(String examinationId) {
+		return ResultVOUtil.success(entryPhysicalExaminationMapper.selectByPrimaryKey(examinationId));
+	}
+
+	@Override
+	public ResultVO getAllPhysicalExamination(String materialId) {
+		return ResultVOUtil.success(entryPhysicalExaminationMapper.selectByMaterialId(materialId));
+	}
+
+	@Override
 	public ResultVO insertQuitProve(String materialId, MultipartFile file) {
 		if (personnelMaterialMapper.selectByPrimaryKey(materialId) == null) {
 			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
@@ -384,6 +442,16 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO getQuitProve(String quitId) {
+		return ResultVOUtil.success(quitProveMapper.selectByPrimaryKey(quitId));
+	}
+
+	@Override
+	public ResultVO getAllQuitProve(String materialId) {
+		return ResultVOUtil.success(quitProveMapper.selectByMaterialId(materialId));
 	}
 
 	@Override
@@ -440,6 +508,16 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 	}
 
 	@Override
+	public ResultVO getProveFile(String proveId) {
+		return ResultVOUtil.success(proveFileMapper.selectByPrimaryKey(proveId));
+	}
+
+	@Override
+	public ResultVO getAllProveFile(String materialId) {
+		return ResultVOUtil.success(proveFileMapper.selectByMaterialId(materialId));
+	}
+
+	@Override
 	public ResultVO insertContract(ContractForm form, MultipartFile file) {
 		if(personnelMaterialMapper.selectByPrimaryKey(form.getMaterialId())==null){
 			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
@@ -486,6 +564,16 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO getContract(String contractId) {
+		return ResultVOUtil.success(contractMapper.selectByPrimaryKey(contractId));
+	}
+
+	@Override
+	public ResultVO getAllContract(String materialId) {
+		return ResultVOUtil.success(contractMapper.selectByMaterialId(materialId));
 	}
 
 	@Override

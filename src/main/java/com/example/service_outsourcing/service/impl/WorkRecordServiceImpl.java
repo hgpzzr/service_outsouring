@@ -147,6 +147,16 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 	}
 
 	@Override
+	public ResultVO getAchievement(String achievementId) {
+		return ResultVOUtil.success(achievementMapper.selectByPrimaryKey(achievementId));
+	}
+
+	@Override
+	public ResultVO getAllAchievement(String recordId) {
+		return ResultVOUtil.success(achievementMapper.selectByRecordId(recordId));
+	}
+
+	@Override
 	public ResultVO insertEvaluate(EvaluateForm form) {
 		if(workRecordMapper.selectByPrimaryKey(form.getRecordId())==null){
 			return ResultVOUtil.error(ResultEnum.WORK_RECORD_NOT_EXIST_ERROR);
@@ -175,6 +185,16 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO getEvaluate(String evaluateId) {
+		return ResultVOUtil.success(evaluateMapper.selectByPrimaryKey(evaluateId));
+	}
+
+	@Override
+	public ResultVO getAllAEvaluate(String recordId) {
+		return ResultVOUtil.success(evaluateMapper.selectByRecordId(recordId));
 	}
 
 	@Override
@@ -218,6 +238,16 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 	}
 
 	@Override
+	public ResultVO getAttendance(String attendanceId) {
+		return ResultVOUtil.success(attendanceMapper.selectByPrimaryKey(attendanceId));
+	}
+
+	@Override
+	public ResultVO getAllAttendance(String recordId) {
+		return ResultVOUtil.success(attendanceMapper.selectByRecordId(recordId));
+	}
+
+	@Override
 	public ResultVO browseWorkRecord(String recordId) {
 		WorkRecord workRecord = workRecordMapper.selectByPrimaryKey(recordId);
 		List<Achievement> achievements = achievementMapper.selectByRecordId(recordId);
@@ -232,8 +262,8 @@ public class WorkRecordServiceImpl implements WorkRecordService {
 	}
 
 	@Override
-	public ResultVO getAllWorkRecord() {
-		List<WorkRecord> workRecords = workRecordMapper.selectAll();
+	public ResultVO getAllWorkRecord(String employeeId) {
+		List<WorkRecord> workRecords = workRecordMapper.selectByEmployeeId(employeeId);
 		return ResultVOUtil.success(workRecords);
 	}
 }

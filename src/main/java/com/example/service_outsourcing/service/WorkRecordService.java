@@ -43,6 +43,20 @@ public interface WorkRecordService {
 	ResultVO deleteAchievement(String achievementId);
 
 	/**
+	 * 获得单个绩效
+	 * @param achievementId
+	 * @return
+	 */
+	ResultVO getAchievement(String achievementId);
+
+	/**
+	 * 获得一份工作记录中的所有绩效
+	 * @param recordId
+	 * @return
+	 */
+	ResultVO getAllAchievement(String recordId);
+
+	/**
 	 * 添加评价
 	 * @param form
 	 * @return
@@ -55,6 +69,20 @@ public interface WorkRecordService {
 	 * @return
 	 */
 	ResultVO deleteEvaluate(String evaluateId);
+
+	/**
+	 * 获得单个评价
+	 * @param evaluateId
+	 * @return
+	 */
+	ResultVO getEvaluate(String evaluateId);
+
+	/**
+	 * 获得一份工作记录中的所有评价
+	 * @param recordId
+	 * @return
+	 */
+	ResultVO getAllAEvaluate(String recordId);
 
 	/**
 	 * 添加考勤
@@ -71,11 +99,29 @@ public interface WorkRecordService {
 	ResultVO deleteAttendance(String attendanceId);
 
 	/**
+	 * 获得单个考勤记录
+	 * @param attendanceId
+	 * @return
+	 */
+	ResultVO getAttendance(String attendanceId);
+
+	/**
+	 * 获得一份工作记录中的所有考勤记录
+	 * @param recordId
+	 * @return
+	 */
+	ResultVO getAllAttendance(String recordId);
+
+	/**
 	 * 浏览单个工作记录
 	 * @param recordId
 	 * @return
 	 */
 	ResultVO browseWorkRecord(String recordId);
 
-	ResultVO getAllWorkRecord();
+	/**
+	 * 获得所有工作记录
+	 * @return
+	 */
+	ResultVO getAllWorkRecord(String employeeId);
 }
