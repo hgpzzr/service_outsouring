@@ -35,4 +35,14 @@
     select organization_id, organization_name, authentication_status, authentication_pic_url
     from organization
   </select>
+
+  <select id="checkExist" parameterType="java.lang.String"  resultType="java.lang.Boolean">
+    <![CDATA[
+    select count(organization_id)
+    from organization
+    where organization_name = #{organizationName,jdbcType=VARCHAR}
+    ]]>
+  </select>
+
+
 </mapper>

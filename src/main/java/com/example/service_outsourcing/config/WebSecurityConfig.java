@@ -27,80 +27,80 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+	@Autowired
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
-    @Autowired
-    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder
-                .userDetailsService(this.userDetailsService)
-                .passwordEncoder(passwordEncoder());
-    }
+	@Autowired
+	public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+		authenticationManagerBuilder
+				.userDetailsService(this.userDetailsService)
+				.passwordEncoder(passwordEncoder());
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-        return new JwtAuthenticationTokenFilter();
-    }
+	@Bean
+	public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+		return new JwtAuthenticationTokenFilter();
+	}
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Override
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                //token的验证方式不需要开启csrf的防护
-                .csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and()
-                //设置无状态的连接,即不创建session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests()
+	@Override
+	protected void configure(HttpSecurity httpSecurity) throws Exception {
+		httpSecurity
+				//token的验证方式不需要开启csrf的防护
+				.csrf().disable()
+				.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+				.and()
+				//设置无状态的连接,即不创建session
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.authorizeRequests()
 //                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 //                当前的url允许进行匿名访问,即不需要身份认证
-                .antMatchers(
-                        "/",
-                        "/*.html",
-                        "/favicon.ico",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js"
-                ).permitAll()
-                //配置swagger界面的匿名访问
-                .antMatchers("/swagger-ui.html",
-                        "/swagger-ui/*",
-                        "/swagger-resources/**",
-                        "/v2/api-docs",
-                        "/v3/api-docs",
-                        "/webjars/**").permitAll()
-                .antMatchers("/images/**").permitAll()
-                .antMatchers("/configuration/ui").permitAll()
-                .antMatchers("/configuration/security").permitAll()
-                //配置允许匿名访问的路径
-                .antMatchers("/user/register/**").permitAll()
-                .antMatchers("/user/login/**").permitAll()
-                .antMatchers("/applicant/*").permitAll()
+				.antMatchers(
+						"/",
+						"/*.html",
+						"/favicon.ico",
+						"/**/*.html",
+						"/**/*.css",
+						"/**/*.js"
+				).permitAll()
+				//配置swagger界面的匿名访问
+				.antMatchers("/swagger-ui.html",
+						"/swagger-ui/*",
+						"/swagger-resources/**",
+						"/v2/api-docs",
+						"/v3/api-docs",
+						"/webjars/**").permitAll()
+				.antMatchers("/images/**").permitAll()
+				.antMatchers("/configuration/ui").permitAll()
+				.antMatchers("/configuration/security").permitAll()
+				//配置允许匿名访问的路径
+				.antMatchers("/user/register/**").permitAll()
+				.antMatchers("/user/login/**").permitAll()
+				.antMatchers("/applicant/*").permitAll()
 
-                .anyRequest().authenticated();
+				.anyRequest().authenticated();
 
-        //配置自己的验证过滤器
-        httpSecurity
-                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+		//配置自己的验证过滤器
+		httpSecurity
+				.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
-        // disable page caching
-        httpSecurity.headers().cacheControl();
-        httpSecurity.headers().frameOptions().sameOrigin();
-        httpSecurity.headers().frameOptions().disable();
-    }
+		// disable page caching
+		httpSecurity.headers().cacheControl();
+		httpSecurity.headers().frameOptions().sameOrigin();
+		httpSecurity.headers().frameOptions().disable();
+	}
 }
 

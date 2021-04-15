@@ -9,6 +9,7 @@ import lombok.Getter;
  */
 @Getter
 public enum  ResultEnum {
+    /***/
     USER_EXIST(1,"用户已存在"),
     DATABASE_OPTION_ERROR(2,"数据库操作失败"),
     USER_NOT_EXIST(3,"用户不存在"),
@@ -32,6 +33,44 @@ public enum  ResultEnum {
     ID_NOT_EXIST_ERROR(21,"身份证不存在"),
     SOCIAL_INFO_NOT_EXIST_ERROR(22,"社会信息不存在"),
     ENTRY_REGISTER_NOT_EXIST_ERROR(23,"入职登记不存在"),
+
+
+
+
+
+
+
+
+
+    POST_NAME_ALREADY_EXISTS(124,"岗位名字已经存在"),
+    POST_ADD_ERROR(125,"岗位添加失败，插入数据库失败"),
+    POST_NOT_EXISTS(126,"岗位不存在"),
+    POST_DELETE_ERROR(127,"岗位删除失败，修改数据库失败"),
+    POST_UPDATE_ERROR(128,"岗位修改失败，修改数据库失败"),
+    POST_SELECT_ERROR(129,"岗位查询失败"),
+    CATEGORY_ADD_ERROR(130,"岗位类型添加失败"),
+    CATEGORY_DELETE_ERROR(131,"岗位类型删除失败，修改数据库失败"),
+    CATEGORY_UPDATE_ERROR(132,"岗位类型修改失败，修改数据库失败"),
+    CATEGORY_SELECT_ERROR(133,"岗位类型查询失败"),
+    CATEGORYLINK_ADD_ERROR(134,"岗位类型关联添加失败"),
+    CATEGORYLINK_DELETE_ERROR(135,"岗位类型关联删除失败"),
+    DEPARTMENT_ADD_ERROR(136,"部门添加失败，插入数据库失败"),
+    DEPARTMENT_NOT_EXISTS(137,"部门不存在"),
+    DEPARTMENT_DELETE_ERROR(138,"部门删除失败，修改数据库失败"),
+    DEPARTMENT_UPDATE_ERROR(139,"部门修改失败，修改数据库失败"),
+    DEPARTMENT_SELECT_ERROR(140,"部门查询失败"),
+    DEPARTMENT_HAS_EXISTS(141,"部门已存在"),
+    ORGANIZATION_NOT_EXISTS(142,"组织不存在"),
+    ORGANIZATION_HAS_EXISTS(143,"组织已存在"),
+    ORGANIZATION_DELETE_ERROR(144,"组织删除失败，修改数据库失败"),
+    ORGANIZATION_UPDATE_ERROR(145,"组织修改失败，修改数据库失败"),
+    ORGANIZATION_SELECT_ERROR(146,"组织查询失败"),
+    EMPLOYEE_HAS_EXISTS(147,"员工已存在"),
+    EMPLOYEE_NOT_EXISTS(148,"员工不存在"),
+    EMPLOYEE_UPDATE_ERROR(149,"员工修改失败，修改数据库失败"),
+    EMPLOYEE_SELECT_ERROR(150,"员工查询失败"),
+    EMPLOYEE_ADD_ERROR(151,"员工添加失败，插入数据库失败"),
+
 
 
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface PostCategoryMapper {
     int deleteByPrimaryKey(@Param("postCategoryId") String postCategoryId, @Param("postId") String postId);
 
-    int insert(PostCategory record);
+    int insert(@Param("postCategoryId") String postCategoryId, @Param("postId") String postId);
 
     List<PostCategory> selectAll();
 }

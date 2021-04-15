@@ -10,7 +10,7 @@
     where post_category_id = #{postCategoryId,jdbcType=VARCHAR}
       and post_id = #{postId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.example.service_outsourcing.entity.PostCategory" >
+  <insert id="insert" parameterType="map" >
     insert into post_category (post_category_id, post_id)
     values (#{postCategoryId,jdbcType=VARCHAR}, #{postId,jdbcType=VARCHAR})
   </insert>

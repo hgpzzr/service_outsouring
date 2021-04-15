@@ -11,6 +11,20 @@
     <result column="post_describe" property="postDescribe" jdbcType="VARCHAR" />
     <result column="post_status" property="postStatus" jdbcType="INTEGER" />
   </resultMap>
+
+  <resultMap id="PostVOMap" type="com.example.service_outsourcing.VO.PostVO" >
+    <id column="post_id" property="postId" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="VARCHAR" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="psot_name" property="psotName" jdbcType="VARCHAR" />
+    <result column="post_category_id" property="postCategoryId" jdbcType="VARCHAR" />
+    <result column="post_max_num" property="postMaxNum" jdbcType="INTEGER" />
+    <result column="post_now_num" property="postNowNum" jdbcType="INTEGER" />
+    <result column="post_describe" property="postDescribe" jdbcType="VARCHAR" />
+    <result column="post_status" property="postStatus" jdbcType="INTEGER" />
+  </resultMap>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from post
     where post_id = #{postId,jdbcType=VARCHAR}
@@ -34,15 +48,54 @@
       post_status = #{postStatus,jdbcType=INTEGER}
     where post_id = #{postId,jdbcType=VARCHAR}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select post_id, department_id, psot_name, post_category_id, post_max_num, post_now_num, 
+
+  <select id="selectByPrimaryKey" resultMap="PostVOMap" parameterType="java.lang.String" >
+    select post_id, post.department_id, department_name, psot_name, post_category_id, post_max_num, post_now_num,
     post_describe, post_status
     from post
+    left join department
+    on post.department_id = department.department_id
     where post_id = #{postId,jdbcType=VARCHAR}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select post_id, department_id, psot_name, post_category_id, post_max_num, post_now_num, 
+
+  <select id="selectByPostName" resultMap="PostVOMap" parameterType="java.lang.String" >
+    select post_id, post.department_id, department_name, psot_name, post_category_id, post_max_num, post_now_num,
     post_describe, post_status
     from post
+    left join department
+    on post.department_id = department.department_id
+    where psot_name = #{postName,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByDepartmentId" resultMap="PostVOMap" parameterType="java.lang.String" >
+    select post_id, post.department_id, department_name, psot_name, post_category_id, post_max_num, post_now_num,
+    post_describe, post_status
+    from post
+    left join department
+    on post.department_id = department.department_id
+    where post.department_id = #{departmentId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="PostVOMap" >
+    select post_id, post.department_id, department_name, psot_name, post_category_id, post_max_num, post_now_num,
+    post_describe, post_status
+    from post
+    left join department
+    on post.department_id = department.department_id
+  </select>
+
+  <select id="checkExistByPostName" parameterType="java.lang.String"  resultType="java.lang.Boolean">
+    <![CDATA[
+    select count(post_id)
+    from post where post_name = #{postName,jdbcType=VARCHAR}
+    ]]>
+  </select>
+
+  <select id="checkExistByPostId" parameterType="java.lang.String"  resultType="java.lang.Boolean">
+    <![CDATA[
+    select count(post_id)
+    from post where post_id = #{postId,jdbcType=VARCHAR}
+    ]]>
+  </select>
+
 </mapper>

@@ -6,7 +6,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123456
+    password: loveyourself
     url: jdbc:mysql://127.0.0.1:3306/service_outsourcing?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=CONVERT_TO_NULL
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -44,7 +44,7 @@ jwt:
 #  location: /home/admin/blogexport/
 #  url: http//106:15:248:34:8082:server
 server:
-  port: 8088
+  port: 8099
 img:
   enterpriseCertification:
     url: D:\\image\\EnterpriseCertification\\

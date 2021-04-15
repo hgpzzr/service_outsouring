@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  * @date 2021/3/29 19:50
  */
-@Service
+@Service("userDetailsService")
 @Slf4j
 public class JwtUserDetailServiceImpl implements UserDetailsService {
 

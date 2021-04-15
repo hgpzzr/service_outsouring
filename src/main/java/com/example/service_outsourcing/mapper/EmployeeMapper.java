@@ -14,5 +14,14 @@ public interface EmployeeMapper {
 
     List<Employee> selectAll();
 
+    List<Employee> selectByPostId(String postId);
+
     int updateByPrimaryKey(Employee record);
+
+
+    /**
+     * @param postId  将该岗位下员工的岗位id改为null
+     * @return
+     */
+    int updatePostByPostId(String postId);
 }

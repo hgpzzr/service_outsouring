@@ -22,11 +22,24 @@
       post_id = #{postId,jdbcType=VARCHAR}
     where employee_id = #{employeeId,jdbcType=VARCHAR}
   </update>
+  <update id="updatePostByPostId" parameterType="java.lang.String" >
+    update employee
+    set post_id = null;
+    where employee_id = #{employeeId,jdbcType=VARCHAR}
+  </update>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select employee_id, status, post_id
     from employee
     where employee_id = #{employeeId,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByPostId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select employee_id, status, post_id
+    from employee
+    where post_id = #{postId,jdbcType=VARCHAR}
+  </select>
+
   <select id="selectAll" resultMap="BaseResultMap" >
     select employee_id, status, post_id
     from employee

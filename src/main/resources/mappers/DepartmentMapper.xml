@@ -1,26 +1,96 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.service_outsourcing.mapper.DepartmentMapper">
-  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.Department">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="depart_name" jdbcType="VARCHAR" property="departName" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.Department" >
+    <id column="department_id" property="departmentId" jdbcType="VARCHAR" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="department_effectiveness" property="departmentEffectiveness" jdbcType="INTEGER" />
+    <result column="establish_time" property="establishTime" jdbcType="VARCHAR" />
+    <result column="max_num" property="maxNum" jdbcType="INTEGER" />
+    <result column="now_num" property="nowNum" jdbcType="INTEGER" />
+    <result column="leader" property="leader" jdbcType="VARCHAR" />
+    <result column="people_in_charge" property="peopleInCharge" jdbcType="VARCHAR" />
+    <result column="organization_id" property="organizationId" jdbcType="VARCHAR" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+
+  <resultMap id="DepartmentVO" type="com.example.service_outsourcing.VO.DepartmentVO" >
+    <id column="department_id" property="departmentId" jdbcType="VARCHAR" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="department_effectiveness" property="departmentEffectiveness" jdbcType="INTEGER" />
+    <result column="establish_time" property="establishTime" jdbcType="VARCHAR" />
+    <result column="max_num" property="maxNum" jdbcType="INTEGER" />
+    <result column="now_num" property="nowNum" jdbcType="INTEGER" />
+    <result column="leader" property="leader" jdbcType="VARCHAR" />
+    <result column="people_in_charge" property="peopleInCharge" jdbcType="VARCHAR" />
+    <result column="organization_id" property="organizationId" jdbcType="VARCHAR" />
+    <result column="organization_name" property="organizationName" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from department
-    where id = #{id,jdbcType=INTEGER}
+    where department_id = #{departmentId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.example.service_outsourcing.entity.Department">
-    insert into department (id, depart_name)
-    values (#{id,jdbcType=INTEGER}, #{departName,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.Department" >
+    insert into department (department_id, department_name, department_effectiveness,
+      establish_time, max_num, now_num, 
+      leader, people_in_charge, organization_id
+      )
+    values (#{departmentId,jdbcType=VARCHAR}, #{departmentName,jdbcType=VARCHAR}, #{departmentEffectiveness,jdbcType=INTEGER}, 
+      #{establishTime,jdbcType=VARCHAR}, #{maxNum,jdbcType=INTEGER}, #{nowNum,jdbcType=INTEGER}, 
+      #{leader,jdbcType=VARCHAR}, #{peopleInCharge,jdbcType=VARCHAR}, #{organizationId,jdbcType=VARCHAR}
+      )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.Department">
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.Department" >
     update department
-    set depart_name = #{departName,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    set department_name = #{departmentName,jdbcType=VARCHAR},
+      department_effectiveness = #{departmentEffectiveness,jdbcType=INTEGER},
+      establish_time = #{establishTime,jdbcType=VARCHAR},
+      max_num = #{maxNum,jdbcType=INTEGER},
+      now_num = #{nowNum,jdbcType=INTEGER},
+      leader = #{leader,jdbcType=VARCHAR},
+      people_in_charge = #{peopleInCharge,jdbcType=VARCHAR},
+      organization_id = #{organizationId,jdbcType=VARCHAR}
+    where department_id = #{departmentId,jdbcType=VARCHAR}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, depart_name
+
+
+  <select id="selectByPrimaryKey" resultMap="DepartmentVO" parameterType="java.lang.String" >
+    select department_id, department_name, department_effectiveness, establish_time, 
+    max_num, now_num, leader, people_in_charge, department.organization_id ,organization_name
     from department
-    where id = #{id,jdbcType=INTEGER}
+    left join organization
+    on department.organization_id = organization.organization_id
+    where department_id = #{departmentId,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectByOrganizationId" resultMap="DepartmentVO" parameterType="java.lang.String" >
+    select department_id, department_name, department_effectiveness, establish_time,
+    max_num, now_num, leader, people_in_charge, department.organization_id ,organization_name
+    from department
+    left join organization
+    on department.organization_id = organization.organization_id
+    where organization_id = #{organizationId,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="checkExist" parameterType="java.lang.String"  resultType="java.lang.Boolean">
+    <![CDATA[
+    select count(department_id)
+    from department
+    where department_name = #{departmentName,jdbcType=VARCHAR}
+    and organization_id = #{organizationId,jdbcType=VARCHAR}
+    ]]>
+  </select>
+
+
+  <select id="selectAll" resultMap="DepartmentVO" >
+     select department_id, department_name, department_effectiveness, establish_time,
+    max_num, now_num, leader, people_in_charge, department.organization_id ,organization_name
+    from department
+    left join organization
+    on department.organization_id = organization.organization_id
   </select>
 </mapper>

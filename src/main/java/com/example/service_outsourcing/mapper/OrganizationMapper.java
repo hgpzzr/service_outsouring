@@ -12,6 +12,8 @@ public interface OrganizationMapper {
 
     Organization selectByPrimaryKey(String organizationId);
 
+    Boolean checkExist(String organizationName);
+
     List<Organization> selectAll();
 
     int updateByPrimaryKey(Organization record);
