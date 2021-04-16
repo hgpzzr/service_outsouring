@@ -85,6 +85,14 @@ public interface ApplicantService {
     ResultVO deleteWorkExperience(String workId);
 
     /**
+     * 更新工作经历
+     * @param form
+     * @param file
+     * @return
+     */
+    ResultVO updateWorkExperience(UpdateWorkExperienceForm form,MultipartFile file);
+
+    /**
      * 获得单个工作经历
      * @param workId
      * @return
@@ -116,6 +124,14 @@ public interface ApplicantService {
     ResultVO deleteProjectExperience(String projectId);
 
     /**
+     * 更新项目经历
+     * @param form
+     * @param file
+     * @return
+     */
+    ResultVO updateProjectExperience(UpdateProjectExperienceForm form,MultipartFile file);
+
+    /**
      * 获得单个项目经历
      * @param projectId
      * @return
@@ -141,6 +157,13 @@ public interface ApplicantService {
      * @return
      */
     ResultVO deleteSkill(String skillId);
+
+    /**
+     * 更新技能特长
+     * @param form
+     * @return
+     */
+    ResultVO updateSkill(UpdateSkillForm form);
 
     /**
      * 获得单个技能特长
@@ -172,6 +195,14 @@ public interface ApplicantService {
     ResultVO deleteCertificate(String certificateId);
 
     /**
+     * 更新证书
+     * @param form
+     * @param file
+     * @return
+     */
+    ResultVO updateCertificate(UpdateCertificateForm form,MultipartFile file);
+
+    /**
      * 获得单个证书
      * @param certificateId
      * @return
@@ -199,6 +230,13 @@ public interface ApplicantService {
      */
     ResultVO deleteSelfEvaluate(String selfEvaluateId);
 
+    ResultVO updateSelfEvaluate(UpdateSelfEvaluateForm form);
+
+    /**
+     * 获得自我评价
+     * @param selfEvaluateId
+     * @return
+     */
     ResultVO getSelfEvaluate(String selfEvaluateId);
 
 

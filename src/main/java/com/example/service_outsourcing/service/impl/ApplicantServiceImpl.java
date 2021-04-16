@@ -290,6 +290,37 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
+    public ResultVO updateWorkExperience(UpdateWorkExperienceForm form,MultipartFile file) {
+        WorkExperience workExperience = workExperienceMapper.selectByPrimaryKey(form.getWorkId());
+        if(workExperience == null){
+            return ResultVOUtil.error(ResultEnum.WORK_EXPERIENCE_NOT_EXIST_ERROR);
+        }
+        // 判断文件是否为空
+        if(!file.isEmpty()){
+            // 删除原来的文件
+            FileUtil.deleteFile(workExperience.getWorkProvePicUrl());
+            // 上传新的文件
+            String filePath = workExperienceUrl;
+            StringBuilder url = new StringBuilder();
+            String fileName = FileUtil.generateFileName(file);
+            url.append(filePath).append(fileName);
+            boolean upload = FileUtil.upload(file, filePath, fileName);
+            if(!upload){
+                return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+            }
+            // 存入新的文件路径
+            workExperience.setWorkProvePicUrl(url.toString());
+        }
+        // 更新数据库
+        BeanUtils.copyProperties(form,workExperience);
+        int update = workExperienceMapper.updateByPrimaryKey(workExperience);
+        if(update != 1){
+            return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
+        return ResultVOUtil.success("更新成功");
+    }
+
+    @Override
     public ResultVO getWorkExperience(String workId) {
         WorkExperience workExperience = workExperienceMapper.selectByPrimaryKey(workId);
         return ResultVOUtil.success(workExperience);
@@ -373,6 +404,36 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
+    public ResultVO updateProjectExperience(UpdateProjectExperienceForm form, MultipartFile file) {
+        ProjectExperience projectExperience = projectExperienceMapper.selectByPrimaryKey(form.getProjectId());
+        if(projectExperience == null){
+            return ResultVOUtil.error(ResultEnum.PROJECT_EXPERIENCE_NOT_EXIST_ERROR);
+        }
+        if(!file.isEmpty()){
+            // 删除原来的图片
+            FileUtil.deleteFile(projectExperience.getProjectProvePicUrl());
+            // 上传新的图片
+            String filePath = projectExperienceUrl;
+            StringBuilder url = new StringBuilder();
+            String fileName = FileUtil.generateFileName(file);
+            boolean upload = FileUtil.upload(file, filePath, fileName);
+            if(!upload){
+                return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+            }
+            // 设置新的文件路径
+            url.append(filePath).append(fileName);
+            projectExperience.setProjectProvePicUrl(url.toString());
+        }
+        //更新数据库记录
+        BeanUtils.copyProperties(form,projectExperience);
+        int update = projectExperienceMapper.updateByPrimaryKey(projectExperience);
+        if(update != 1){
+            return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
+        return ResultVOUtil.success("更新成功");
+    }
+
+    @Override
     public ResultVO getProjectExperience(String projectId) {
         ProjectExperience projectExperience = projectExperienceMapper.selectByPrimaryKey(projectId);
         return ResultVOUtil.success(projectExperience);
@@ -422,6 +483,20 @@ public class ApplicantServiceImpl implements ApplicantService {
             return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
         }
         return ResultVOUtil.success("删除成功");
+    }
+
+    @Override
+    public ResultVO updateSkill(UpdateSkillForm form) {
+        Skill skill = skillMapper.selectByPrimaryKey(form.getSkillId());
+        if(skill == null){
+            return ResultVOUtil.error(ResultEnum.SKILL_NOT_EXIST_ERROR);
+        }
+        BeanUtils.copyProperties(form,skill);
+        int update = skillMapper.updateByPrimaryKey(skill);
+        if(update != 1){
+            return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
+        return ResultVOUtil.success("更新成功");
     }
 
     @Override
@@ -493,6 +568,35 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
+    public ResultVO updateCertificate(UpdateCertificateForm form, MultipartFile file) {
+        Certificate certificate = certificateMapper.selectByPrimaryKey(form.getCertificateId());
+        if(certificate == null){
+            return ResultVOUtil.error(ResultEnum.CERTIFICATE_NOT_EXIST_ERROR);
+        }
+        if(!file.isEmpty()){
+            // 删除原来的图片
+            FileUtil.deleteFile(certificate.getCertificateProvePicUrl());
+            // 上传新的图片
+            StringBuilder url = new StringBuilder();
+            String filePath = certificateUrl;
+            String fileName = FileUtil.generateFileName(file);
+            boolean upload = FileUtil.upload(file, filePath, fileName);
+            if(!upload){
+                return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+            }
+            // 设置新的文件路径
+            url.append(filePath).append(fileName);
+            certificate.setCertificateProvePicUrl(url.toString());
+        }
+        BeanUtils.copyProperties(form,certificate);
+        int update = certificateMapper.updateByPrimaryKey(certificate);
+        if(update != 1){
+            ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
+        return ResultVOUtil.success("更新成功");
+    }
+
+    @Override
     public ResultVO getCertificate(String certificateId) {
         Certificate certificate = certificateMapper.selectByPrimaryKey(certificateId);
         return ResultVOUtil.success(certificate);
@@ -533,12 +637,29 @@ public class ApplicantServiceImpl implements ApplicantService {
 
     @Override
     public ResultVO deleteSelfEvaluate(String selfEvaluateId) {
+        if(selfEvaluateMapper.selectByPrimaryKey(selfEvaluateId)==null){
+            return ResultVOUtil.error(ResultEnum.SELF_EVALUATE_NOT_EXIST_ERROR);
+        }
         int delete = selfEvaluateMapper.deleteByPrimaryKey(selfEvaluateId);
         if(delete != 1){
             log.error("【删除自我评价】:数据库操作失败");
             return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
         }
         return ResultVOUtil.success("删除成功");
+    }
+
+    @Override
+    public ResultVO updateSelfEvaluate(UpdateSelfEvaluateForm form) {
+        SelfEvaluate selfEvaluate = selfEvaluateMapper.selectByPrimaryKey(form.getSelfEvaluateId());
+        if(selfEvaluate == null){
+            return ResultVOUtil.error(ResultEnum.SELF_EVALUATE_NOT_EXIST_ERROR);
+        }
+        BeanUtils.copyProperties(form,selfEvaluate);
+        int update = selfEvaluateMapper.updateByPrimaryKey(selfEvaluate);
+        if(update != 1){
+            return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
+        return ResultVOUtil.success("更新成功");
     }
 
     @Override

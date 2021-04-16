@@ -152,6 +152,35 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 	}
 
 	@Override
+	public ResultVO updateID(UpdateIDForm form, MultipartFile file) {
+		IdentifyCard identifyCard = identifyCardMapper.selectByPrimaryKey(form.getIdentityCardId());
+		if(identifyCard == null){
+			return ResultVOUtil.error(ResultEnum.ID_NOT_EXIST_ERROR);
+		}
+		if(!file.isEmpty()){
+			// 删除原来的图片
+			FileUtil.deleteFile(identifyCard.getIdentityCardPicUrl());
+			// 上传新的图片
+			String filePath = imgIDUrl;
+			String fileName = FileUtil.generateFileName(file);
+			boolean upload = FileUtil.upload(file, filePath, fileName);
+			if(!upload){
+				return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+			}
+			// 设置新的url
+			StringBuilder url = new StringBuilder(filePath).append(fileName);
+			identifyCard.setIdentityCardPicUrl(url.toString());
+		}
+		// 更新数据库
+		BeanUtils.copyProperties(form,identifyCard);
+		int update = identifyCardMapper.updateByPrimaryKey(identifyCard);
+		if(update != 1){
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		return ResultVOUtil.success("更新成功");
+	}
+
+	@Override
 	public ResultVO getID(String identifyCardId) {
 		IdentifyCard identifyCard = identifyCardMapper.selectByPrimaryKey(identifyCardId);
 		return ResultVOUtil.success(identifyCard);
@@ -264,6 +293,23 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO updateSocialInfo(UpdateSocialInfoForm form, MultipartFile file) {
+		SocialInfo socialInfo = socialInfoMapper.selectByPrimaryKey(form.getSocialInfoId());
+		if(socialInfo == null){
+			return ResultVOUtil.error(ResultEnum.SOCIAL_INFO_NOT_EXIST_ERROR);
+		}
+		if(!file.isEmpty()){
+			// 删除原来的图片
+			FileUtil.deleteFile(socialInfo.getSupportingMaterialUrl());
+			// 上传新的图片
+			String filePath = socialInfoUrl;
+			String fileName = FileUtil.generateFileName(file);
+
+		}
+		return null;
 	}
 
 	@Override

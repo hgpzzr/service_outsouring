@@ -89,6 +89,12 @@ public class ApplicantController {
         return applicantService.deleteWorkExperience(workId);
     }
 
+    @PutMapping("/updateWorkExperience")
+    @ApiOperation("更新工作经历")
+    public ResultVO updateWorkExperience(UpdateWorkExperienceForm form,@RequestParam("file")MultipartFile file){
+        return applicantService.updateWorkExperience(form,file);
+    }
+
     @GetMapping("/getWorkExperience")
     @ApiOperation("获得单个工作经历")
     public ResultVO getWorkExperience(String workId){
@@ -111,6 +117,12 @@ public class ApplicantController {
     @ApiOperation("删除项目经历")
     public ResultVO deleteProjectExperience(String projectId){
         return applicantService.deleteProjectExperience(projectId);
+    }
+
+    @PutMapping("/updateProjectExperience")
+    @ApiOperation("更新项目经历")
+    public ResultVO updateProjectExperience(UpdateProjectExperienceForm form,@RequestParam("file")MultipartFile file){
+        return applicantService.updateProjectExperience(form,file);
     }
 
     @GetMapping("/getProjectExperience")
@@ -137,6 +149,12 @@ public class ApplicantController {
         return applicantService.deleteSkill(skillId);
     }
 
+    @PutMapping("/updateSkill")
+    @ApiOperation("更新技能特长")
+    public ResultVO updateSkill(UpdateSkillForm form){
+        return applicantService.updateSkill(form);
+    }
+
     @GetMapping("/getSkill")
     @ApiOperation("获得单个技能特长")
     public ResultVO getSkill(String skillId){
@@ -159,6 +177,12 @@ public class ApplicantController {
     @ApiOperation("删除证书")
     public ResultVO deleteCertificate(String certificateId){
         return applicantService.deleteCertificate(certificateId);
+    }
+
+    @PutMapping("/updateCertificate")
+    @ApiOperation("更新证书")
+    public ResultVO updateCertificate(UpdateCertificateForm form,@RequestParam("file") MultipartFile file){
+        return applicantService.updateCertificate(form,file);
     }
 
     @GetMapping("/getCertificate")
@@ -184,6 +208,10 @@ public class ApplicantController {
     public ResultVO deleteSelfEvaluate(String selfEvaluateId){
         return applicantService.deleteSelfEvaluate(selfEvaluateId);
     }
+
+    @PutMapping("/updateSelfEvaluate")
+    @ApiOperation("更新自我评价")
+    public ResultVO updateSelfEvaluate(UpdateSelfEvaluateForm form){return applicantService.updateSelfEvaluate(form);}
 
     @GetMapping("/getSelfEvaluate")
     @ApiOperation("获得单个自我评价")

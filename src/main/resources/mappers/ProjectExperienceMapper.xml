@@ -33,7 +33,7 @@
       project_name = #{projectName,jdbcType=VARCHAR},
       begin_time = #{beginTime,jdbcType=VARCHAR},
       project_describe = #{projectDescribe,jdbcType=VARCHAR},
-      project_prove_pic_url = #{projectProvePicUrl,jdbcType=VARCHAR}
+      project_prove_pic_url = #{projectProvePicUrl,jdbcType=VARCHAR},
       end_time = #{endTime,jdbcType=VARCHAR}
     where project_id = #{projectId,jdbcType=VARCHAR}
   </update>

@@ -37,6 +37,14 @@ public interface PersonnelMaterialsService {
 	ResultVO deleteID(String identifyCardId);
 
 	/**
+	 * 更新身份证
+	 * @param form
+	 * @param file
+	 * @return
+	 */
+	ResultVO updateID(UpdateIDForm form,MultipartFile file);
+
+	/**
 	 * 获得单个身份证
 	 * @param identifyCardId
 	 * @return
@@ -93,6 +101,14 @@ public interface PersonnelMaterialsService {
 	 * @return
 	 */
 	ResultVO deleteSocialInfo(String socialInfoId);
+
+	/**
+	 * 更新社会信息
+	 * @param form
+	 * @param file
+	 * @return
+	 */
+	ResultVO updateSocialInfo(UpdateSocialInfoForm form,MultipartFile file);
 
 	/**
 	 * 获得单个社会信息
@@ -267,6 +283,10 @@ public interface PersonnelMaterialsService {
 	 */
 	ResultVO deletePersonnelMaterial(String materialId);
 
+	/**
+	 * 活鹅所有人事材料
+	 * @return
+	 */
 	ResultVO getAllPersonnelMaterial();
 
 }
