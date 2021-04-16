@@ -31,6 +31,11 @@
     from entry_physical_examination
     where physical_examination_id = #{physicalExaminationId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByMaterialId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select physical_examination_id, material_id, physical_examination_pic_url, physical_examination_status
+    from entry_physical_examination
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select physical_examination_id, material_id, physical_examination_pic_url, physical_examination_status
     from entry_physical_examination

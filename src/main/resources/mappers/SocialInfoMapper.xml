@@ -13,13 +13,13 @@
         where social_info_id = #{socialInfoId,jdbcType=VARCHAR}
     </delete>
     <insert id="insert" parameterType="com.example.service_outsourcing.entity.SocialInfo" >
-        insert into skill (material_id, social_info_id, info_name,
+        insert into social_info (material_id, social_info_id, info_name,
         concrete_content,supporting_material_url)
         values (#{materialId,jdbcType=VARCHAR}, #{socialInfoId,jdbcType=VARCHAR}, #{infoName,jdbcType=VARCHAR},
         #{concreteContent,jdbcType=VARCHAR},#{supportingMaterialUrl,jdbcType=VARCHAR})
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.SocialInfo" >
-        update skill
+        update social_info
         set material_id = #{materialId,jdbcType=VARCHAR},
         info_name = #{infoName,jdbcType=VARCHAR},
         concrete_content = #{concreteContent,jdbcType=VARCHAR}
@@ -31,8 +31,13 @@
         from social_info
         where social_info_id = #{socialInfoId,jdbcType=VARCHAR}
     </select>
+    <select id="selectByMaterialId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select *
+        from social_info
+        where material_id = #{materialId,jdbcType=VARCHAR}
+    </select>
     <select id="selectAll" resultMap="BaseResultMap" >
         select *
-        from skill
+        from social_info
     </select>
 </mapper>

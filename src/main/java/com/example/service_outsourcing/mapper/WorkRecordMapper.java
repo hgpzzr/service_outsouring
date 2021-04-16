@@ -21,5 +21,7 @@ public interface WorkRecordMapper {
 
 	List<WorkRecord> selectAll();
 
+	List<WorkRecord> selectByEmployeeId(String employeeId);
+
 	int updateByPrimaryKey(WorkRecord record);
 }

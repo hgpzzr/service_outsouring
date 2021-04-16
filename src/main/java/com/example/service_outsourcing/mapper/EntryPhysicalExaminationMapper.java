@@ -12,6 +12,8 @@ public interface EntryPhysicalExaminationMapper {
 
     EntryPhysicalExamination selectByPrimaryKey(String physicalExaminationId);
 
+    List<EntryPhysicalExamination> selectByMaterialId(String materialId);
+
     List<EntryPhysicalExamination> selectAll();
 
     int updateByPrimaryKey(EntryPhysicalExamination record);

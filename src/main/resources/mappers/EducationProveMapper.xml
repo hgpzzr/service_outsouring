@@ -29,6 +29,11 @@
     from education_prove
     where education_id = #{educationId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByMaterialId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select education_id, material_id, education_pic_url, education_prove_status
+    from education_prove
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select education_id, material_id, education_pic_url, education_prove_status
     from education_prove

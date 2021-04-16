@@ -12,6 +12,8 @@ public interface EducationProveMapper {
 
     EducationProve selectByPrimaryKey(String educationId);
 
+    List<EducationProve> selectByMaterialId(String materialId);
+
     List<EducationProve> selectAll();
 
     int updateByPrimaryKey(EducationProve record);

@@ -9,7 +9,9 @@ public class Contract implements Serializable {
 
     private String contractFilePicUrl;
 
-    private String contractStatus;
+    private Integer contractStatus;
+
+    private String expirationTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -19,6 +21,14 @@ public class Contract implements Serializable {
 
     public void setContractId(String contractId) {
         this.contractId = contractId == null ? null : contractId.trim();
+    }
+
+    public String getExpirationTimed() {
+        return expirationTime;
+    }
+
+    public void setExpirationTime(String expirationTime) {
+        this.expirationTime = expirationTime == null ? null : expirationTime.trim();
     }
 
     public String getMaterialId() {
@@ -37,12 +47,12 @@ public class Contract implements Serializable {
         this.contractFilePicUrl = contractFilePicUrl == null ? null : contractFilePicUrl.trim();
     }
 
-    public String getContractStatus() {
+    public Integer getContractStatus() {
         return contractStatus;
     }
 
-    public void setContractStatus(String contractStatus) {
-        this.contractStatus = contractStatus == null ? null : contractStatus.trim();
+    public void setContractStatus(Integer contractStatus) {
+        this.contractStatus = contractStatus;
     }
 
     @Override
@@ -55,6 +65,7 @@ public class Contract implements Serializable {
         sb.append(", materialId=").append(materialId);
         sb.append(", contractFilePicUrl=").append(contractFilePicUrl);
         sb.append(", contractStatus=").append(contractStatus);
+        sb.append(", expirationTime=").append(expirationTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

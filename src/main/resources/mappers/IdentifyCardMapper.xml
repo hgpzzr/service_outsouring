@@ -37,4 +37,10 @@
     overdue_time
     from identify_card
   </select>
+  <select id="selectByMaterialId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select identity_card_id, material_id, identity_card_pic_url, verification_status,
+    overdue_time
+    from identify_card
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </select>
 </mapper>

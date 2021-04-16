@@ -84,6 +84,28 @@ public interface ApplicantService {
      */
     ResultVO deleteWorkExperience(String workId);
 
+    /**
+     * 更新工作经历
+     * @param form
+     * @param file
+     * @return
+     */
+    ResultVO updateWorkExperience(UpdateWorkExperienceForm form,MultipartFile file);
+
+    /**
+     * 获得单个工作经历
+     * @param workId
+     * @return
+     */
+    ResultVO getWorkExperience(String workId);
+
+    /**
+     * 获得一张简历的所有工作经历
+     * @param resumeId
+     * @return
+     */
+    ResultVO getAllWorkExperience(String resumeId);
+
 //    ResultVO updateWorkExperience(UpdateWorkExperienceForm form, MultipartFile file);
 
     /**
@@ -102,6 +124,27 @@ public interface ApplicantService {
     ResultVO deleteProjectExperience(String projectId);
 
     /**
+     * 更新项目经历
+     * @param form
+     * @param file
+     * @return
+     */
+    ResultVO updateProjectExperience(UpdateProjectExperienceForm form,MultipartFile file);
+
+    /**
+     * 获得单个项目经历
+     * @param projectId
+     * @return
+     */
+    ResultVO getProjectExperience(String projectId);
+
+    /**
+     * 获得一张简历下的所有项目经历
+     * @param resumeId
+     * @return
+     */
+    ResultVO getAllProjectExperience(String resumeId);
+    /**
      * 添加技能特长
      * @param skillForm
      * @return
@@ -114,6 +157,27 @@ public interface ApplicantService {
      * @return
      */
     ResultVO deleteSkill(String skillId);
+
+    /**
+     * 更新技能特长
+     * @param form
+     * @return
+     */
+    ResultVO updateSkill(UpdateSkillForm form);
+
+    /**
+     * 获得单个技能特长
+     * @param skillId
+     * @return
+     */
+    ResultVO getSkill(String skillId);
+
+    /**
+     * 获得一张简历下的所有技能特长
+     * @param resumeId
+     * @return
+     */
+    ResultVO getAllSkill(String resumeId);
 
     /**
      * 添加证书
@@ -131,6 +195,28 @@ public interface ApplicantService {
     ResultVO deleteCertificate(String certificateId);
 
     /**
+     * 更新证书
+     * @param form
+     * @param file
+     * @return
+     */
+    ResultVO updateCertificate(UpdateCertificateForm form,MultipartFile file);
+
+    /**
+     * 获得单个证书
+     * @param certificateId
+     * @return
+     */
+    ResultVO getCertificate(String certificateId);
+
+    /**
+     * 获得一张简历下的所有证书
+     * @param resumeId
+     * @return
+     */
+    ResultVO getAllCertificate(String resumeId);
+
+    /**
      * 添加自我评价
      * @param form
      * @return
@@ -144,6 +230,16 @@ public interface ApplicantService {
      */
     ResultVO deleteSelfEvaluate(String selfEvaluateId);
 
+    ResultVO updateSelfEvaluate(UpdateSelfEvaluateForm form);
+
+    /**
+     * 获得自我评价
+     * @param selfEvaluateId
+     * @return
+     */
+    ResultVO getSelfEvaluate(String selfEvaluateId);
+
+
     /**
      * 删除简历
      * @param resumeId
@@ -151,5 +247,10 @@ public interface ApplicantService {
      */
     ResultVO deleteResume(String resumeId);
 
+    /**
+     * 浏览简历
+     * @param resumeId
+     * @return
+     */
     ResultVO browseResume(String resumeId);
 }

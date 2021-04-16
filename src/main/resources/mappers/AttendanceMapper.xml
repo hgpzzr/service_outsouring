@@ -52,6 +52,12 @@
     from attendance
     where attendance_id = #{attendanceId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByRecordId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select attendance_id, record_id, attendance_num, absence_num, absence_rate, late_num,
+    late_rate, leave_num, leave_rate, leave_early_num, leave_early_rate, comprehensive_rating
+    from attendance
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select attendance_id, record_id, attendance_num, absence_num, absence_rate, late_num, 
     late_rate, leave_num, leave_rate, leave_early_num, leave_early_rate, comprehensive_rating

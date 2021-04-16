@@ -62,6 +62,8 @@ public class UserServiceImpl implements UserService {
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private JwtProperties jwtProperties;
+    @Autowired
+    private GenerateIdUtil generateIdUtil;
 
     @Value("${img.enterpriseCertification.url}")
     private String imageUrl;
@@ -96,10 +98,13 @@ public class UserServiceImpl implements UserService {
         user.setRole(1);
         user.setPasswd(passwordEncoder.encode(registerForm.getPasswd()));
         //生成随机的userId
-        String userId = GenerateIdUtil.getUserId(userMapper);
+//        String userId = GenerateIdUtil.getUserId(userMapper);
+        String userId = generateIdUtil.getRandomId(userMapper, "");
         user.setUserId(userId);
         //设置会员级别
         user.setMembershipLevel(0);
+        // 初始化积分
+        user.setIntegralNum(0);
         int insert = userMapper.insert(user);
         if(insert != 1){
             return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
@@ -177,7 +182,8 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUserName(form.getUserName());
         user.setPasswd(passwordEncoder.encode(form.getPasswd()));
-        String userId = GenerateIdUtil.getUserId(userMapper);
+//        String userId = GenerateIdUtil.getUserId(userMapper);
+        String userId = generateIdUtil.getRandomId(userMapper, "");
         user.setUserId(userId);
         user.setOrganizationId(currentUser.getOrganizationId());
         user.setRole(0);
@@ -203,7 +209,8 @@ public class UserServiceImpl implements UserService {
         if(currentUser.getOrganizationId()!=null){
             return ResultVOUtil.error(ResultEnum.CERTIFICATE_REPEAT_ERROR);
         }
-        String organizationId = GenerateIdUtil.getOrganizationId(organizationMapper);
+//        String organizationId = GenerateIdUtil.getOrganizationId(organizationMapper);
+        String organizationId = generateIdUtil.getRandomId(organizationMapper, "EN");
 
         //获得图片路径
         StringBuilder stringBuilder = new StringBuilder();

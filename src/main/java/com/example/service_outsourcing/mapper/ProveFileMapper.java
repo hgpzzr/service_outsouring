@@ -12,6 +12,10 @@ public interface ProveFileMapper {
 
     ProveFile selectByPrimaryKey(String proveId);
 
+    ProveFile selectByProjectId(String projectId);
+
+    List<ProveFile> selectByMaterialId(String materialId);
+
     List<ProveFile> selectAll();
 
     int updateByPrimaryKey(ProveFile record);

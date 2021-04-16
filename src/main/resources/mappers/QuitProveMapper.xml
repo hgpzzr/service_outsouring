@@ -29,6 +29,11 @@
     from quit_prove
     where quit_id = #{quitId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByMaterialId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select quit_id, material_id, quit_file_pic_url, quit_status
+    from quit_prove
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select quit_id, material_id, quit_file_pic_url, quit_status
     from quit_prove

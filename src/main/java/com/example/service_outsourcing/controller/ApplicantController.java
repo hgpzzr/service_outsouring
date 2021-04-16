@@ -47,7 +47,7 @@ public class ApplicantController {
         return applicantService.browseBasicInformation(resumeId);
     }
 
-    @PostMapping("updateBasicInformation")
+    @PutMapping("updateBasicInformation")
     @ApiOperation("修改基本信息")
     public ResultVO updateBasicInformation(BasicInformationForm form,@RequestParam("file")MultipartFile file){
         return applicantService.updateBasicInformation(form,file);
@@ -59,7 +59,7 @@ public class ApplicantController {
         return applicantService.insertEducationBackground(form);
     }
 
-    @PostMapping("/updateEducationBackground")
+    @PutMapping("/updateEducationBackground")
     @ApiOperation("更新教育背景")
     public ResultVO updateEducationBackground(UpdateEducationBackgroundForm form){
         return applicantService.updateEducationBackground(form);
@@ -89,6 +89,24 @@ public class ApplicantController {
         return applicantService.deleteWorkExperience(workId);
     }
 
+    @PutMapping("/updateWorkExperience")
+    @ApiOperation("更新工作经历")
+    public ResultVO updateWorkExperience(UpdateWorkExperienceForm form,@RequestParam("file")MultipartFile file){
+        return applicantService.updateWorkExperience(form,file);
+    }
+
+    @GetMapping("/getWorkExperience")
+    @ApiOperation("获得单个工作经历")
+    public ResultVO getWorkExperience(String workId){
+        return applicantService.getWorkExperience(workId);
+    }
+
+    @GetMapping("/getAllWorkExperience")
+    @ApiOperation("获得一张简历下的所有工作经历")
+    public ResultVO getAllWorkExperience(String resumeId){
+        return applicantService.getAllWorkExperience(resumeId);
+    }
+
     @PostMapping("insertProjectExperience")
     @ApiOperation("添加项目经历")
     public ResultVO insertProjectExperience(ProjectExperienceForm form,@RequestParam("file")MultipartFile file){
@@ -99,6 +117,24 @@ public class ApplicantController {
     @ApiOperation("删除项目经历")
     public ResultVO deleteProjectExperience(String projectId){
         return applicantService.deleteProjectExperience(projectId);
+    }
+
+    @PutMapping("/updateProjectExperience")
+    @ApiOperation("更新项目经历")
+    public ResultVO updateProjectExperience(UpdateProjectExperienceForm form,@RequestParam("file")MultipartFile file){
+        return applicantService.updateProjectExperience(form,file);
+    }
+
+    @GetMapping("/getProjectExperience")
+    @ApiOperation("获得单个项目经历")
+    public ResultVO getProjectExperience(String projectId){
+        return applicantService.getProjectExperience(projectId);
+    }
+
+    @GetMapping("/getAllProjectExperience")
+    @ApiOperation("获得一张简历下的所有项目经历")
+    public ResultVO getAllProjectExperience(String resumeId){
+        return applicantService.getAllProjectExperience(resumeId);
     }
 
     @PostMapping("/insertSkill")
@@ -113,6 +149,24 @@ public class ApplicantController {
         return applicantService.deleteSkill(skillId);
     }
 
+    @PutMapping("/updateSkill")
+    @ApiOperation("更新技能特长")
+    public ResultVO updateSkill(UpdateSkillForm form){
+        return applicantService.updateSkill(form);
+    }
+
+    @GetMapping("/getSkill")
+    @ApiOperation("获得单个技能特长")
+    public ResultVO getSkill(String skillId){
+        return applicantService.getSkill(skillId);
+    }
+
+    @GetMapping("/getAllSkill")
+    @ApiOperation("获得一张简历下的所有技能特长")
+    public ResultVO getAllSkill(String resumeId){
+        return applicantService.getAllSkill(resumeId);
+    }
+
     @PostMapping("/insertCertificate")
     @ApiOperation("添加证书")
     public ResultVO insertCertificate(CertificateForm form,@RequestParam("file") MultipartFile file){
@@ -123,6 +177,24 @@ public class ApplicantController {
     @ApiOperation("删除证书")
     public ResultVO deleteCertificate(String certificateId){
         return applicantService.deleteCertificate(certificateId);
+    }
+
+    @PutMapping("/updateCertificate")
+    @ApiOperation("更新证书")
+    public ResultVO updateCertificate(UpdateCertificateForm form,@RequestParam("file") MultipartFile file){
+        return applicantService.updateCertificate(form,file);
+    }
+
+    @GetMapping("/getCertificate")
+    @ApiOperation("获得单个证书")
+    public ResultVO getCertificate(String certificateId){
+        return applicantService.getCertificate(certificateId);
+    }
+
+    @GetMapping("/getAllCertificate")
+    @ApiOperation("获得一张简历下的所有证书")
+    public ResultVO getAllCertificate(String resumeId){
+        return applicantService.getAllCertificate(resumeId);
     }
 
     @PostMapping("/insertSelfEvaluate")
@@ -136,6 +208,17 @@ public class ApplicantController {
     public ResultVO deleteSelfEvaluate(String selfEvaluateId){
         return applicantService.deleteSelfEvaluate(selfEvaluateId);
     }
+
+    @PutMapping("/updateSelfEvaluate")
+    @ApiOperation("更新自我评价")
+    public ResultVO updateSelfEvaluate(UpdateSelfEvaluateForm form){return applicantService.updateSelfEvaluate(form);}
+
+    @GetMapping("/getSelfEvaluate")
+    @ApiOperation("获得单个自我评价")
+    public ResultVO getSelfEvaluate(String selfEvaluateId){
+        return applicantService.getSelfEvaluate(selfEvaluateId);
+    }
+
 
     @DeleteMapping("/deleteResume")
     @ApiOperation("删除简历")

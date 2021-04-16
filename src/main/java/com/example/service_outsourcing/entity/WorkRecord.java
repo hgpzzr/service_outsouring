@@ -21,7 +21,7 @@ public class WorkRecord {
 
 	private String endTime;
 
-	private String workStatus;
+	private Integer workStatus;
 
 	private static final long serialVersionUID = 1L;
 }
