@@ -1,10 +1,7 @@
 package com.example.service_outsourcing.service;
 
 import com.example.service_outsourcing.VO.ResultVO;
-import com.example.service_outsourcing.form.AchievementForm;
-import com.example.service_outsourcing.form.AttendanceForm;
-import com.example.service_outsourcing.form.EvaluateForm;
-import com.example.service_outsourcing.form.WorkRecordForm;
+import com.example.service_outsourcing.form.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,6 +25,8 @@ public interface WorkRecordService {
 	 */
 	ResultVO deleteWorkRecord(String recordId);
 
+	ResultVO updateWorkRecord(UpdateWorkRecordForm form);
+
 	/**
 	 * 添加绩效
 	 * @param form
@@ -41,6 +40,13 @@ public interface WorkRecordService {
 	 * @return
 	 */
 	ResultVO deleteAchievement(String achievementId);
+
+	/**
+	 * 更新绩效
+	 * @param form
+	 * @return
+	 */
+	ResultVO updateAchievement(UpdateAchievementForm form);
 
 	/**
 	 * 获得单个绩效
@@ -71,6 +77,13 @@ public interface WorkRecordService {
 	ResultVO deleteEvaluate(String evaluateId);
 
 	/**
+	 * 更新评价
+	 * @param form
+	 * @return
+	 */
+	ResultVO updateEvaluate(UpdateEvaluateForm form);
+
+	/**
 	 * 获得单个评价
 	 * @param evaluateId
 	 * @return
@@ -97,6 +110,13 @@ public interface WorkRecordService {
 	 * @return
 	 */
 	ResultVO deleteAttendance(String attendanceId);
+
+	/**
+	 * 更新考勤记录
+	 * @param form
+	 * @return
+	 */
+	ResultVO updateAttendance(UpdateAttendanceForm form);
 
 	/**
 	 * 获得单个考勤记录

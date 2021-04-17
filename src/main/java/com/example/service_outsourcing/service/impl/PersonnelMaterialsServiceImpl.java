@@ -84,13 +84,13 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		PersonnelMaterial personnelMaterial = new PersonnelMaterial();
 		personnelMaterial.setMaterialId(materialId);
 		personnelMaterial.setEmployeeId(employeeId);
-		log.info("personnelMaterial:{}",personnelMaterial.toString());
+		log.info("personnelMaterial:{}", personnelMaterial.toString());
 		int insert = personnelMaterialMapper.insert(personnelMaterial);
 		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		Map map = new HashMap();
-		map.put("materialId",materialId);
+		map.put("materialId", materialId);
 		return ResultVOUtil.success(map);
 	}
 
@@ -104,8 +104,8 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		Date date = new Date();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String format = simpleDateFormat.format(date);
-		log.info("format:{}",format);
-		if(format.compareTo(form.getOverdueTime()) >= 0){
+		log.info("format:{}", format);
+		if (format.compareTo(form.getOverdueTime()) >= 0) {
 			return ResultVOUtil.error(ResultEnum.DATE_EARLY_ERROR);
 		}
 		// 上传文件
@@ -131,7 +131,7 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		identifyCard.setIdentityCardPicUrl(url.toString());
 		identifyCardMapper.insert(identifyCard);
 		Map map = new HashMap();
-		map.put("identifyCardId",identifyCardId);
+		map.put("identifyCardId", identifyCardId);
 		return ResultVOUtil.success(map);
 	}
 
@@ -154,17 +154,17 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 	@Override
 	public ResultVO updateID(UpdateIDForm form, MultipartFile file) {
 		IdentifyCard identifyCard = identifyCardMapper.selectByPrimaryKey(form.getIdentityCardId());
-		if(identifyCard == null){
+		if (identifyCard == null) {
 			return ResultVOUtil.error(ResultEnum.ID_NOT_EXIST_ERROR);
 		}
-		if(!file.isEmpty()){
+		if (!file.isEmpty()) {
 			// 删除原来的图片
 			FileUtil.deleteFile(identifyCard.getIdentityCardPicUrl());
 			// 上传新的图片
 			String filePath = imgIDUrl;
 			String fileName = FileUtil.generateFileName(file);
 			boolean upload = FileUtil.upload(file, filePath, fileName);
-			if(!upload){
+			if (!upload) {
 				return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
 			}
 			// 设置新的url
@@ -172,9 +172,9 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			identifyCard.setIdentityCardPicUrl(url.toString());
 		}
 		// 更新数据库
-		BeanUtils.copyProperties(form,identifyCard);
+		BeanUtils.copyProperties(form, identifyCard);
 		int update = identifyCardMapper.updateByPrimaryKey(identifyCard);
-		if(update != 1){
+		if (update != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("更新成功");
@@ -219,7 +219,7 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		Map map = new HashMap();
-		map.put("educationId",educationId);
+		map.put("educationId", educationId);
 		return ResultVOUtil.success(map);
 	}
 
@@ -276,7 +276,7 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		Map map = new HashMap();
-		map.put("socialInfoId",socialInfoId);
+		map.put("socialInfoId", socialInfoId);
 		return ResultVOUtil.success(map);
 	}
 
@@ -298,18 +298,29 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 	@Override
 	public ResultVO updateSocialInfo(UpdateSocialInfoForm form, MultipartFile file) {
 		SocialInfo socialInfo = socialInfoMapper.selectByPrimaryKey(form.getSocialInfoId());
-		if(socialInfo == null){
+		if (socialInfo == null) {
 			return ResultVOUtil.error(ResultEnum.SOCIAL_INFO_NOT_EXIST_ERROR);
 		}
-		if(!file.isEmpty()){
+		if (!file.isEmpty()) {
 			// 删除原来的图片
 			FileUtil.deleteFile(socialInfo.getSupportingMaterialUrl());
 			// 上传新的图片
 			String filePath = socialInfoUrl;
 			String fileName = FileUtil.generateFileName(file);
-
+			boolean upload = FileUtil.upload(file, filePath, fileName);
+			if (!upload) {
+				return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+			}
+			// 设置新的url
+			StringBuilder url = new StringBuilder(filePath).append(fileName);
 		}
-		return null;
+		// 更新数据库
+		BeanUtils.copyProperties(form, socialInfo);
+		int update = socialInfoMapper.updateByPrimaryKey(socialInfo);
+		if (update != 1) {
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		return ResultVOUtil.success("更新成功");
 	}
 
 	@Override
@@ -352,7 +363,7 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		Map map = new HashMap();
-		map.put("registerId",registerId);
+		map.put("registerId", registerId);
 		return ResultVOUtil.success(map);
 	}
 
@@ -399,7 +410,7 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		url.append(filePath).append(fileName);
 
 		// 存入数据库
-		EntryPhysicalExamination physicalExamination= new EntryPhysicalExamination();
+		EntryPhysicalExamination physicalExamination = new EntryPhysicalExamination();
 		physicalExamination.setMaterialId(materialId);
 //		String physicalExaminationId = GenerateIdUtil.getPhysicalExaminationId(entryPhysicalExaminationMapper);
 		String physicalExaminationId = generateIdUtil.getRandomId(entryPhysicalExaminationMapper, "EP");
@@ -407,26 +418,26 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		physicalExamination.setPhysicalExaminationStatus(1);
 		physicalExamination.setPhysicalExaminationPicUrl(url.toString());
 		int insert = entryPhysicalExaminationMapper.insert(physicalExamination);
-		if(insert != 1){
+		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		Map map = new HashMap();
-		map.put("message","添加成功");
-		map.put("physicalExaminationId",physicalExaminationId);
+		map.put("message", "添加成功");
+		map.put("physicalExaminationId", physicalExaminationId);
 		return ResultVOUtil.success(map);
 	}
 
 	@Override
 	public ResultVO deletePhysicalExamination(String examinationId) {
 		EntryPhysicalExamination physicalExamination = entryPhysicalExaminationMapper.selectByPrimaryKey(examinationId);
-		if(physicalExamination==null){
+		if (physicalExamination == null) {
 			return ResultVOUtil.error(ResultEnum.PHYSICAL_EXAMINATION_NOT_EXIST_ERROR);
 		}
 		String physicalExaminationPicUrl = physicalExamination.getPhysicalExaminationPicUrl();
 		// 删除图片
 		FileUtil.deleteFile(physicalExaminationPicUrl);
 		int delete = entryPhysicalExaminationMapper.deleteByPrimaryKey(examinationId);
-		if(delete != 1){
+		if (delete != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("删除成功");
@@ -451,7 +462,7 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		String filePath = quitProveUrl;
 		String fileName = FileUtil.generateFileName(file);
 		boolean upload = FileUtil.upload(file, filePath, fileName);
-		if(!upload){
+		if (!upload) {
 			return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
 		}
 		StringBuilder url = new StringBuilder();
@@ -465,26 +476,26 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		quitProve.setQuitFilePicUrl(url.toString());
 		quitProve.setQuitStatus(1);
 		int insert = quitProveMapper.insert(quitProve);
-		if(insert != 1){
+		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		Map map = new HashMap();
-		map.put("message","添加成功");
-		map.put("quitId",quitId);
+		map.put("message", "添加成功");
+		map.put("quitId", quitId);
 		return ResultVOUtil.success(map);
 	}
 
 	@Override
 	public ResultVO deleteQuitProve(String quitId) {
 		QuitProve quitProve = quitProveMapper.selectByPrimaryKey(quitId);
-		if(quitProve==null){
+		if (quitProve == null) {
 			return ResultVOUtil.error(ResultEnum.QUIT_PROVE_NOT_EXIST_ERROR);
 		}
 		String quitFilePicUrl = quitProve.getQuitFilePicUrl();
 		// 删除图片
 		FileUtil.deleteFile(quitFilePicUrl);
 		int delete = quitProveMapper.deleteByPrimaryKey(quitId);
-		if(delete != 1){
+		if (delete != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("删除成功");
@@ -501,19 +512,19 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 	}
 
 	@Override
-	public ResultVO insertProveFile(ProveFileForm proveFileForm,MultipartFile file) {
-		if(personnelMaterialMapper.selectByPrimaryKey(proveFileForm.getMaterialId())==null){
+	public ResultVO insertProveFile(ProveFileForm proveFileForm, MultipartFile file) {
+		if (personnelMaterialMapper.selectByPrimaryKey(proveFileForm.getMaterialId()) == null) {
 			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
 		}
 		// 判断项目是否已存在证明文件
-		if(proveFileMapper.selectByProjectId(proveFileForm.getProjectId())!=null){
+		if (proveFileMapper.selectByProjectId(proveFileForm.getProjectId()) != null) {
 			return ResultVOUtil.error(ResultEnum.PROJECT_PROVE_FILE_EXIST_ERROR);
 		}
 		// 上传文件
 		String filePath = proveFileUrl;
 		String fileName = FileUtil.generateFileName(file);
 		boolean upload = FileUtil.upload(file, filePath, fileName);
-		if(!upload){
+		if (!upload) {
 			return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
 		}
 		StringBuilder url = new StringBuilder();
@@ -521,36 +532,64 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 
 		// 存入数据库
 		ProveFile proveFile = new ProveFile();
-		BeanUtils.copyProperties(proveFileForm,proveFile);
+		BeanUtils.copyProperties(proveFileForm, proveFile);
 		proveFile.setProveFilePicUrl(url.toString());
 //		String proveId = GenerateIdUtil.getProveId(proveFileMapper);
 		String proveId = generateIdUtil.getRandomId(proveFileMapper, "PF");
 		proveFile.setProveId(proveId);
 		proveFile.setProveStatus(1);
 		int insert = proveFileMapper.insert(proveFile);
-		if(insert != 1){
+		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		Map map = new HashMap();
-		map.put("message","添加成功");
-		map.put("proveId",proveId);
+		map.put("message", "添加成功");
+		map.put("proveId", proveId);
 		return ResultVOUtil.success(map);
 	}
 
 	@Override
 	public ResultVO deleteProveFile(String proveId) {
 		ProveFile proveFile = proveFileMapper.selectByPrimaryKey(proveId);
-		if(proveFile==null){
+		if (proveFile == null) {
 			return ResultVOUtil.error(ResultEnum.PROVE_FILE_NOT_EXIST_ERROR);
 		}
 		// 删除图片
 		FileUtil.deleteFile(proveFile.getProveFilePicUrl());
 		// 删除数据库记录
 		int delete = proveFileMapper.deleteByPrimaryKey(proveId);
-		if(delete != 1){
+		if (delete != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO updateProveFile(UpdateProveFileForm form, MultipartFile file) {
+		ProveFile proveFile = proveFileMapper.selectByPrimaryKey(form.getProveId());
+		if (proveFile == null) {
+			return ResultVOUtil.error(ResultEnum.PROVE_FILE_NOT_EXIST_ERROR);
+		}
+		if (!file.isEmpty()) {
+			// 删除原来的图片
+			FileUtil.deleteFile(proveFile.getProveFilePicUrl());
+			// 上传新的图片
+			String filePath = proveFileUrl;
+			String fileName = FileUtil.generateFileName(file);
+			boolean upload = FileUtil.upload(file, filePath, fileName);
+			if (!upload) {
+				return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
+			}
+			// 设置新的url
+			StringBuilder url = new StringBuilder(filePath).append(fileName);
+			proveFile.setProveFilePicUrl(url.toString());
+		}
+		BeanUtils.copyProperties(form, proveFile);
+		int update = proveFileMapper.updateByPrimaryKey(proveFile);
+		if (update != 1) {
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		return ResultVOUtil.success("更新成功");
 	}
 
 	@Override
@@ -565,14 +604,14 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 
 	@Override
 	public ResultVO insertContract(ContractForm form, MultipartFile file) {
-		if(personnelMaterialMapper.selectByPrimaryKey(form.getMaterialId())==null){
+		if (personnelMaterialMapper.selectByPrimaryKey(form.getMaterialId()) == null) {
 			return ResultVOUtil.error(ResultEnum.PERSONNEL_MATERIAL_NOT_EXIST_ERROR);
 		}
 		// 上传图片
 		String filePath = contractUrl;
 		String fileName = FileUtil.generateFileName(file);
 		boolean upload = FileUtil.upload(file, filePath, fileName);
-		if(!upload){
+		if (!upload) {
 			return ResultVOUtil.error(ResultEnum.FILE_UPLOAD_ERROR);
 		}
 		StringBuilder url = new StringBuilder();
@@ -580,36 +619,65 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 
 		// 存入数据库
 		Contract contract = new Contract();
-		BeanUtils.copyProperties(form,contract);
+		BeanUtils.copyProperties(form, contract);
 		contract.setContractFilePicUrl(url.toString());
 		contract.setContractStatus(1);
 //		String contractId = GenerateIdUtil.getContractId(contractMapper);
 		String contractId = generateIdUtil.getRandomId(contractMapper, "CO");
 		contract.setContractId(contractId);
 		int insert = contractMapper.insert(contract);
-		if(insert != 1){
+		if (insert != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		Map map = new HashMap();
-		map.put("message","添加成功");
-		map.put("contractId",contractId);
+		map.put("message", "添加成功");
+		map.put("contractId", contractId);
 		return ResultVOUtil.success(map);
 	}
 
 	@Override
 	public ResultVO deleteContract(String contractId) {
 		Contract contract = contractMapper.selectByPrimaryKey(contractId);
-		if(contract == null){
+		if (contract == null) {
 			return ResultVOUtil.error(ResultEnum.CONTRACT_NOT_EXIST_ERROR);
 		}
 		// 删除图片
 		FileUtil.deleteFile(contract.getContractFilePicUrl());
 		// 删除数据库记录
 		int delete = contractMapper.deleteByPrimaryKey(contractId);
-		if(delete != 1){
+		if (delete != 1) {
 			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
 		}
 		return ResultVOUtil.success("删除成功");
+	}
+
+	@Override
+	public ResultVO updateContract(UpdateContractForm form, MultipartFile file) {
+		Contract contract = contractMapper.selectByPrimaryKey(form.getContractId());
+		if (contract == null) {
+			return ResultVOUtil.error(ResultEnum.CONTRACT_NOT_EXIST_ERROR);
+		}
+		if (!file.isEmpty()) {
+			// 删除原来的图片
+			FileUtil.deleteFile(contract.getContractFilePicUrl());
+			// 上传新的图片
+			String filePath = contractUrl;
+			String fileName = FileUtil.generateFileName(file);
+			boolean upload = FileUtil.upload(file, filePath, fileName);
+			if (!upload) {
+				return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+			}
+			// 设置新的url
+			StringBuilder url = new StringBuilder(filePath).append(fileName);
+			contract.setContractFilePicUrl(url.toString());
+		}
+		// 更新数据库
+		BeanUtils.copyProperties(form, contract);
+		int update = contractMapper.updateByPrimaryKey(contract);
+		if (update != 1) {
+			return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+		}
+		return ResultVOUtil.success("更新成功");
 	}
 
 	@Override
@@ -634,15 +702,15 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 		List<ProveFile> proveFiles = proveFileMapper.selectByMaterialId(materialId);
 		List<Contract> contracts = contractMapper.selectByMaterialId(materialId);
 		Map map = new HashMap();
-		map.put("personnelMaterial",personnelMaterial);
-		map.put("identifyCards",identifyCards);
-		map.put("educationProves",educationProves);
-		map.put("socialInfos",socialInfos);
-		map.put("entryRegisters",entryRegisters);
-		map.put("entryPhysicalExaminations",entryPhysicalExaminations);
-		map.put("quitProves",quitProves);
-		map.put("proveFiles",proveFiles);
-		map.put("contracts",contracts);
+		map.put("personnelMaterial", personnelMaterial);
+		map.put("identifyCards", identifyCards);
+		map.put("educationProves", educationProves);
+		map.put("socialInfos", socialInfos);
+		map.put("entryRegisters", entryRegisters);
+		map.put("entryPhysicalExaminations", entryPhysicalExaminations);
+		map.put("quitProves", quitProves);
+		map.put("proveFiles", proveFiles);
+		map.put("contracts", contracts);
 		return ResultVOUtil.success(map);
 	}
 
@@ -689,6 +757,7 @@ public class PersonnelMaterialsServiceImpl implements PersonnelMaterialsService 
 			Contract contract = contracts.get(i);
 			deleteContract(contract.getContractId());
 		}
+		personnelMaterialMapper.deleteByPrimaryKey(materialId);
 		return ResultVOUtil.success("删除成功");
 	}
 

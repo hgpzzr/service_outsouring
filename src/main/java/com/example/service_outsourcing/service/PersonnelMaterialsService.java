@@ -16,52 +16,52 @@ import org.springframework.web.multipart.MultipartFile;
 public interface PersonnelMaterialsService {
 	/**
 	 * 添加人事材料
-	 * @param employeeId
+	 * @param employeeId 员工id
 	 * @return
 	 */
 	ResultVO insertPersonnelMaterial(String employeeId);
 
 	/**
 	 * 添加身份证
-	 * @param form
-	 * @param file
+	 * @param form 身份证表单
+	 * @param file 文件
 	 * @return
 	 */
 	ResultVO insertID(IDForm form, MultipartFile file);
 
 	/**
 	 * 删除身份证
-	 * @param identifyCardId
+	 * @param identifyCardId 身份证id
 	 * @return
 	 */
 	ResultVO deleteID(String identifyCardId);
 
 	/**
 	 * 更新身份证
-	 * @param form
-	 * @param file
+	 * @param form 更新身份证表单
+	 * @param file 文件
 	 * @return
 	 */
 	ResultVO updateID(UpdateIDForm form,MultipartFile file);
 
 	/**
 	 * 获得单个身份证
-	 * @param identifyCardId
+	 * @param identifyCardId 身份证id
 	 * @return
 	 */
 	ResultVO getID(String identifyCardId);
 
 	/**
 	 * 获得一份人事材料下的所有身份证
-	 * @param materialId
+	 * @param materialId 人事材料id
 	 * @return
 	 */
 	ResultVO getAllID(String materialId);
 
 	/**
 	 * 添加学历证明
-	 * @param materialId
-	 * @param file
+	 * @param materialId 人事材料id
+	 * @param file 文件
 	 * @return
 	 */
 	ResultVO insertEducationProve(String materialId,MultipartFile file);
@@ -227,6 +227,14 @@ public interface PersonnelMaterialsService {
 	ResultVO deleteProveFile(String proveId);
 
 	/**
+	 * 更新证明材料
+	 * @param form
+	 * @param file
+	 * @return
+	 */
+	ResultVO updateProveFile(UpdateProveFileForm form,MultipartFile file);
+
+	/**
 	 * 获得单个证明材料
 	 * @param proveId
 	 * @return
@@ -254,6 +262,14 @@ public interface PersonnelMaterialsService {
 	 * @return
 	 */
 	ResultVO deleteContract(String contractId);
+
+	/**
+	 * 更新合同
+	 * @param form
+	 * @param file
+	 * @return
+	 */
+	ResultVO updateContract(UpdateContractForm form,MultipartFile file);
 
 	/**
 	 * 获得单个合同

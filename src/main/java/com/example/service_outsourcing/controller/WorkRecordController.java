@@ -1,10 +1,7 @@
 package com.example.service_outsourcing.controller;
 
 import com.example.service_outsourcing.VO.ResultVO;
-import com.example.service_outsourcing.form.AchievementForm;
-import com.example.service_outsourcing.form.AttendanceForm;
-import com.example.service_outsourcing.form.EvaluateForm;
-import com.example.service_outsourcing.form.WorkRecordForm;
+import com.example.service_outsourcing.form.*;
 import com.example.service_outsourcing.service.WorkRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,6 +35,12 @@ public class WorkRecordController {
 		return workRecordService.deleteWorkRecord(recordId);
 	}
 
+	@PutMapping("update")
+	@ApiOperation("更新工作记录")
+	public ResultVO updateWorkRecord(UpdateWorkRecordForm form){
+		return workRecordService.updateWorkRecord(form);
+	}
+
 	@ApiOperation("添加绩效")
 	@PostMapping("/insertAchievement")
 	public ResultVO insertAchievement(AchievementForm form){
@@ -48,6 +51,12 @@ public class WorkRecordController {
 	@DeleteMapping("/deleteAchievement")
 	public ResultVO deleteAchievement(String achievementId){
 		return workRecordService.deleteAchievement(achievementId);
+	}
+
+	@PutMapping("updateAchievement")
+	@ApiOperation("更新绩效记录")
+	public ResultVO updateAchievement(UpdateAchievementForm form){
+		return workRecordService.updateAchievement(form);
 	}
 
 	@GetMapping("/getAchievement")
@@ -74,6 +83,12 @@ public class WorkRecordController {
 		return workRecordService.deleteEvaluate(evaluateId);
 	}
 
+	@PutMapping("updateEvaluate")
+	@ApiOperation("更新评价")
+	public ResultVO updateEvaluate(UpdateEvaluateForm form){
+		return workRecordService.updateEvaluate(form);
+	}
+
 	@GetMapping("/getEvaluate")
 	@ApiOperation("获得单个评价")
 	public ResultVO getEvaluate(String evaluateId){
@@ -96,6 +111,12 @@ public class WorkRecordController {
 	@DeleteMapping("/deleteAttendance")
 	public ResultVO deleteAttendance(String attendanceId){
 		return workRecordService.deleteAttendance(attendanceId);
+	}
+
+	@PutMapping("updateAttendance")
+	@ApiOperation("更新考勤记录")
+	public ResultVO updateAttendance(UpdateAttendanceForm form){
+		return workRecordService.updateAttendance(form);
 	}
 
 	@GetMapping("/getAttendance")

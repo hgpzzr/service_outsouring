@@ -24,5 +24,5 @@ public interface SocialInfoMapper {
 
     List<SocialInfo> selectAll();
 
-    int updateByPrimaryKey(Skill socialInfoId);
+    int updateByPrimaryKey(SocialInfo record);
 }
