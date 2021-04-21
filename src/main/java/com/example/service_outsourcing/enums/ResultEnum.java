@@ -47,7 +47,7 @@ public enum  ResultEnum {
     ATTENDANCE_NOT_EXIST_ERROR(35,"考勤不存在"),
     SELF_EVALUATE_EXIST_ERROR(36,"自我评价已存在"),
     SELF_EVALUATE_NOT_EXIST_ERROR(37,"自我评价不存在"),
-
+    PASSWORD_LENGTH_ERROR(38,"密码长度错误"),
 
 
 

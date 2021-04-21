@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.service_outsourcing.mapper.GrantAuthorizationMapper" >
+  <resultMap id="BaseResultMap" type="com.example.service_outsourcing.entity.GrantAuthorization" >
+    <id column="grant_authorization_id" property="grantAuthorizationId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+    <result column="expiration_time" property="expirationTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from grant_authorization
+    where grant_authorization_id = #{grantAuthorizationId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.service_outsourcing.entity.GrantAuthorization" >
+    insert into grant_authorization (grant_authorization_id, user_id, employee_id, 
+      expiration_time)
+    values (#{grantAuthorizationId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{employeeId,jdbcType=VARCHAR}, 
+      #{expirationTime,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.service_outsourcing.entity.GrantAuthorization" >
+    update grant_authorization
+    set user_id = #{userId,jdbcType=VARCHAR},
+      employee_id = #{employeeId,jdbcType=VARCHAR},
+      expiration_time = #{expirationTime,jdbcType=VARCHAR}
+    where grant_authorization_id = #{grantAuthorizationId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select grant_authorization_id, user_id, employee_id, expiration_time
+    from grant_authorization
+    where grant_authorization_id = #{grantAuthorizationId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select grant_authorization_id, user_id, employee_id, expiration_time
+    from grant_authorization
+  </select>
+</mapper>

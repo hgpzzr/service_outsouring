@@ -8,6 +8,8 @@ import java.util.List;
 public interface SkillMapper {
     int deleteByPrimaryKey(String skillId);
 
+    int isExist(String skillId);
+
     int deleteByResumeId(String resumeId);
 
     int insert(Skill record);

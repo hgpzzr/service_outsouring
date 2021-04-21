@@ -4,6 +4,7 @@ import com.example.service_outsourcing.VO.ResultVO;
 import com.example.service_outsourcing.accessctro.RoleControl;
 import com.example.service_outsourcing.enums.RoleEnum;
 import com.example.service_outsourcing.form.EnterpriseCertificationForm;
+import com.example.service_outsourcing.form.GrantAuthorizationForm;
 import com.example.service_outsourcing.form.LoginForm;
 import com.example.service_outsourcing.form.RegisterForm;
 import com.example.service_outsourcing.service.UserService;
@@ -65,5 +66,12 @@ public class UserController {
     @RoleControl(role = RoleEnum.ADMIN)
     public ResultVO getAllHRAccount(){
         return userService.getAllHRAccount();
+    }
+
+    @ApiOperation("添加授权")
+    @PostMapping("/grantAuthorization")
+    @RoleControl(role = RoleEnum.ADMIN)
+    public ResultVO grantAuthorization(GrantAuthorizationForm form){
+        return userService.grantAuthorization(form);
     }
 }

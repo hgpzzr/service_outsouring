@@ -11,6 +11,10 @@
     delete from skill
     where skill_id = #{skillId,jdbcType=VARCHAR}
   </delete>
+  <delete id="isExist" parameterType="java.lang.String" >
+    select count(*) from skill
+    where skill_id = #{skillId,jdbcType=VARCHAR}
+  </delete>
   <delete id="deleteByResumeId" parameterType="java.lang.String" >
     delete from skill
     where resume_id = #{resumeId,jdbcType=VARCHAR}

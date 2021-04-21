@@ -3,6 +3,7 @@ package com.example.service_outsourcing.service;
 import com.example.service_outsourcing.VO.ResultVO;
 import com.example.service_outsourcing.entity.User;
 import com.example.service_outsourcing.form.EnterpriseCertificationForm;
+import com.example.service_outsourcing.form.GrantAuthorizationForm;
 import com.example.service_outsourcing.form.LoginForm;
 import com.example.service_outsourcing.form.RegisterForm;
 import com.sun.xml.internal.ws.resources.HttpserverMessages;
@@ -70,7 +71,12 @@ public interface UserService {
      */
     ResultVO getAllHRAccount();
 
-
+    /**
+     * 授权
+     * @param form
+     * @return
+     */
+    ResultVO grantAuthorization(GrantAuthorizationForm form);
 
 
 }

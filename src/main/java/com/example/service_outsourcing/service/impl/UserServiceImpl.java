@@ -3,12 +3,15 @@ package com.example.service_outsourcing.service.impl;
 
 import com.example.service_outsourcing.VO.GetAllHRAccountVO;
 import com.example.service_outsourcing.VO.ResultVO;
+import com.example.service_outsourcing.entity.GrantAuthorization;
 import com.example.service_outsourcing.entity.Organization;
 import com.example.service_outsourcing.entity.User;
 import com.example.service_outsourcing.enums.ResultEnum;
 import com.example.service_outsourcing.form.EnterpriseCertificationForm;
+import com.example.service_outsourcing.form.GrantAuthorizationForm;
 import com.example.service_outsourcing.form.LoginForm;
 import com.example.service_outsourcing.form.RegisterForm;
+import com.example.service_outsourcing.mapper.GrantAuthorizationMapper;
 import com.example.service_outsourcing.mapper.OrganizationMapper;
 import com.example.service_outsourcing.mapper.UserMapper;
 import com.example.service_outsourcing.security.JwtProperties;
@@ -64,6 +67,8 @@ public class UserServiceImpl implements UserService {
     private JwtProperties jwtProperties;
     @Autowired
     private GenerateIdUtil generateIdUtil;
+    @Autowired
+    private GrantAuthorizationMapper grantAuthorizationMapper;
 
     @Value("${img.enterpriseCertification.url}")
     private String imageUrl;
@@ -91,6 +96,10 @@ public class UserServiceImpl implements UserService {
         boolean isHave = userMapper.getUserByUserName(registerForm.getUserName()) != null;
         if(isHave){
             return ResultVOUtil.error(ResultEnum.USER_EXIST);
+        }
+        // 判断密码长度
+        if(registerForm.getPasswd().length()<6 || registerForm.getPasswd().length()>18){
+            return ResultVOUtil.error(ResultEnum.PASSWORD_LENGTH_ERROR);
         }
         User user = new User();
         BeanUtils.copyProperties(registerForm,user);
@@ -255,6 +264,21 @@ public class UserServiceImpl implements UserService {
             getAllHRAccountVOS.add(getAllHRAccountVO);
         }
         return ResultVOUtil.success(getAllHRAccountVOS);
+    }
+
+    @Override
+    public ResultVO grantAuthorization(GrantAuthorizationForm form) {
+        GrantAuthorization grantAuthorization = new GrantAuthorization();
+        BeanUtils.copyProperties(form,grantAuthorization);
+        String grantAuthorizationId = generateIdUtil.getRandomId(grantAuthorizationMapper, "GA");
+        grantAuthorization.setGrantAuthorizationId(grantAuthorizationId);
+        int insert = grantAuthorizationMapper.insert(grantAuthorization);
+        if(insert != 1){
+            return ResultVOUtil.error(ResultEnum.DATABASE_OPTION_ERROR);
+        }
+        Map map = new HashMap();
+        map.put("grantAuthorizationId",grantAuthorizationId);
+        return ResultVOUtil.success(map);
     }
 
 }
